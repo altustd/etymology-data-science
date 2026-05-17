@@ -1,0 +1,41 @@
+---
+title: "Preface"
+number-sections: false
+---
+
+# Preface {.unnumbered}
+
+## Why This Book Exists {.unnumbered}
+
+There is a game that every student of Latin is taught to play, usually around the third week of class, right after the paradigm tables start to blur. The game is called "spot the cousin." You take the Latin word *pater* and the English word *father*, and you notice that the *p* has become an *f* and the *t* has become a *th*. Then you do it again: Latin *piscis*, English *fish*. Latin *ped-*, English *foot*. Suddenly, without knowing quite when it happened, you are no longer studying vocabulary. You are watching a language drift across a thousand years like a continent, grinding against its neighbors, shedding consonants like scale.
+
+Most people who discover this game are content to play it by hand, one word at a time. This book is for the people who look at that game and ask: could we automate it?
+
+The answer, it turns out, is substantially yes—and the story of how computational linguists figured that out in the last twenty years is one of the more quietly remarkable episodes in the history of data science. It involves borrowed algorithms from molecular biology, machine learning models that beat expert linguists at their own task, and neural networks that have reconstructed words spoken by people who died before writing was invented. It is the kind of story that sounds like science fiction until you actually run the code.
+
+## What You Will Find Here {.unnumbered}
+
+This book is organized as twelve chapters that move from concept to technique to application. The first three chapters build up linguistic intuition: what etymology actually studies, how traditional linguists work, and how to translate language into a form a computer can use. Chapters four through six introduce the core algorithms—sequence alignment borrowed from bioinformatics, machine learning for detecting word kinship, and phylogenetic inference for building family trees of languages. Chapters seven through eleven apply these tools to harder problems: reconstructing dead proto-languages with neural networks, tracking how word meanings drift over centuries, detecting when languages have borrowed from each other, and building queryable knowledge graphs of etymological relationships. Chapter twelve is a capstone in which you design and execute your own research question.
+
+Each chapter begins with a concrete example—a word, a puzzle, a historical accident—before generalizing to the method. Code appears throughout, written to be run rather than merely read. Every chapter closes with exercises and a further reading list for the curious.
+
+## What You Will Need {.unnumbered}
+
+Linguistically: nothing. We build the relevant concepts from scratch.
+
+Computationally: basic Python—enough to know what a loop is and how to index a list. Everything else is introduced when it is needed.
+
+Mathematically: high school algebra. The one section that involves linear algebra (Chapter 7, on neural networks) explains what it needs as it goes.
+
+What you do need is a tolerance for the slightly unsettling feeling that arrives when you realize that a computer can do in three seconds something that took a nineteenth-century philologist three years. That feeling is not a sign that something has gone wrong. It is a sign that you are paying attention.
+
+## A Note on Style {.unnumbered}
+
+The linguist J.E. Gordon once opened a chapter on the mechanics of elasticity with a discussion of worms. He was not being whimsical; he was being pedagogically shrewd. Abstract principles stick when they are first encountered in the flesh. This book tries to do the same: every major concept is introduced through a specific word, a specific language pair, a specific historical moment. The abstraction comes after.
+
+Wherever equations appear, they appear because they compress something important, not because they signal that the material is serious. The material is serious with or without them.
+
+---
+
+*Troy Altus*
+*May 2026*

@@ -1,0 +1,165 @@
+# Capstone Project {#sec-capstone}
+
+::: {.callout-note}
+## Learning Objectives
+
+By the end of this chapter, you will be able to:
+
+- Design a complete computational etymology research project from scratch
+- Select appropriate methods for your specific research question
+- Collect, clean, and structure raw linguistic data
+- Apply alignment, cognate detection, phylogenetic inference, and/or semantic analysis
+- Write a clear technical report with interpretable visualizations
+- Identify and honestly state the limitations of your findings
+:::
+
+## The Point of All This
+
+There is a particular kind of satisfaction that arrives when a technique you have learned in the abstract produces a result that surprises you. You run the alignment algorithm on a word pair you thought would look boring, and the gap falls exactly where the historical record says a sound was lost. You cluster a language family and the dendrogram recovers a branching that linguists spent decades debating—and your dataset is forty words and one Python script. The technique is not magic, but it is doing something real.
+
+The capstone project is where this becomes personal. You choose a question, gather the data, apply the methods, and report what you find. The constraint is only this: the question must be genuinely open, at least to you. If you already know the answer, it is not a research question—it is an exercise.
+
+This chapter describes five capstone options in enough detail that you can begin one without further instruction. Each specifies the research question, the data sources, the methods to apply, and the deliverable format.
+
+## Capstone Option A: Trace a Word Family
+
+**Research question**: Choose an English word whose etymology you find interesting. Trace it as far back as the record allows, documenting the cognates, sound changes, and meaning shifts along the way. Build a graph representation of the family.
+
+**Suggested words** (chosen for richness of history): *heart*, *fire*, *star*, *name*, *wolf*, *speak*, *know*, *ten*, *give*, *stand*.
+
+**Data sources**:
+- Etymonline.com for the initial trace
+- Wiktionary for cognates in related languages
+- Campbell (2013) *Historical Linguistics* for the comparative method context
+- LingPy for automated alignment of the cognate set
+
+**Methods to apply**:
+1. Manual comparative method reconstruction (Chapters 1–2)
+2. IPA transcription of all forms (Chapter 3)
+3. Pairwise alignment of cognates (Chapter 4)
+4. Cognate detection classifier on the aligned forms (Chapter 5)
+5. Graph construction and visualization (Chapter 11)
+
+**Deliverable**: Jupyter notebook with the full analysis + a 1,500-word markdown report covering: the word's origin, the key sound changes, any meaning shifts, and a visualization of the family tree or graph. Cite every claim about etymology to a dictionary or scholarly source.
+
+---
+
+## Capstone Option B: Language Influence Study
+
+**Research question**: Quantify the vocabulary that English borrowed from a specific source language during a defined historical period. What kinds of words were borrowed? What patterns characterize the loan vocabulary?
+
+**Suggested source languages**: Norman French (post-1066), Old Norse (Danelaw), Classical Latin (Renaissance), Greek (scientific terminology).
+
+**Data sources**:
+- The Oxford English Dictionary online (university library access) has dates of first attestation and source languages for over 600,000 words
+- Etymonline.com (free) for a substantial subset
+- The CELEX English lexical database (free academic license)
+
+**Methods to apply**:
+1. Borrowing detection classifier (Chapter 9) to identify likely loans
+2. Feature analysis: what phonotactic features characterize this language's loans vs. others?
+3. Semantic analysis: what semantic domains are overrepresented in the loan vocabulary?
+4. Timeline visualization: when did borrowing peak?
+
+**Deliverable**: A dataset of at least 500 classified words (inherited vs. borrowed from source language), with 5–8 visualizations and a 2,000-word analysis report.
+
+---
+
+## Capstone Option C: Semantic Evolution Study
+
+**Research question**: Choose 5–10 words and track how their meanings have changed over a period of at least 100 years using historical text corpora. Identify the type of change (pejoration, amelioration, broadening, narrowing, metaphorical extension) and estimate when it occurred.
+
+**Data sources**:
+- Google Ngrams Viewer (books.google.com/ngrams) for frequency data
+- Corpus of Historical American English (COHA) — free access at corpus.byu.edu
+- Project Gutenberg for raw text by decade
+
+**Methods to apply**:
+1. Diachronic word embeddings (Chapter 8): train Word2Vec on text by decade
+2. Orthogonal Procrustes alignment of embedding spaces
+3. Cosine distance over time as a change measure
+4. Nearest-neighbor analysis: what words cluster near the target word in each decade?
+
+**Deliverable**: Embedding change trajectories for each target word, with nearest-neighbor tables by decade, and a 1,500-word narrative interpreting the results against known historical events or cultural shifts.
+
+---
+
+## Capstone Option D: Language Relationship Discovery
+
+**Research question**: Apply cognate detection and phylogenetic inference to a language family of your choice. Compare your computed tree to the expert consensus. Where do they agree and where do they disagree?
+
+**Suggested families** (with available CLDF data): Austronesian, Bantu, Turkic, Dravidian, Sino-Tibetan.
+
+**Data sources**:
+- CLLD (Cross-Linguistic Linked Data): https://clld.org — provides CLDF-format wordlists for many language families
+- LingPy ships with several built-in test datasets
+
+**Methods to apply**:
+1. Load a CLDF wordlist (Chapter 3)
+2. Run LexStat cognate detection (Chapter 5)
+3. Compute distance matrix from cognate proportions (Chapter 6)
+4. Build UPGMA and Neighbor-Joining trees (Chapter 6)
+5. Compare to expert tree using Robinson-Foulds distance
+6. Identify specific subtrees where your tree disagrees with expert consensus and investigate why
+
+**Deliverable**: Both computed trees + the expert reference tree, RF distance calculation, and a 2,000-word discussion of where and why the methods agree or disagree with expert consensus.
+
+---
+
+## Capstone Option E: Build an Etymology Tool
+
+**Research question**: Design and build a computational tool that solves one specific etymological problem better (in some measurable dimension) than existing solutions.
+
+**Suggested tools**:
+- A web scraper + LLM extractor that builds a structured cognate dataset from Wiktionary entries for a specific language family
+- A streamlit app that lets users input a wordlist and receive an automatic phylogenetic tree with cognate clusters highlighted
+- A semantic drift tracker that accepts a word and returns its 5-year semantic trajectory from COHA data
+
+**Methods to apply**: All of the above, as appropriate to your tool.
+
+**Deliverable**: A working Python application + a benchmark evaluation showing its performance on a held-out test set + documentation sufficient for another student to run it. Open-source on GitHub.
+
+---
+
+## Report Structure (All Options)
+
+Regardless of option, your final report should follow this structure:
+
+1. **Introduction** (200–400 words): What question are you answering and why does it matter?
+2. **Data** (300–500 words): What data did you use, where did it come from, what are its known limitations?
+3. **Methods** (400–600 words): What did you do, and why did you choose these methods over alternatives?
+4. **Results** (600–1000 words): What did you find? Tables, figures, and specific numbers.
+5. **Discussion** (400–600 words): What do your results mean? What would you do differently? What are the limits of your conclusions?
+6. **Conclusion** (100–200 words): Three bullet points: what you found, what you would do next, one caveat.
+7. **References**: Every claim about a language or etymology cited to a source.
+
+**A note on honest uncertainty**: Computational etymology is a field where the tools are powerful and the data is imperfect. Your classifier may have 75% accuracy, not 99%. Your phylogenetic tree may disagree with experts on one branch. Your semantic drift signal may be noise. Report these results honestly. An honest null result or a modest success with clear limitations is more valuable than an overclaimed success that doesn't survive scrutiny.
+
+The goal is not to solve etymology. The goal is to do something real with the methods, report it clearly, and learn where they work and where they do not.
+
+---
+
+## Evaluation Rubric
+
+| Component | Weight | Criteria |
+|---|---|---|
+| Research question | 10% | Clear, specific, genuinely open |
+| Data documentation | 15% | Sources cited, limitations stated |
+| Methods | 25% | Appropriate choice, correctly implemented |
+| Results | 25% | Accurate, clearly presented, numbers reported |
+| Discussion | 15% | Honest interpretation, limitations stated |
+| Code quality | 10% | Readable, reproducible, commented where non-obvious |
+
+**Total**: 100 points
+
+The most common reason for low scores is overclaiming: asserting that a 75% F1 classifier "proves" a linguistic relationship, or interpreting a noisy semantic drift signal as definitive evidence of meaning change. Let the numbers speak for themselves.
+
+---
+
+## Getting Started
+
+Choose your option. Spend thirty minutes gathering data before you commit. If the data is unavailable, inaccessible, or thinner than expected, switch options before investing further. The data availability check is the most important step.
+
+Then: write the Introduction first. Before you run a single line of code, write two paragraphs about what you are trying to find out and why. This forces you to have a hypothesis, which is the difference between analysis and fishing.
+
+Good luck.

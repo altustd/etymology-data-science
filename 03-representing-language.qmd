@@ -1,0 +1,277 @@
+# Representing Language as Data {#sec-representation}
+
+```{python}
+#| echo: false
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+```
+
+::: {.callout-note}
+## Learning Objectives
+
+By the end of this chapter, you will be able to:
+
+- Read and write basic IPA transcriptions for common sounds
+- Describe phonemes in terms of articulatory features (voicing, place, manner)
+- Load and manipulate a CLDF-format wordlist in Python
+- Represent a phoneme as a binary feature vector
+- Identify common data quality issues in linguistic datasets
+- Segment a transcribed word into its component phonemes
+:::
+
+## The Alphabet Problem
+
+When the phone company needed to determine whether two spoken words were the same, it did not read the spelling. It analyzed the acoustic waveform—the pressure signature of air molecules vibrating against a microphone. Spelling, it turns out, is an extremely poor proxy for sound. English alone has twenty-six letters representing roughly forty-four phonemes, with vowels that change meaning without warning (*bat*, *bate*, *bait*, *beat*, *bit*) and consonants that double without doubling their sound (*kitten* has one *t* sound, not two).
+
+For a human who has been reading English since childhood, this ambiguity is invisible—we have learned to decode it automatically. For a computer, it is a disaster. If we want to analyze language as *sound*, we cannot use orthography. We need a different alphabet.
+
+That alphabet exists. It is the International Phonetic Alphabet (IPA), designed in 1888 and now maintained by the International Phonetic Association. Its governing principle is one-to-one correspondence: every symbol represents exactly one sound, every sound is represented by exactly one symbol. Whether you are transcribing Mandarin tones, Arabic gutturals, or the click consonants of isiZulu, the IPA has a symbol for it.
+
+## The IPA Essentials
+
+You do not need to memorize the full IPA chart to work through this book. You do need to recognize its structure and be comfortable with the sounds that appear in Indo-European languages.
+
+The IPA organizes consonants by three properties:
+
+**Place of articulation**: where in the mouth the obstruction occurs. Bilabial (both lips): *p, b, m*. Labiodental (lip + teeth): *f, v*. Alveolar (tongue + tooth ridge): *t, d, n, s, z, l, r*. Velar (tongue + soft palate): *k, g, ŋ*.
+
+**Manner of articulation**: how the airstream is obstructed. Stops (complete closure): *p, b, t, d, k, g*. Fricatives (turbulent flow): *f, v, s, z, ʃ, ʒ*. Nasals (air through nose): *m, n, ŋ*. Approximants (minimal obstruction): *l, r, w, j*.
+
+**Voicing**: whether the vocal folds are vibrating. Voiced: *b, d, g, v, z*. Voiceless: *p, t, k, f, s*.
+
+```{python}
+#| label: fig-ipa-chart
+#| fig-cap: "Partial IPA consonant chart for common Indo-European sounds, organized by place and manner of articulation."
+
+places = ["Bilabial", "Labiodental", "Alveolar", "Palato-alv.", "Velar"]
+manners = ["Stop", "Fricative", "Nasal", "Approximant"]
+
+chart = {
+    ("Stop", "Bilabial"):       "p / b",
+    ("Stop", "Alveolar"):       "t / d",
+    ("Stop", "Velar"):          "k / g",
+    ("Fricative", "Labiodental"): "f / v",
+    ("Fricative", "Alveolar"):  "s / z",
+    ("Fricative", "Palato-alv."): "ʃ / ʒ",
+    ("Nasal", "Bilabial"):      "m",
+    ("Nasal", "Alveolar"):      "n",
+    ("Nasal", "Velar"):         "ŋ",
+    ("Approximant", "Alveolar"): "l, r",
+    ("Approximant", "Bilabial"): "w",
+}
+
+fig, ax = plt.subplots(figsize=(9, 4))
+ax.axis("off")
+
+data = [[chart.get((m, p), "—") for p in places] for m in manners]
+table = ax.table(cellText=data, rowLabels=manners, colLabels=places,
+                 cellLoc="center", loc="center")
+table.auto_set_font_size(False)
+table.set_fontsize(10)
+table.scale(1.3, 1.8)
+for (r, c), cell in table.get_celld().items():
+    if r == 0 or c == -1:
+        cell.set_facecolor("#dde")
+ax.set_title("Partial IPA Consonant Chart (voiceless / voiced)", pad=20)
+plt.tight_layout()
+plt.show()
+```
+
+Vowels are organized differently: by the position of the tongue (front, central, back) and the height of the jaw (high, mid, low), plus lip rounding. The vowel *i* (as in *machine*) is high front unrounded. The vowel *u* (as in *food*) is high back rounded. The vowel *a* (as in *father*) is low central unrounded.
+
+## Phonemic Transcription vs. Phonetic Transcription
+
+There is an important distinction you will encounter throughout this book.
+
+*Phonemic transcription* (between slashes: /word/) represents the abstract sound units of a language—the sounds that distinguish meaning. English has the phoneme /p/: it distinguishes *pat* from *bat*, *pin* from *bin*.
+
+*Phonetic transcription* (between brackets: [word]) represents the actual physical sounds as produced in a specific context. The English /p/ in *pin* is actually [pʰ] (aspirated—followed by a puff of air); the /p/ in *spin* is [p] (unaspirated). Both are the "same" phoneme to an English speaker, but they are physically different sounds.
+
+For etymology, phonemic transcription is usually sufficient. We care about which sounds distinguish words, not the fine-grained acoustic detail.
+
+## Phonemes as Feature Vectors
+
+Here is the connection to data science: if every phoneme can be described by a set of binary features (voiced/voiceless, stop/fricative/nasal, bilabial/alveolar/velar...), then every phoneme can be represented as a vector of zeros and ones.
+
+```{python}
+#| label: tbl-feature-vectors
+#| tbl-cap: "Selected phonemes as binary feature vectors. These 8 features are a simplified subset of a full feature system."
+
+features = ["voiced", "stop", "fricative", "nasal", "approx",
+            "bilabial", "alveolar", "velar"]
+
+phoneme_features = {
+    "p":  [0, 1, 0, 0, 0, 1, 0, 0],
+    "b":  [1, 1, 0, 0, 0, 1, 0, 0],
+    "t":  [0, 1, 0, 0, 0, 0, 1, 0],
+    "d":  [1, 1, 0, 0, 0, 0, 1, 0],
+    "k":  [0, 1, 0, 0, 0, 0, 0, 1],
+    "g":  [1, 1, 0, 0, 0, 0, 0, 1],
+    "f":  [0, 0, 1, 0, 0, 1, 0, 0],
+    "v":  [1, 0, 1, 0, 0, 1, 0, 0],
+    "s":  [0, 0, 1, 0, 0, 0, 1, 0],
+    "z":  [1, 0, 1, 0, 0, 0, 1, 0],
+    "m":  [1, 0, 0, 1, 0, 1, 0, 0],
+    "n":  [1, 0, 0, 1, 0, 0, 1, 0],
+    "l":  [1, 0, 0, 0, 1, 0, 1, 0],
+}
+
+df_feat = pd.DataFrame(phoneme_features, index=features).T
+df_feat.columns.name = "Feature"
+df_feat.index.name = "Phoneme"
+df_feat
+```
+
+Why does this matter? Because now we can compute the *distance* between phonemes. The distance between /p/ and /b/ is 1 (they differ only in voicing). The distance between /p/ and /s/ is 3 (they differ in voicing, stop vs. fricative, and bilabial vs. alveolar). Sounds that are close in feature space are more likely to be confused or to shift into each other over time—which is exactly what we need when we build alignment algorithms in Chapter 4.
+
+```{python}
+#| label: fig-phoneme-distance
+#| fig-cap: "Pairwise Hamming distances between 12 consonants, based on 8 binary features. Similar sounds (p/b, t/d, k/g) cluster near zero."
+
+phonemes = list(phoneme_features.keys())
+vecs = np.array([phoneme_features[p] for p in phonemes])
+
+dist = np.zeros((len(phonemes), len(phonemes)))
+for i in range(len(phonemes)):
+    for j in range(len(phonemes)):
+        dist[i, j] = np.sum(vecs[i] != vecs[j])
+
+fig, ax = plt.subplots(figsize=(8, 7))
+im = ax.imshow(dist, cmap="YlOrRd", aspect="auto")
+ax.set_xticks(range(len(phonemes)))
+ax.set_yticks(range(len(phonemes)))
+ax.set_xticklabels(phonemes)
+ax.set_yticklabels(phonemes)
+for i in range(len(phonemes)):
+    for j in range(len(phonemes)):
+        ax.text(j, i, f"{int(dist[i,j])}", ha="center", va="center",
+                fontsize=9, color="black" if dist[i,j] < 5 else "white")
+plt.colorbar(im, ax=ax, label="Hamming distance")
+ax.set_title("Phoneme-to-phoneme Hamming distances (feature space)")
+plt.tight_layout()
+plt.show()
+```
+
+## The CLDF Standard
+
+Linguistics has a proliferation-of-formats problem. Every research group has historically encoded their wordlists in a slightly different way: different column names, different transcription conventions, different handling of missing data. This makes reuse difficult.
+
+The *Cross-Linguistic Data Formats* (CLDF) standard, developed in the 2010s by Johann-Mattis List and collaborators, is an attempt to fix this. A CLDF wordlist is a set of CSV files with standardized column names, machine-readable metadata, and links between tables. The key tables are:
+
+- `languages.csv`: one row per language (ID, name, Glottocode, coordinates)
+- `parameters.csv`: one row per concept (ID, Concepticon concept reference)
+- `forms.csv`: one row per form (language ID, parameter ID, transcription, segments)
+- `cognates.csv`: one row per cognate judgment (form ID, cognate set ID)
+
+You do not need to work with CLDF directly to use this book—we will often work with simplified CSV files—but you will encounter it in the wild and knowing its structure saves confusion.
+
+```{python}
+#| label: lst-cldf-load
+#| lst-cap: "Loading a simplified CLDF-style wordlist into pandas."
+
+import io
+
+forms_csv = """ID,Language_ID,Parameter_ID,Form,Segments
+1,spa,father,padre,p a d r e
+2,fra,father,père,p ɛ r
+3,ita,father,padre,p a d r e
+4,por,father,pai,p a j
+5,spa,night,noche,n o tʃ e
+6,fra,night,nuit,n ɥ i
+7,ita,night,notte,n o t t e
+8,por,night,noite,n o j t e
+"""
+
+forms = pd.read_csv(io.StringIO(forms_csv))
+
+forms["Segment_list"] = forms["Segments"].str.split()
+forms["N_segments"] = forms["Segment_list"].apply(len)
+
+print(forms[["Language_ID", "Parameter_ID", "Form", "N_segments"]].to_string())
+```
+
+The `Segments` column is the key: it contains the IPA transcription with spaces between phonemes, so that splitting on whitespace gives you a list of phonemes directly. This is the standard segmentation format in CLDF. Notice that French *père* has three segments (p-ɛ-r) while Italian *notte* has four (n-o-t-t-e, where the geminate *tt* counts as two segments). These length differences are exactly what a sequence alignment algorithm must handle.
+
+## Segmentation
+
+Segmenting a transcribed word into phonemes sounds trivial—just split on spaces—but the issue of *multigraphs* complicates things. In IPA, some sounds are represented by two characters: *tʃ* (the sound in *church*), *dʒ* (the sound in *judge*), *ts* (the sound in *cats*). If you split character-by-character rather than phoneme-by-phoneme, you get the wrong segmentation.
+
+LingPy, the Python library we will use extensively in Chapter 4, includes a segmentation function that handles these cases:
+
+```{python}
+#| eval: false
+from lingpy import ipa2tokens
+tokens = ipa2tokens("natʃ")
+print(tokens)
+```
+
+```
+['n', 'a', 'tʃ']
+```
+
+The function knows that *tʃ* is a single phoneme and should not be split. This is not trivial knowledge—it is embedded in the library's symbol table, derived from the IPA standard.
+
+## Data Quality Issues
+
+Real linguistic datasets are messy. Here are the issues you will most commonly encounter:
+
+**Inconsistent transcription.** Different scholars use slightly different conventions. Some use *j* for the palatal approximant (English *yes*); others use *y*. Some mark stress; others do not. This must be normalized before any automated analysis.
+
+**Missing data.** Not all languages have words for all concepts. If the concept does not exist in the culture, there is no word. CLDF uses explicit null markers; ad hoc datasets often leave cells blank, use "N/A," or use "—", all of which must be handled separately.
+
+**Loans mixed with inherited vocabulary.** A wordlist for English will contain borrowed words from French, Latin, Old Norse, and Greek alongside the inherited Germanic vocabulary. If you run a cognate detector without filtering loanwords, you will find false cognates everywhere.
+
+**Dialectal variation.** The "Spanish" word for a concept may vary substantially between Madrid, Mexico City, and Buenos Aires. Which dialect is recorded matters—and is often not documented.
+
+```{python}
+#| label: fig-data-quality
+#| fig-cap: "Simulated missing-data pattern in a 10-language, 20-concept wordlist. White = missing. Real datasets often have 5–20% missing cells."
+
+rng = np.random.default_rng(42)
+n_lang, n_concept = 10, 20
+mask = rng.random((n_lang, n_concept)) < 0.12
+
+fig, ax = plt.subplots(figsize=(9, 4))
+ax.imshow(mask, cmap="Greys", aspect="auto", vmin=0, vmax=1)
+ax.set_xlabel("Concept index")
+ax.set_ylabel("Language index")
+ax.set_title(f"Missing data pattern ({mask.sum()} missing of {n_lang * n_concept} cells = {mask.mean():.1%})")
+plt.tight_layout()
+plt.show()
+```
+
+## Building Your Own Feature Matrix
+
+To close this chapter with a concrete object you can use in later chapters, let us build a complete feature matrix for a small phoneme inventory:
+
+```{python}
+#| label: tbl-feature-matrix
+#| tbl-cap: "Feature matrix for 13 common phonemes. This will become our substitution cost table in Chapter 4."
+
+def phoneme_distance(p1, p2, feature_dict):
+    v1 = np.array(feature_dict[p1])
+    v2 = np.array(feature_dict[p2])
+    return int(np.sum(v1 != v2))
+
+ph = list(phoneme_features.keys())
+dist_df = pd.DataFrame(
+    [[phoneme_distance(a, b, phoneme_features) for b in ph] for a in ph],
+    index=ph, columns=ph
+)
+print("Feature-based phoneme distance matrix:")
+print(dist_df.to_string())
+```
+
+This matrix will serve directly as the cost matrix in our alignment algorithm in Chapter 4: substituting one similar phoneme for another (e.g., *p* for *b*, distance 1) costs less than substituting a dissimilar one (e.g., *p* for *n*, distance 3). The cost matrix is what allows alignment to prefer linguistically plausible correspondences over linguistically arbitrary ones.
+
+## Summary
+
+Orthography is a poor representation of sound; IPA provides a one-to-one mapping that computational methods require. Phonemes are usefully described by articulatory features—voicing, place, manner—which can be encoded as binary feature vectors. Those vectors allow the computation of phoneme-to-phoneme distances, which will power the alignment algorithms of Chapter 4. The CLDF standard provides a consistent format for multilingual wordlists. Real datasets have messy realities: inconsistent transcription, missing data, unlabeled loanwords, and dialectal variation. Cleaning and normalizing data is always the first step.
+
+## Further Reading
+
+- Ladefoged, P., & Johnson, K. (2014). *A Course in Phonetics* (7th ed.). Cengage. The standard textbook.
+- List, J.-M., Greenhill, S. J., Anderson, C., Mayer, T., Tresoldi, T., & Forkel, R. (2018). CLDF: Encoding Cross-Linguistic Data in a Machine-Readable Way. *Language Documentation & Conservation*.
+- Moran, S., & Cysouw, M. (2018). *The Unicode Cookbook for Linguists*. Language Science Press. Free PDF; excellent on the practical problems of linguistic data encoding.
+- IPA chart: [https://www.internationalphoneticassociation.org/IPAcharts](https://www.internationalphoneticassociation.org/IPAcharts)

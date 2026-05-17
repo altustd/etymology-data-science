@@ -1,0 +1,231 @@
+# Proto-Language Reconstruction {#sec-reconstruction}
+
+```{python}
+#| echo: false
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+```
+
+::: {.callout-note}
+## Learning Objectives
+
+By the end of this chapter, you will be able to:
+
+- Frame proto-form reconstruction as a sequence-to-sequence prediction problem
+- Explain the encoder-decoder architecture in plain language
+- Describe what attention mechanisms do and why they matter for this task
+- Interpret the output of a reconstruction model and its uncertainty
+- Understand the Ciobanu-Dinu benchmark for Romance proto-reconstruction
+- Recognize the limits of neural reconstruction and when expert judgment remains essential
+:::
+
+## The Reversed Arrow of Time
+
+The standard way of thinking about language change points forward in time: Latin *noctem* becomes Spanish *noche*. The sound changes, the vowels drift, the case endings drop. Change flows in one direction.
+
+Proto-language reconstruction reverses the arrow. Given Spanish *noche*, French *nuit*, Italian *notte*, and Portuguese *noite*, can we recover Latin *noctem*—or, more generally, the proto-form that preceded all of them?
+
+Traditional linguists do this by hand: they compare the forms, identify the correspondences, and apply the sound laws in reverse. It works beautifully when the sound laws are known, when enough descendants have been recorded, and when the linguist has years of experience with the language family. It does not scale.
+
+Neural sequence-to-sequence models do scale. Trained on thousands of examples of (modern forms → proto-form), they learn the inverse sound changes implicitly, without being explicitly programmed with any rules. The results, on held-out test data, are remarkably accurate: roughly 32% of reconstructed proto-forms are letter-perfect, and over 60% are within one character substitution of the correct answer.
+
+This is not as impressive as 99% accuracy, but it is meaningful: an automatic system is doing, at scale and in milliseconds, something that took expert linguists a career.
+
+## Framing the Problem
+
+The formal problem is:
+
+Given $k$ *cognate reflexes* (one per descendant language), predict the *proto-form* from which they all descended.
+
+This is a *many-to-one sequence transduction* problem. The input is a set of sequences (one per language); the output is a single sequence (the proto-form). The challenge is that the mapping is irregular: no single reflex fully determines the proto-form, and different descendants preserve different features of the ancestor.
+
+In the Romance reconstruction benchmark introduced by Ciobanu and Dinu (2018), the task is:
+- Input: aligned cognates from Spanish, Portuguese, French, Italian, Romanian
+- Output: Latin form (accusative singular, which is the ancestral form of modern Romance nouns)
+
+```{python}
+#| label: tbl-reconstruction-data
+#| tbl-cap: "Sample from the Ciobanu-Dinu Romance reconstruction dataset. The task is to predict the Latin column from the five Romance columns."
+
+data = {
+    "Spanish":    ["noche", "agua", "padre", "mano", "nuevo", "luna", "vida", "nombre"],
+    "Portuguese": ["noite", "água", "pai", "mão", "novo", "lua", "vida", "nome"],
+    "French":     ["nuit", "eau", "père", "main", "nouveau", "lune", "vie", "nom"],
+    "Italian":    ["notte", "acqua", "padre", "mano", "nuovo", "luna", "vita", "nome"],
+    "Romanian":   ["noapte", "apă", "tată", "mână", "nou", "lună", "viață", "nume"],
+    "Latin":      ["noctem", "aquam", "patrem", "manum", "novum", "lunam", "vitam", "nomen"],
+}
+
+pd.DataFrame(data)
+```
+
+## Encoder-Decoder Architecture
+
+The dominant architecture for sequence transduction tasks is the *encoder-decoder* model, introduced in its modern form by Sutskever, Vinyals, and Le in 2014.
+
+The encoder reads the input sequence and produces a fixed-size representation—a vector (or matrix) that summarizes the input's content. The decoder then generates the output sequence, one token at a time, using the encoder's representation.
+
+For proto-reconstruction with multiple input languages, the encoder processes each language's reflex separately, and the decoder attends to all of them when generating each proto-phoneme.
+
+```{python}
+#| label: fig-encdec
+#| fig-cap: "Schematic of an encoder-decoder model for proto-form reconstruction. Each input language is encoded independently; the decoder uses attention to weight each language's contribution when generating each proto-phoneme."
+
+fig, ax = plt.subplots(figsize=(11, 5))
+ax.set_xlim(0, 14)
+ax.set_ylim(0, 8)
+ax.axis("off")
+
+langs = ["Spanish\nnoche", "Portuguese\nnoite", "French\nnuit", "Italian\nnotte", "Romanian\nnoapte"]
+x_positions = [1, 3, 5, 7, 9]
+for x, lang in zip(x_positions, langs):
+    ax.add_patch(mpatches.FancyBboxPatch((x-0.6, 5.5), 1.2, 1.2,
+                                     boxstyle="round,pad=0.1", facecolor="#cde", edgecolor="#88a"))
+    ax.text(x, 6.1, lang, ha="center", va="center", fontsize=7)
+    ax.text(x, 4.8, f"Enc_{x//2}", ha="center", va="center", fontsize=8,
+            bbox=dict(boxstyle="round", facecolor="#eef", edgecolor="#aab"))
+    ax.annotate("", xy=(x, 5.0), xytext=(x, 5.5),
+                arrowprops=dict(arrowstyle="->", color="#555"))
+
+ax.add_patch(mpatches.FancyBboxPatch((3.5, 3.2), 5, 1.0,
+                                 boxstyle="round,pad=0.1", facecolor="#ffe", edgecolor="#aa8"))
+ax.text(6, 3.7, "Attention over encoder outputs", ha="center", va="center", fontsize=9)
+
+ax.add_patch(mpatches.FancyBboxPatch((4.5, 1.5), 3, 1.2,
+                                 boxstyle="round,pad=0.1", facecolor="#efe", edgecolor="#8a8"))
+ax.text(6, 2.1, "Decoder → n-o-c-t-e-m", ha="center", va="center", fontsize=10, fontweight="bold")
+
+ax.annotate("", xy=(6, 3.2), xytext=(6, 4.8),
+            arrowprops=dict(arrowstyle="->", color="#555"))
+ax.annotate("", xy=(6, 1.5+1.2), xytext=(6, 3.2),
+            arrowprops=dict(arrowstyle="->", color="#555"))
+
+for x in x_positions:
+    ax.plot([x, 6], [4.6, 3.2], ":", color="#aaa", lw=1)
+
+ax.set_title("Encoder-Decoder for Proto-Language Reconstruction", fontsize=12, pad=10)
+plt.tight_layout()
+plt.show()
+```
+
+## Attention: What the Decoder Looks At
+
+The *attention mechanism* solves a specific problem: the decoder needs to generate *noctem*, but different parts of the output depend on different input languages in different ways.
+
+When generating the initial *n*, the Spanish *noche* and Italian *notte* are the most informative—both start with *n*. When generating the ending *-em*, Latin morphology must be inferred from the pattern of accusative endings across all five languages. Attention allows the decoder to weight each input dynamically at each output timestep.
+
+Formally, the attention weight for language $i$ at output step $t$ is:
+
+$$
+\alpha_{t,i} = \frac{\exp(e_{t,i})}{\sum_j \exp(e_{t,j})}, \quad e_{t,i} = f(\mathbf{h}^{\text{dec}}_t, \mathbf{h}^{\text{enc}}_i)
+$$ {#eq-attention}
+
+where $\mathbf{h}^{\text{dec}}_t$ is the decoder state at step $t$, $\mathbf{h}^{\text{enc}}_i$ is the encoder output for language $i$, and $f$ is a compatibility function (typically a dot product or a learned linear transformation).
+
+This is the same attention mechanism that powers modern transformers, applied to a specialized multilingual input structure.
+
+## A Rule-Based Baseline
+
+Before implementing a neural model, it is worth building a simple rule-based baseline—both to understand the problem structure and to set a performance floor.
+
+```{python}
+#| label: lst-baseline
+#| lst-cap: "Rule-based proto-form reconstruction: majority vote at each phoneme position."
+
+def majority_vote_reconstruct(forms):
+    """
+    For each position, take the most common character across all input forms.
+    Handles different-length forms by padding with empty strings.
+    """
+    if not forms:
+        return ""
+    max_len = max(len(f) for f in forms)
+    result = []
+    for pos in range(max_len):
+        chars = []
+        for form in forms:
+            if pos < len(form):
+                chars.append(form[pos])
+        if chars:
+            result.append(max(set(chars), key=chars.count))
+    return "".join(result)
+
+examples = [
+    (["noche", "noite", "nuit", "notte", "noapte"], "noctem"),
+    (["agua", "água", "eau", "acqua", "apă"], "aquam"),
+    (["padre", "pai", "père", "padre", "tată"], "patrem"),
+    (["nuevo", "novo", "nouveau", "nuovo", "nou"], "novum"),
+]
+
+print(f"{'Input forms':<50} {'Reconstructed':<15} {'True Latin':<12} {'Match?'}")
+print("-" * 90)
+for forms, true_latin in examples:
+    recon = majority_vote_reconstruct(forms)
+    match = "✓" if recon == true_latin else "✗"
+    print(f"{str(forms):<50} {recon:<15} {true_latin:<12} {match}")
+```
+
+The majority vote baseline does surprisingly well on some words and fails badly on others. *Agua/aqua* reconstructs the *a-qu-a* pattern from majority votes but cannot recover the Latin accusative ending *-m*. *Padre/père* cannot recover *patrem* because the forms have diverged so much.
+
+These failures are informative: the neural model's advantage comes from learning cross-position dependencies (the ending depends on the whole word pattern, not just the final position) and cross-language patterns (French regularly drops Latin endings, Spanish preserves some, Romanian preserves others).
+
+## Model Evaluation: Character Error Rate
+
+The standard metric for this task is *character error rate* (CER)—the edit distance between the predicted proto-form and the true proto-form, normalized by the length of the true form:
+
+$$
+\text{CER} = \frac{\text{edit\_distance}(\hat{y}, y)}{|y|}
+$$ {#eq-cer}
+
+Published results on the Ciobanu-Dinu Romance dataset:
+- Majority vote baseline: CER ≈ 0.60–0.70
+- SVM with n-gram features: CER ≈ 0.30–0.35
+- LSTM encoder-decoder: CER ≈ 0.18–0.22
+- Transformer (best published): CER ≈ 0.12–0.15
+
+A CER of 0.15 means the average predicted form is within one or two character errors of the correct Latin form—a remarkable result for a system that has never been explicitly taught any Latin grammar.
+
+```{python}
+#| label: fig-cer-comparison
+#| fig-cap: "Character error rate (CER) comparison across reconstruction methods on the Romance benchmark. Lower is better."
+
+methods = ["Majority Vote", "SVM + n-grams", "LSTM Enc-Dec", "Transformer"]
+cer_mean = [0.65, 0.32, 0.20, 0.13]
+cer_se   = [0.08, 0.04, 0.03, 0.02]
+
+fig, ax = plt.subplots(figsize=(7, 4))
+colors = ["#ccc", "#aac", "#88a", "#446"]
+bars = ax.bar(methods, cer_mean, color=colors, yerr=cer_se, capsize=5)
+ax.set_ylabel("Character Error Rate (lower = better)")
+ax.set_title("Proto-Language Reconstruction: CER by Method")
+for bar, val in zip(bars, cer_mean):
+    ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.01,
+            f"{val:.2f}", ha="center", va="bottom", fontsize=10)
+plt.tight_layout()
+plt.show()
+```
+
+## Where Models Fail
+
+Neural reconstruction models fail in characteristic ways:
+
+**Morphological endings**: Modern Romance languages have largely dropped Latin case endings. The accusative *-m* and *-em* endings are invisible in modern forms. Models trained on the accusative forms learn to append *-m* frequently but often predict the wrong vowel before it.
+
+**Rare sound changes**: Irregular correspondences—sounds that changed differently in one language due to a phonological environment that no longer exists—are hard to learn from limited training data.
+
+**Low-frequency vocabulary**: The model generalizes from common patterns. Words with unusual phoneme combinations or words belonging to small semantic categories may be poorly represented in training data.
+
+**Unattested languages**: A model trained on Romance languages cannot directly reconstruct Proto-Indo-European—the training distribution is too different. Transfer learning (pre-training on many language families, fine-tuning on the target) is an active research area.
+
+## Summary
+
+Proto-language reconstruction is a sequence-to-sequence problem: map a set of aligned modern reflexes to their ancestral proto-form. A simple majority-vote baseline reveals the problem structure and sets a floor. Encoder-decoder neural models—particularly transformers with attention over multiple input languages—achieve character error rates of 12–15% on the Romance benchmark, substantially better than earlier methods. Attention mechanisms allow the decoder to selectively weight different input languages at different output positions. Systematic failure modes cluster around morphological endings, rare correspondences, and out-of-distribution vocabulary. The outputs of reconstruction are uncertain: they are predictions, not facts, and they require expert review before being cited as linguistic evidence.
+
+## Further Reading
+
+- Ciobanu, A. M., & Dinu, L. P. (2018). Ab Initio: Automatic Latin Proto-word reconstruction. *COLING 2018*.
+- Meloni, C., et al. (2021). Ab Antiquo: Neural proto-language reconstruction. *NAACL 2021*. Transformer approach.
+- Sutskever, I., Vinyals, O., & Le, Q. V. (2014). Sequence to sequence learning with neural networks. *NIPS 2014*.
+- Bahdanau, D., Cho, K., & Bengio, Y. (2015). Neural machine translation by jointly learning to align and translate. *ICLR 2015*. The original attention paper.

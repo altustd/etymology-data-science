@@ -1,0 +1,141 @@
+# Tools & Resources {.unnumbered}
+
+## Python Libraries
+
+**LingPy** (lingpy.org)
+Primary library for computational historical linguistics in Python. Provides IPA tokenization, phoneme feature extraction, sequence alignment (SCA algorithm), cognate detection (LexStat), and distance matrix computation.
+```bash
+pip install lingpy
+```
+
+**Gensim** (radimrehurek.com/gensim)
+Industry-standard library for Word2Vec, FastText, and GloVe embeddings. Handles large corpora efficiently.
+```bash
+conda install -c conda-forge gensim
+```
+
+**NetworkX** (networkx.org)
+Graph data structures and algorithms for Python. Used throughout Chapter 11 for building and querying etymology graphs.
+```bash
+conda install -c conda-forge networkx
+```
+
+**scikit-learn** (scikit-learn.org)
+Standard Python machine learning library. Used for cognate detection (Chapter 5), borrowing detection (Chapter 9), and all classification tasks.
+```bash
+conda install -c conda-forge scikit-learn
+```
+
+**Hugging Face Transformers** (huggingface.co/transformers)
+Library for pre-trained transformer models including FLAN-T5 for fine-tuning (Chapter 10).
+```bash
+pip install transformers
+```
+
+**NLTK** (nltk.org)
+General-purpose NLP library with useful tokenizers and corpus readers.
+```bash
+conda install -c conda-forge nltk
+```
+
+**SciPy** (scipy.org)
+Scientific computing library. Used for hierarchical clustering (UPGMA) and distance matrix operations.
+```bash
+conda install -c conda-forge scipy
+```
+
+---
+
+## Linguistics Software
+
+**EDICTOR** (digling.org/edictor)
+Web-based tool for creating, editing, and annotating etymological wordlists in CLDF format. The best tool for building gold-standard alignment datasets.
+
+**SplitsTree** (splitstree.org)
+Desktop software for phylogenetic network visualization, including NeighborNet for reticulate evolution. Free for academic use.
+
+**BEAST2** (beast2.org)
+Bayesian phylogenetic inference software with time-calibrated tree reconstruction. Used in the major computational historical linguistics papers on Indo-European dating.
+
+**PRAAT** (fon.hum.uva.nl/praat)
+Standard tool for acoustic phonetics: recording, spectrograms, formant analysis. Required for working with actual speech data rather than transcribed text.
+
+---
+
+## Data Sources
+
+**CLLD — Cross-Linguistic Linked Data** (clld.org)
+Hub for CLDF-format linguistic databases. Key datasets:
+- WALS (World Atlas of Language Structures): typological features of 2,600 languages
+- Glottolog: genealogical classification of all documented languages
+- Concepticon: standardized concept list linking Swadesh lists across studies
+
+**Etymonline** (etymonline.com)
+The Online Etymology Dictionary. Free, well-curated, with entries for 50,000+ English words. The best free source for English etymology.
+
+**Wiktionary** (wiktionary.org)
+Crowdsourced multilingual dictionary with etymological sections. Quality varies but coverage is unmatched. Parseable via the Wiktionary API or dump files.
+
+**COHA — Corpus of Historical American English** (corpus.byu.edu/coha)
+400 million words of American English from 1810–2009, balanced by decade. Primary resource for diachronic embedding studies. Free access with registration.
+
+**Google Ngrams** (books.google.com/ngrams)
+Frequency data for words and phrases across Google Books (1500–2019). Useful for spotting when words gained or lost usage, not a substitute for a full corpus.
+
+**ASJP** (asjp.clld.org)
+Automated Similarity Judgments Program. 40-item wordlists for 6,000+ languages in a consistent orthographic format. Useful for broad-coverage studies.
+
+**IELex** (ielex.mpi.nl)
+Indo-European Lexical Cognacy Database. 208-item Swadesh lists for ~50 Indo-European languages with expert cognate judgments.
+
+---
+
+## Reference Books
+
+**Ladefoged, P., & Johnson, K. (2014). *A Course in Phonetics* (7th ed.). Cengage.**
+The standard phonetics textbook. Clear, well-illustrated, and available in most university libraries.
+
+**Campbell, L. (2013). *Historical Linguistics: An Introduction* (3rd ed.). MIT Press.**
+Comprehensive, authoritative, and readable. The reference for the comparative method.
+
+**Fortson, B. W. (2010). *Indo-European Language and Culture: An Introduction* (2nd ed.). Wiley-Blackwell.**
+Best single-volume reference for Indo-European specifically.
+
+**Haspelmath, M., & Tadmor, U. (2009). *Loanwords in the World's Languages*. De Gruyter Mouton.**
+Systematic cross-linguistic study of borrowing patterns.
+
+**Jurafsky, D., & Martin, J. H. (2023). *Speech and Language Processing* (3rd ed. draft). Available free at web.stanford.edu/~jurafsky/slp3/.**
+The standard NLP textbook. Covers word embeddings, sequence models, and language processing at graduate level.
+
+---
+
+## Key Papers by Chapter
+
+**Chapter 4 (Sequence Alignment)**
+- Needleman & Wunsch (1970) — the original alignment algorithm
+- Kondrak (2000) — phonetic alignment specifically
+
+**Chapter 5 (Cognate Detection)**
+- List (2012) — LexStat
+- Jäger, List & Sofroniev (2017) — SVM approach
+
+**Chapter 6 (Phylogenetics)**
+- Saitou & Nei (1987) — Neighbor-Joining
+- Gray & Atkinson (2003) — Nature paper on Indo-European dating
+
+**Chapter 7 (Proto-reconstruction)**
+- Ciobanu & Dinu (2018) — Ab Initio
+- Meloni et al. (2021) — Ab Antiquo (transformer approach)
+
+**Chapter 8 (Semantic Drift)**
+- Hamilton, Leskovec & Jurafsky (2016) — diachronic embeddings
+
+**Chapter 9 (Borrowing)**
+- Haspelmath & Tadmor (2009) — systematic borrowing survey
+
+**Chapter 10 (LLMs)**
+- Brown et al. (2020) — GPT-3 few-shot learning
+- Chung et al. (2022) — FLAN-T5
+
+**Chapter 11 (Graphs)**
+- Navigli & Ponzetto (2012) — BabelNet

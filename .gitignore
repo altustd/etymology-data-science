@@ -1,0 +1,14 @@
+.quarto/
+docs/.quarto/
+**/*.quarto_ipynb
+*.quarto_ipynb_*
+__pycache__/
+*.pyc
+.DS_Store
+.env
+*.pkl
+*.joblib
+data/processed/
+.netlify/
+
+/.quarto/

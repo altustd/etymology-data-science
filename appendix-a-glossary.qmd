@@ -1,0 +1,101 @@
+# Linguistic Glossary {.unnumbered}
+
+**Alignment**: The assignment of correspondence between phonemes in two words, used to identify which sounds in one word correspond to which sounds in another.
+
+**Amelioration**: A type of semantic change in which a word's meaning becomes more positive over time. Example: "nice" (once "foolish") → pleasant.
+
+**Articulation, place of**: The location in the vocal tract where a speech sound is produced (bilabial, alveolar, velar, etc.).
+
+**Articulation, manner of**: The type of obstruction in the vocal tract that produces a sound (stop, fricative, nasal, approximant).
+
+**Attention mechanism**: In neural networks, a mechanism that allows the decoder to selectively weight different parts of the encoder's output at each step of generation.
+
+**B-cubed metric**: A precision/recall metric for clustering and alignment evaluation that measures how well automatically determined correspondences match gold-standard correspondences.
+
+**Bootstrap support**: In phylogenetics, a measure of confidence for a tree branching, computed by re-sampling the data many times and checking how often the same branch appears.
+
+**Borrowing**: The process by which words from one language are adopted into another. Distinguished from cognacy by direction: borrowed words move between contemporaneous languages; cognates descend from a common ancestor.
+
+**Character Error Rate (CER)**: The edit distance between a predicted string and a true string, normalized by the length of the true string. Used to evaluate proto-form reconstruction.
+
+**CLDF**: Cross-Linguistic Data Formats — a standardized set of CSV-based formats for multilingual wordlists, cognate sets, and linguistic annotations.
+
+**Cognate**: A pair (or set) of words in different languages that descend from the same ancestral word. Cognacy implies shared descent, not merely surface similarity.
+
+**Comparative method**: The classical technique of historical linguistics: collecting cognate sets, identifying sound correspondences, and reconstructing proto-forms.
+
+**Contact zone**: A geographic area where two or more languages are spoken in proximity, leading to mutual borrowing and sometimes structural convergence.
+
+**Distributional hypothesis**: The principle that words occurring in similar contexts have similar meanings. Foundation of word embedding models.
+
+**Diachronic**: Across time. Diachronic linguistics studies language change; synchronic linguistics studies language at a fixed point in time.
+
+**Edit distance (Levenshtein distance)**: The minimum number of insertions, deletions, and substitutions needed to transform one string into another.
+
+**Encoder-decoder**: A neural network architecture in which one component (encoder) reads the input and another (decoder) generates the output, typically connected through an attention mechanism.
+
+**Feature vector**: A numerical representation of a phoneme in terms of binary articulatory features (voiced/voiceless, stop/fricative, etc.).
+
+**Fine-tuning**: The process of continuing to train a pre-trained neural network on a small domain-specific dataset to adapt it to a new task.
+
+**F1 score**: The harmonic mean of precision and recall, used as a single summary metric for classification performance.
+
+**Glottocode**: A unique identifier for a language variety in the Glottolog database, analogous to an ISBN for languages.
+
+**Grimm's Law**: The systematic shift of stop consonants in Proto-Germanic relative to other Indo-European languages (PIE *p → Gmc *f; PIE *t → Gmc *þ; PIE *k → Gmc *h), formulated by Jakob Grimm in the 1820s.
+
+**IPA (International Phonetic Alphabet)**: A writing system designed to represent all sounds used in human language, with one symbol per sound.
+
+**Knowledge graph**: A structured representation of entities and their relationships, represented as a graph of typed nodes and typed edges.
+
+**Language family**: A group of languages that descend from a common ancestor (proto-language). Example: the Indo-European family (English, Latin, Sanskrit, and thousands more).
+
+**LexStat**: An algorithm developed by Johann-Mattis List for automatic cognate detection in multilingual wordlists, using permutation-based alignment score normalization.
+
+**LingPy**: An open-source Python library for computational historical linguistics, providing tools for tokenization, alignment, cognate detection, and phylogenetic distance computation.
+
+**Morphology**: The study of word structure—how words are built from smaller meaningful units (morphemes): roots, prefixes, suffixes, etc.
+
+**Narrowing**: A type of semantic change in which a word's meaning becomes more restricted. Example: "meat" (once "any food") → flesh of animals.
+
+**Needleman-Wunsch algorithm**: A dynamic programming algorithm for global sequence alignment, originally developed for protein sequences and adapted for phonetic word alignment.
+
+**Neighbor-Joining**: A phylogenetic tree construction algorithm that minimizes total tree length by iteratively joining the pair of taxa whose joining most reduces branch length sum.
+
+**Neogrammarians**: A school of 19th-century German linguists who formulated the principle that sound changes are exceptionless and regular.
+
+**Pejoration**: A type of semantic change in which a word's meaning becomes more negative. Example: "awful" (once "awe-inspiring") → very bad.
+
+**Phoneme**: The smallest unit of sound that can distinguish word meaning in a language. English /p/ and /b/ are different phonemes because they distinguish "pat" from "bat."
+
+**Phonotactics**: The rules governing which sequences of phonemes are permissible in a given language.
+
+**Phylogenetics**: The field of science concerned with inferring evolutionary trees (phylogenies) from observed data. In linguistics, applied to language family trees.
+
+**Precision**: In information retrieval, the proportion of retrieved items that are relevant. Precision = TP / (TP + FP).
+
+**Proto-language**: A reconstructed ancestral language from which a set of descendant languages derive. Written with an asterisk: Proto-Indo-European, Proto-Germanic.
+
+**Recall**: In information retrieval, the proportion of relevant items that are retrieved. Recall = TP / (TP + FN).
+
+**Reconstruction**: The inference of the form of a proto-language word from its modern descendants, using the comparative method or computational models.
+
+**Reflex**: A modern descendant of an ancestral form. Spanish "noche" is a reflex of Latin "noctem."
+
+**Reticulation**: Non-tree-like patterns of language relationship, typically caused by borrowing and contact. Represented by phylogenetic networks rather than trees.
+
+**Robinson-Foulds distance**: A metric for comparing two phylogenetic trees, counting the number of bipartitions (splits of the leaf set) that appear in one tree but not the other.
+
+**Semantic drift**: The gradual change of a word's meaning over time. Also called semantic change or lexical semantic change.
+
+**Sound correspondence**: A systematic relationship between sounds in corresponding cognate words in different languages. The *p/f* correspondence between Latin and Germanic is a sound correspondence.
+
+**Sprachbund**: A geographic area in which unrelated or distantly related languages share structural features due to prolonged contact. The Balkan Sprachbund is the classic example.
+
+**Swadesh list**: A set of 100 or 207 basic vocabulary items (body parts, numerals, kinship terms, etc.) selected for their cross-linguistic stability, used as a standard dataset for comparative work.
+
+**UPGMA**: Unweighted Pair Group Method with Arithmetic Mean — a hierarchical clustering algorithm used for phylogenetic tree construction.
+
+**Word embedding**: A dense, low-dimensional vector representation of a word, learned from co-occurrence patterns in large text corpora. Words with similar meanings have vectors that are geometrically close.
+
+**Word2Vec**: A neural model for learning word embeddings, introduced by Mikolov et al. (2013), using either CBOW (predict word from context) or Skip-gram (predict context from word) training.

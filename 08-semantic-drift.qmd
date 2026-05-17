@@ -1,0 +1,263 @@
+# Semantic Drift & Word Meaning Change {#sec-semantic}
+
+```{python}
+#| echo: false
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.decomposition import PCA
+```
+
+::: {.callout-note}
+## Learning Objectives
+
+By the end of this chapter, you will be able to:
+
+- Explain the distributional hypothesis and why it enables meaning modeling
+- Describe how word embeddings encode semantic similarity as vector proximity
+- Train a Word2Vec model on a text corpus
+- Build diachronic embeddings by training on text from different time periods
+- Measure semantic change using cosine distance between temporal embeddings
+- Identify known cases of semantic drift and verify them computationally
+:::
+
+## The Biography of a Word
+
+The English word *awful* once meant something that inspired awe—vast, terrifying, divine. In the King James Bible, God is awful. Niagara Falls is awful. By the nineteenth century, the word had begun to shift toward merely "very large" or "very bad." By the twentieth century, it had completed the journey to simply mean "bad." The awesome power of God became the awful traffic on the highway.
+
+This process—the slow migration of a word's meaning from one semantic region to another—is called *semantic drift*. It happens to every language, in every era. "Nice" once meant foolish or ignorant (from Latin *nescius*, not knowing). "Silly" once meant happy or blessed. "Manufacture" once meant to make by hand. Words drift the way tectonic plates drift: slowly, relentlessly, and without anyone noticing until you look at where they started.
+
+The question for data science is whether we can detect and quantify this drift automatically, across hundreds of words and decades of text. The answer—developed over the last decade by computational linguists working with historical corpora—is a qualified yes.
+
+## The Distributional Hypothesis
+
+The foundation of the method is a fifty-year-old idea from the linguist John Rupert Firth: "You shall know a word by the company it keeps."
+
+The *distributional hypothesis* holds that words with similar meanings appear in similar contexts. "Dog" and "cat" co-occur with words like "pet," "fur," "walk," "feed," "veterinarian." "Bank" (financial) co-occurs with "money," "loan," "interest," "savings." "Bank" (river) co-occurs with "water," "flood," "fish," "shore."
+
+If you count how often each word co-occurs with every other word across a large corpus, you get a high-dimensional co-occurrence matrix. Each row is a word; each column is a context word; each cell is a count (or a weighted count). Words with similar meanings have similar rows.
+
+The insight of neural word embeddings—Word2Vec, GloVe, FastText—is that you can compress this matrix into a dense, low-dimensional representation (100–300 dimensions) while preserving the semantic structure. The result is a set of vectors in which similar words are geometrically close, and in which arithmetic operations on vectors capture semantic relationships.
+
+## Word2Vec: The Key Idea
+
+Word2Vec, introduced by Mikolov et al. in 2013, trains a shallow neural network to predict a word from its context (CBOW) or to predict context words from a target word (Skip-gram). The trained weights become the word vectors.
+
+The training objective (Skip-gram) is to maximize:
+
+$$
+\frac{1}{T} \sum_{t=1}^{T} \sum_{-c \leq j \leq c, j \neq 0} \log p(w_{t+j} | w_t)
+$$ {#eq-skipgram}
+
+where $T$ is the corpus size, $c$ is the context window size, and $p(w_{t+j} | w_t)$ is modeled via a softmax over the dot products between the target vector and all context vectors.
+
+The famous result: in the embedding space, `king - man + woman ≈ queen`. The vectors encode not just similarity but *relational structure*.
+
+```{python}
+#| label: lst-simple-embeddings
+#| lst-cap: "Simulating pre-trained word embeddings for semantic analysis (since training requires a large corpus, we use synthetic vectors here)."
+
+rng = np.random.default_rng(42)
+
+word_groups = {
+    "authority": ["king", "queen", "ruler", "throne", "crown"],
+    "noble_male": ["king", "man", "lord", "duke", "prince"],
+    "noble_female": ["queen", "woman", "lady", "duchess", "princess"],
+    "negative": ["awful", "terrible", "bad", "dreadful", "horrible"],
+    "positive": ["nice", "good", "pleasant", "fine", "lovely"],
+    "nature": ["bank_river", "shore", "water", "flood", "stream"],
+    "finance": ["bank_money", "loan", "interest", "savings", "credit"],
+}
+
+n_dim = 50
+word_vecs = {}
+base_vecs = {}
+for group, words in word_groups.items():
+    base = rng.standard_normal(n_dim)
+    base_vecs[group] = base
+    for w in words:
+        noise = rng.standard_normal(n_dim) * 0.3
+        word_vecs[w] = base + noise
+
+for w, v in word_vecs.items():
+    word_vecs[w] = v / np.linalg.norm(v)
+
+words = list(word_vecs.keys())
+vecs = np.array([word_vecs[w] for w in words])
+
+def cosine_sim(a, b):
+    return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
+
+print("Cosine similarities (higher = more similar):")
+pairs = [("king", "queen"), ("king", "awful"), ("bank_river", "bank_money"),
+         ("awful", "terrible"), ("nice", "pleasant")]
+for a, b in pairs:
+    sim = cosine_sim(word_vecs[a], word_vecs[b])
+    print(f"  {a:15} ↔ {b:15}: {sim:.3f}")
+```
+
+```{python}
+#| label: fig-embedding-pca
+#| fig-cap: "PCA projection of simulated word embeddings onto 2D. Semantic clusters are visible: royal terms, sentiment terms, and the two senses of 'bank' are separated."
+
+pca = PCA(n_components=2, random_state=42)
+proj = pca.fit_transform(vecs)
+
+colors = {"authority":"steelblue", "noble_male":"blue", "noble_female":"navy",
+          "negative":"coral", "positive":"darkgreen",
+          "nature":"teal", "finance":"orange"}
+
+word_to_group = {}
+for group, ws in word_groups.items():
+    for w in ws:
+        word_to_group[w] = group
+
+fig, ax = plt.subplots(figsize=(9, 6))
+for i, w in enumerate(words):
+    group = word_to_group.get(w, "other")
+    color = colors.get(group, "gray")
+    ax.scatter(proj[i, 0], proj[i, 1], color=color, s=60, alpha=0.8)
+    ax.annotate(w, (proj[i, 0] + 0.01, proj[i, 1] + 0.01), fontsize=8)
+
+handles = [plt.Line2D([0],[0],marker='o',color='w',markerfacecolor=c,label=g,markersize=8)
+           for g, c in colors.items()]
+ax.legend(handles=handles, loc="best", fontsize=7)
+ax.set_title("PCA Projection of Word Embeddings (simulated)")
+ax.set_xlabel("PC1"); ax.set_ylabel("PC2")
+plt.tight_layout()
+plt.show()
+```
+
+## Diachronic Embeddings: Meaning Over Time
+
+To measure semantic change, we train *separate* word embedding models on text from different time periods, then measure how much a word's vector moved between periods.
+
+The challenge: two models trained separately will not have the same coordinate system. A word might appear in the top-right of one model's space and the bottom-left of another's, even if its meaning did not change—simply because the axes are arbitrary. We need to *align* the vector spaces before comparing them.
+
+The standard approach is *Orthogonal Procrustes alignment*: find the rotation matrix $W$ that best aligns the embeddings from period $t$ to the embeddings from period $t+1$, minimizing $\|E_1 W - E_2\|_F$ over the set of anchor words (words assumed to be semantically stable across the time period).
+
+$$
+W^* = \arg\min_W \|E_1 W - E_2\|_F \quad \text{subject to } W^T W = I
+$$ {#eq-procrustes}
+
+This has a closed-form solution via SVD: $W^* = UV^T$ where $U \Sigma V^T = SVD(E_2^T E_1)$.
+
+```{python}
+#| label: lst-procrustes
+#| lst-cap: "Orthogonal Procrustes alignment for comparing temporal embeddings."
+
+from scipy.linalg import svd
+
+def procrustes_align(E1, E2):
+    """
+    Find W that best aligns E1 to E2 (both n_words × n_dim).
+    Returns E1 @ W (aligned E1).
+    """
+    M = E2.T @ E1
+    U, S, Vt = svd(M)
+    W = Vt.T @ U.T
+    return E1 @ W
+
+print("Procrustes alignment: aligns two embedding spaces before comparison.")
+print("After alignment, we can measure cosine distance for the same word across periods.")
+```
+
+```{python}
+#| label: fig-semantic-change
+#| fig-cap: "Simulated semantic change trajectories for five target words across four decades. Words with known drift (awful, nice, sick) show larger displacement."
+
+rng2 = np.random.default_rng(7)
+periods = ["1900s", "1930s", "1960s", "1990s"]
+
+target_words = ["awful", "nice", "sick", "bank", "computer"]
+drift_rates  = {"awful": 0.35, "nice": 0.25, "sick": 0.30, "bank": 0.10, "computer": 0.40}
+
+base_vecs_target = {w: rng2.standard_normal(50) for w in target_words}
+
+embeddings_over_time = {}
+for period in periods:
+    period_vecs = {}
+    t = periods.index(period)
+    for w in target_words:
+        drift = drift_rates[w] * t
+        noise = rng2.standard_normal(50) * drift
+        v = base_vecs_target[w] + noise
+        period_vecs[w] = v / np.linalg.norm(v)
+    embeddings_over_time[period] = period_vecs
+
+period_dists = {w: [] for w in target_words}
+for i in range(1, len(periods)):
+    for w in target_words:
+        v1 = embeddings_over_time[periods[i-1]][w]
+        v2 = embeddings_over_time[periods[i]][w]
+        dist = 1 - cosine_sim(v1, v2)
+        period_dists[w].append(dist)
+
+fig, ax = plt.subplots(figsize=(9, 5))
+x = np.arange(len(periods) - 1)
+for w in target_words:
+    ax.plot(x, period_dists[w], marker="o", label=w)
+ax.set_xticks(x)
+ax.set_xticklabels([f"{periods[i]}→{periods[i+1]}" for i in range(len(periods)-1)])
+ax.set_ylabel("Cosine distance (1 - similarity)")
+ax.set_title("Semantic Change Rate per Decade (simulated)")
+ax.legend()
+ax.axhline(0.15, color="gray", linestyle="--", alpha=0.5, label="change threshold")
+plt.tight_layout()
+plt.show()
+```
+
+## Known Cases of Semantic Drift
+
+The Hamilton et al. (2016) study examined semantic change in English using corpora from 1800 to 2000 and found several consistent patterns:
+
+**Pejoration**: words that referred to neutral or positive things acquire negative connotations. "Villain" originally meant a serf or farm laborer. "Hussy" originally meant housewife.
+
+**Amelioration**: words that were pejorative become neutral or positive. "Fond" once meant foolish. "Knight" once meant a boy or servant.
+
+**Broadening**: a word's meaning expands to cover more referents. "Arrival" once specifically meant arriving by ship (from Old French *ariver*, to reach the shore).
+
+**Narrowing**: a word's meaning contracts to cover fewer referents. "Meat" once meant food in general; now it means animal flesh specifically.
+
+**Metaphorical extension**: a concrete word acquires abstract senses. "Grasp" meant physically seizing something; now it also means mentally comprehending.
+
+```{python}
+#| label: tbl-semantic-drift-cases
+#| tbl-cap: "Selected cases of semantic drift in English, with type and approximate time of shift."
+
+drift_cases = {
+    "Word": ["awful", "nice", "silly", "villain", "fond", "meat", "broadcast", "computer"],
+    "Original meaning": ["inspiring awe", "foolish/ignorant", "blessed/happy", "farm laborer",
+                         "foolish", "any food", "scattered (seeds)", "one who computes (human)"],
+    "Modern meaning": ["very bad", "pleasant", "foolish/amusing", "criminal", "affectionate",
+                       "animal flesh", "transmit media", "electronic device"],
+    "Type": ["pejoration", "amelioration", "narrowing", "pejoration", "amelioration",
+             "narrowing", "broadening", "metaphor/tech"],
+    "~Era of shift": ["1700s–1900s", "1300s–1600s", "1200s–1500s", "1300s",
+                      "1300s–1500s", "1300s–1700s", "1920s", "1940s–1960s"],
+}
+
+pd.DataFrame(drift_cases)
+```
+
+## Evaluating Semantic Change Detection
+
+The standard benchmark for semantic change detection uses words with known change histories (from etymological dictionaries) as positive examples, and stable words as negatives. Performance is measured as the correlation between the model's predicted rate of change and a human-labeled ranking of change magnitude.
+
+Published results on the SemEval-2020 Task 1 benchmark (English, German, Latin, Swedish):
+- Best system: Spearman correlation ≈ 0.77 (English)
+- Median system: Spearman correlation ≈ 0.50
+- Simple cosine distance baseline: Spearman correlation ≈ 0.40–0.50
+
+The gaps between systems are smaller than they appear: the task is inherently noisy because human annotators disagree about which words have changed and by how much.
+
+## Summary
+
+Semantic drift is the process by which word meanings shift over time—through pejoration, amelioration, broadening, narrowing, and metaphorical extension. The distributional hypothesis provides the theoretical foundation for measuring meaning computationally: words in similar contexts have similar meanings. Word embeddings encode distributional similarity as vector proximity, enabling arithmetic operations that capture semantic relationships. Diachronic embeddings—one embedding model per time period, aligned via Orthogonal Procrustes—allow us to measure how much a word's semantic neighborhood changed from decade to decade. Known cases of drift (awful, nice, sick, computer) are recoverable from corpus data with models that achieve Spearman correlations of 0.50–0.77 against human judgments.
+
+## Further Reading
+
+- Hamilton, W. L., Leskovec, J., & Jurafsky, D. (2016). Diachronic word embeddings reveal statistical laws of semantic change. *ACL 2016*.
+- Mikolov, T., et al. (2013). Distributed representations of words and phrases and their compositionality. *NIPS 2013*.
+- Tahmasebi, N., Borin, L., & Jatowt, A. (2021). Survey of Computational Approaches to Lexical Semantic Change Detection. *Computational Approaches to Semantic Change*, Language Science Press.
+- Kutuzov, A., et al. (2018). Diachronic word embeddings and semantic shifts: A survey. *COLING 2018*.

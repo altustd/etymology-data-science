@@ -1,0 +1,246 @@
+# The Comparative Method {#sec-comparative}
+
+```{python}
+#| echo: false
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+```
+
+::: {.callout-note}
+## Learning Objectives
+
+By the end of this chapter, you will be able to:
+
+- Apply the comparative method step-by-step to a set of cognates
+- Identify sound correspondences from parallel data
+- Explain what makes a sound change "regular" and why regularity matters
+- Reconstruct a proto-phoneme from its modern reflexes
+- Recognize the limitations and failure modes of the traditional approach
+- Visualize sound change correspondences as a mapping table
+:::
+
+## The Crime Scene
+
+Imagine arriving at an archaeological dig where the only surviving artifacts are the words. No pottery, no bones, no inscriptions—just the vocabulary of a dozen languages that happened to be related, preserved in the mouths of their modern speakers. Your job is to determine: what language did they all descend from? What did that language sound like? When did the various descendants begin to diverge?
+
+This is not a metaphor. It is precisely the problem that faced the German philologist Jakob Grimm in the early nineteenth century, and the solution he devised—which now bears his name as Grimm's Law—was the moment historical linguistics became a science.
+
+Grimm noticed something that had been sitting in plain sight for anyone who cared to look. The Germanic languages—Gothic, Old English, Old High German, Old Norse—had systematically different consonants from Latin, Greek, and Sanskrit in corresponding words. Not randomly different. *Systematically* different, with a consistent mapping:
+
+- Latin *p* → Germanic *f* (Latin *pater*, Gothic *fadar*)
+- Latin *t* → Germanic *th* (Latin *tres*, English *three*)
+- Latin *k* → Germanic *h* (Latin *cornu*, English *horn*)
+
+This was not accident. This was sound change: a systematic shift in how an entire population pronounced a class of consonants, spreading through a speech community over generations like a slow-moving wave.
+
+The comparative method is the technique for reading these waves backward—tracing from the modern shoreline back to the stone that fell in the water.
+
+## Step-by-Step: The Four Operations
+
+The comparative method proceeds in four operations, applied iteratively.
+
+### 1. Collect a Wordlist of Basic Vocabulary
+
+The first step is deliberate conservatism. Basic vocabulary—words for body parts, numerals, kinship terms, common natural phenomena—changes more slowly than specialized vocabulary. You do not start with words for "television" or "algorithm." You start with words for MOTHER, HAND, THREE, WATER, FIRE.
+
+The classic standard is the Swadesh list: 100 or 207 concepts selected by Morris Swadesh in the 1950s for their cross-linguistic stability. We will use a reduced version for illustration.
+
+```{python}
+#| label: tbl-swadesh
+#| tbl-cap: "A mini-Swadesh list: ten basic concepts across five Romance languages plus their Latin ancestor."
+
+swadesh_romance = {
+    "Concept":   ["one", "two", "water", "fire", "hand", "eye", "name", "mouth", "night", "new"],
+    "Latin":     ["unus", "duo", "aqua", "ignis", "manus", "oculus", "nomen", "os/oris", "nox", "novus"],
+    "Spanish":   ["uno", "dos", "agua", "fuego", "mano", "ojo", "nombre", "boca", "noche", "nuevo"],
+    "French":    ["un", "deux", "eau", "feu", "main", "oeil", "nom", "bouche", "nuit", "nouveau"],
+    "Italian":   ["uno", "due", "acqua", "fuoco", "mano", "occhio", "nome", "bocca", "notte", "nuovo"],
+    "Portuguese":["um", "dois", "água", "fogo", "mão", "olho", "nome", "boca", "noite", "novo"],
+}
+
+df = pd.DataFrame(swadesh_romance)
+df
+```
+
+### 2. Identify Cognate Sets
+
+A *cognate set* is a group of words—one per language—that all descend from the same proto-word. In the table above, the words for WATER are not all cognates: Spanish *agua* and Italian *acqua* trace to Latin *aqua*, but French *eau* traces to the same Latin word via a drastically eroded path (Latin *aqua* → Old French *ewe* → French *eau*). They are still cognates—just with more weathering on one of them.
+
+The test for cognacy is not similarity. It is *systematic* similarity, explained by known or discoverable sound changes. English *night* and Greek *nýks* look very different, but they are cognates; English *day* and Latin *dies* look superficially similar, but the etymology is more complicated. Surface similarity is a clue, not a verdict.
+
+### 3. Establish Sound Correspondences
+
+This is the analytical core of the method. Take all your cognate pairs and line up which sound in language A corresponds to which sound in language B.
+
+```{python}
+#| label: fig-correspondences
+#| fig-cap: "Sound correspondence table for Latin vs. Spanish in word-initial position. Arrows indicate regular correspondences."
+
+correspondences = {
+    "Latin": ["p", "t", "k", "f", "n", "m", "s", "l", "r", "v"],
+    "Spanish": ["p", "t", "k/g", "h/f", "n", "m", "s", "l", "r", "b"],
+    "Example": [
+        "pater→padre", "terra→tierra", "caput→cabo",
+        "filiu→hijo", "nomen→nombre", "manus→mano",
+        "sole→sol", "luna→luna", "rivus→río", "vitam→vida"
+    ]
+}
+
+fig, ax = plt.subplots(figsize=(9, 5))
+ax.axis("off")
+table = ax.table(
+    cellText=list(zip(correspondences["Latin"], correspondences["Spanish"], correspondences["Example"])),
+    colLabels=["Latin consonant", "Spanish reflex", "Example"],
+    cellLoc="center",
+    loc="center",
+)
+table.auto_set_font_size(False)
+table.set_fontsize(10)
+table.scale(1.2, 1.6)
+for (row, col), cell in table.get_celld().items():
+    if row == 0:
+        cell.set_facecolor("#dde")
+ax.set_title("Latin → Spanish Consonant Correspondences (selected)", pad=20)
+plt.tight_layout()
+plt.show()
+```
+
+The key insight is *regularity*. If Latin *f* becomes Spanish *h* in one word (Latin *filiu* → Spanish *hijo*, "son"), it must become *h* in every word where the same conditions hold—otherwise the change is not a law, it is an accident. Jakob Grimm's insight was that the Germanic consonant shifts were regular in exactly this sense: every instance of Latin *p* in the right position became Germanic *f*, without exception.
+
+When you find exceptions, you do not dismiss them. They are data. Either they reflect borrowing from another language (which skips the sound change), or they reflect a conditioned environment where the change behaved differently, or they reveal an error in your cognate identification. Exceptions are gifts.
+
+### 4. Reconstruct the Proto-Form
+
+Given the correspondences, you can work backward to what the ancestral sound must have been. If Spanish has *p*, French has *p*, Italian has *p*, and Latin has *p*, the proto-Romance form almost certainly had *p*. If one language has *h* where the others have *f*, the *h* is the locally innovated form; *f* is older.
+
+The reconstruction is not a guess. It is the most parsimonious hypothesis that explains all the observed reflexes. Linguists write reconstructed forms with an asterisk: *\*pater* for the Proto-Indo-European form of FATHER.
+
+```{python}
+#| label: fig-reconstruction
+#| fig-cap: "Reconstructing the Proto-Romance word for NIGHT from its modern reflexes. The Latin *noctem* (accusative of *nox*) is the direct ancestor."
+
+fig, ax = plt.subplots(figsize=(8, 5))
+ax.set_xlim(0, 10)
+ax.set_ylim(0, 8)
+ax.axis("off")
+
+# Proto-form at top
+ax.text(5, 7, "*NOCTEM (Latin)", ha="center", va="center",
+        fontsize=13, fontweight="bold",
+        bbox=dict(boxstyle="round,pad=0.4", facecolor="#cde", edgecolor="#888"))
+
+# Modern descendants
+descendants = [
+    (1.5, 2, "Spanish\nnoche"),
+    (3.5, 2, "French\nnuit"),
+    (5.5, 2, "Italian\nnotte"),
+    (7.5, 2, "Portuguese\nnoite"),
+    (9.5, 2, "Romanian\nnoapte"),
+]
+
+for x, y, label in descendants:
+    ax.text(x, y, label, ha="center", va="center", fontsize=10,
+            bbox=dict(boxstyle="round,pad=0.3", facecolor="#eef", edgecolor="#888"))
+    ax.annotate("", xy=(x, y + 0.5), xytext=(5, 6.5),
+                arrowprops=dict(arrowstyle="->", color="#666", lw=1.5))
+
+ax.set_title("Descent of NIGHT from Latin to Romance languages", fontsize=12, pad=10)
+plt.tight_layout()
+plt.show()
+```
+
+## Why Regularity Is Not Obvious
+
+It is worth pausing on the claim of regularity, because it is not something you would expect if you had not seen it demonstrated.
+
+Languages are spoken by millions of people across a geographic area and a span of time. Sound changes spread like any other social behavior—not simultaneously, not uniformly, with geographic and social variation. Why would a change be *regular*, affecting every instance of a phoneme in the same environment?
+
+The answer, proposed by the Neogrammarians in the 1870s and still essentially correct, is that sound change operates on the physical mechanism of speech production, not on the meaning of words. A shift from *p* to *f* is a change in how the mouth moves—from a full stop to a fricative—not a lexical decision. The mouth changes its habit. Every word that used that motion changes with it.
+
+This is why exceptions tend to cluster: words borrowed from another language arrive after the change, so they do not carry its effects. Words used in very formal or religious contexts may be pronounced conservatively. These patterns are not noise; they are diagnostic.
+
+## The Limits of the Method
+
+The comparative method is powerful, but it has a horizon.
+
+**Time depth.** Sound changes accumulate. After roughly 8,000–10,000 years of separation, the resemblances between related languages may have eroded below the threshold of reliable detection. This is why reconstructing proto-forms deeper than Proto-Indo-European is controversial: there may be too little signal left in the noise.
+
+**Contact and borrowing.** Languages that have been in prolonged contact contaminate each other's vocabulary. The English word for "beef" comes from French; the French word for "week-end" comes from English. Borrowed words violate the regularity of sound changes because they arrived after the change, or from a different system altogether. Detecting and excluding loanwords is a nontrivial problem—and the subject of Chapter 9.
+
+**Parallelism.** Sometimes similar-looking words in different languages developed independently from different roots. English *day* and Latin *dies* superficially resemble each other but are not cognates in the straightforward sense. These *false cognates* (or *coincidental resemblances*) can mislead analysis.
+
+**Documentation gaps.** For most of human linguistic history, we have no written records. The comparative method can only work with data that was recorded—which biases it heavily toward languages spoken by literate civilizations.
+
+## Automating Correspondences
+
+Here is the connection to data science that will become central in later chapters. The correspondence table we drew manually can be derived algorithmically: line up cognate pairs, count which sound in language A co-occurs with which sound in language B, build a matrix.
+
+```{python}
+#| label: fig-auto-correspondence
+#| fig-cap: "A minimal automatically-derived correspondence matrix between Latin and Spanish consonants, from a small set of cognate pairs."
+
+cognate_pairs = [
+    ("pater", "padre"),
+    ("porta", "puerta"),
+    ("planus", "llano"),
+    ("noctem", "noche"),
+    ("factum", "hecho"),
+    ("filium", "hijo"),
+    ("aquam", "agua"),
+    ("caput", "cabo"),
+    ("terra", "tierra"),
+    ("luna", "luna"),
+]
+
+lat_sounds = list("ptkbdgfsnlrmaoeiuv")
+spa_sounds = list("ptkbdgfjsnlrmaoeiubv")
+
+freq = {}
+for lat, spa in cognate_pairs:
+    for l, s in zip(lat[:5], spa[:5]):
+        key = (l, s)
+        freq[key] = freq.get(key, 0) + 1
+
+common_lat = "ptknmlraoei"
+common_spa = "ptknmlraoei"
+
+mat = np.zeros((len(common_lat), len(common_spa)))
+for (l, s), count in freq.items():
+    if l in common_lat and s in common_spa:
+        i = common_lat.index(l)
+        j = common_spa.index(s)
+        mat[i, j] += count
+
+fig, ax = plt.subplots(figsize=(8, 7))
+im = ax.imshow(mat, cmap="Blues", aspect="auto")
+ax.set_xticks(range(len(common_spa)))
+ax.set_yticks(range(len(common_lat)))
+ax.set_xticklabels(list(common_spa))
+ax.set_yticklabels(list(common_lat))
+ax.set_xlabel("Spanish sound")
+ax.set_ylabel("Latin sound")
+ax.set_title("Auto-derived Latin→Spanish correspondence counts")
+plt.colorbar(im, ax=ax, label="Co-occurrence count")
+for i in range(len(common_lat)):
+    for j in range(len(common_spa)):
+        if mat[i, j] > 0:
+            ax.text(j, i, f"{mat[i,j]:.0f}", ha="center", va="center",
+                    color="black" if mat[i,j] < 3 else "white", fontsize=9)
+plt.tight_layout()
+plt.show()
+```
+
+The diagonal dominates—sounds tend to be preserved—but the off-diagonal entries tell the story of change. With a larger dataset, this matrix becomes the foundation of automated sound correspondence discovery, which we will build in Chapters 4 and 5.
+
+## Summary
+
+The comparative method works in four steps: collect a basic wordlist, identify cognate sets, establish systematic sound correspondences, and reconstruct the proto-form as the most parsimonious explanation of those correspondences. Regularity—the principle that sound changes are exceptionless—is the method's core commitment. Exceptions exist and are informative, clustering around borrowing, conservative usage, and conditioned environments. The method has real limits: it loses resolution at great time depths, is confounded by contact and borrowing, and requires sufficient documentation. All four limitations become targets for computational approaches in subsequent chapters.
+
+## Further Reading
+
+- Fortson, B. W. (2010). *Indo-European Language and Culture: An Introduction* (2nd ed.). Wiley-Blackwell. Chapter 2 covers the comparative method with care.
+- Hock, H. H., & Joseph, B. D. (2009). *Language History, Language Change, and Language Relationship* (2nd ed.). Mouton de Gruyter.
+- Grimm, J. (1822). *Deutsche Grammatik* (2nd ed.). The original source for Grimm's Law, in German.
+- Verner, K. (1875). Eine Ausnahme der ersten Lautverschiebung. *Zeitschrift für vergleichende Sprachforschung*. Verner's Law: the famous exception to Grimm's Law that was itself regular.

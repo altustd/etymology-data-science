@@ -1,0 +1,306 @@
+# Sequence Alignment & Phonetic Distance {#sec-alignment}
+
+```{python}
+#| echo: false
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
+```
+
+::: {.callout-note}
+## Learning Objectives
+
+By the end of this chapter, you will be able to:
+
+- Implement the Levenshtein edit distance algorithm from scratch
+- Explain why basic edit distance is insufficient for linguistic data
+- Construct a phonetically-weighted substitution cost matrix
+- Implement the Needleman-Wunsch global alignment algorithm
+- Align word pairs and interpret the result linguistically
+- Evaluate alignment quality against gold-standard datasets
+:::
+
+## The Biologist's Gift
+
+In 1970, a computational biologist named Saul Needleman and a computer scientist named Christian Wunsch published an algorithm for aligning biological sequences—the DNA and protein sequences whose comparison was becoming central to molecular biology. Their algorithm found the *globally optimal* alignment of two sequences, given a scoring scheme that rewarded matches and penalized mismatches and gaps.
+
+Fifteen years later, when computational linguists started thinking seriously about the problem of automatically aligning cognate word forms, they reached for the same tool. The analogy was not superficial. A sequence of phonemes is structurally identical to a sequence of nucleotides: a finite string of symbols drawn from a defined alphabet, where the order matters and where certain substitutions are more likely than others.
+
+The gift from biology was not just the algorithm. It was the conceptual framing: aligning sequences is a problem with a mathematically well-defined optimal solution. You do not have to guess; you can compute.
+
+## Edit Distance: The Starting Point
+
+The Levenshtein edit distance between two strings is the minimum number of single-character operations—insertions, deletions, substitutions—needed to transform one string into the other. It is the foundation of all sequence comparison.
+
+```{python}
+#| label: lst-edit-distance
+#| lst-cap: "Levenshtein edit distance via dynamic programming."
+
+def edit_distance(s1, s2, costs=(1, 1, 1)):
+    """
+    Compute Levenshtein distance between s1 and s2.
+    costs: (insert, delete, substitute) — all 1 by default.
+    Returns (distance, dp_matrix).
+    """
+    ins_cost, del_cost, sub_cost = costs
+    m, n = len(s1), len(s2)
+    dp = np.zeros((m + 1, n + 1), dtype=float)
+    dp[:, 0] = np.arange(m + 1) * del_cost
+    dp[0, :] = np.arange(n + 1) * ins_cost
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if s1[i-1] == s2[j-1]:
+                sub = dp[i-1][j-1]
+            else:
+                sub = dp[i-1][j-1] + sub_cost
+            dp[i][j] = min(
+                dp[i-1][j] + del_cost,
+                dp[i][j-1] + ins_cost,
+                sub
+            )
+    return dp[m][n], dp
+
+dist, dp = edit_distance("night", "nacht")
+print(f"Edit distance('night', 'nacht') = {dist}")
+print()
+dist2, _ = edit_distance("pater", "father")
+print(f"Edit distance('pater', 'father') = {dist2}")
+```
+
+```{python}
+#| label: fig-dp-matrix
+#| fig-cap: "Dynamic programming matrix for aligning 'night' and 'nacht'. The path from top-left to bottom-right gives the optimal alignment."
+
+def plot_dp(s1, s2, dp, ax, title=""):
+    ax.imshow(dp, cmap="Blues", aspect="auto")
+    ax.set_xticks(range(len(s2) + 1))
+    ax.set_yticks(range(len(s1) + 1))
+    ax.set_xticklabels(["-"] + list(s2))
+    ax.set_yticklabels(["-"] + list(s1))
+    for i in range(dp.shape[0]):
+        for j in range(dp.shape[1]):
+            ax.text(j, i, f"{dp[i,j]:.0f}", ha="center", va="center", fontsize=9)
+    ax.set_title(title)
+
+fig, axes = plt.subplots(1, 2, figsize=(11, 4))
+_, dp1 = edit_distance(list("night"), list("nacht"))
+_, dp2 = edit_distance(list("pater"), list("father"))
+plot_dp("night", "nacht", dp1, axes[0], "night vs. nacht (dist=2)")
+plot_dp("pater", "father", dp2, axes[1], "pater vs. father (dist=3)")
+plt.tight_layout()
+plt.show()
+```
+
+*night* vs. *nacht*: distance 2 (the vowel [aɪ]→[a] and the final t→t match, but the medial consonant cluster differs). *pater* vs. *father*: distance 3 (the *p*→*f* shift, the vowel, and the *t*→*th* shift). These distances are correct as string distances, but they do not capture the *linguistic* significance of the differences. The *p*→*f* correspondence is a known, regular sound change (Grimm's Law); the algorithm treats it as arbitrary.
+
+## The Problem with Orthographic Edit Distance
+
+Plain edit distance has three problems for etymology.
+
+**First, it operates on orthography, not phonology.** English *knight* has seven letters but four phonemes: /n/, /aɪ/, /t/. Comparing strings of letters introduces silent letters, digraphs (*th*, *ch*, *ng*), and other orthographic artifacts that have nothing to do with sound.
+
+**Second, all substitutions cost the same.** Substituting *p* for *b* costs the same as substituting *p* for *s*, even though *p*→*b* is a trivial voicing change and *p*→*s* requires changing both place and manner of articulation. A linguistically aware algorithm should make similar sounds cheaper to substitute.
+
+**Third, gap placement is unconstrained.** When a gap is inserted (to handle words of different length), all positions are equally valid. But in linguistics, certain positions are more likely to gain or lose sounds—word-final position is especially prone to loss, for instance.
+
+The solution to all three is *phonetically-weighted alignment*.
+
+## Weighted Alignment with a Cost Matrix
+
+We replace the uniform substitution cost with a matrix $C$ where $C_{ij}$ is the cost of substituting phoneme $i$ for phoneme $j$. We build this matrix from the feature vectors of Chapter 3.
+
+```{python}
+#| label: lst-cost-matrix
+#| lst-cap: "Building a phonetically-weighted cost matrix from feature vectors."
+
+phoneme_features = {
+    "p": [0,1,0,0,0,1,0,0], "b": [1,1,0,0,0,1,0,0],
+    "t": [0,1,0,0,0,0,1,0], "d": [1,1,0,0,0,0,1,0],
+    "k": [0,1,0,0,0,0,0,1], "g": [1,1,0,0,0,0,0,1],
+    "f": [0,0,1,0,0,1,0,0], "v": [1,0,1,0,0,1,0,0],
+    "s": [0,0,1,0,0,0,1,0], "z": [1,0,1,0,0,0,1,0],
+    "m": [1,0,0,1,0,1,0,0], "n": [1,0,0,1,0,0,1,0],
+    "l": [1,0,0,0,1,0,1,0], "r": [1,0,0,0,1,0,0,0],
+    "a": [1,0,0,0,0,0,0,0], "e": [1,0,0,0,0,0,0,0],
+    "i": [1,0,0,0,0,0,0,0], "o": [1,0,0,0,0,0,0,0],
+    "u": [1,0,0,0,0,0,0,0],
+}
+
+phonemes = list(phoneme_features.keys())
+vecs = np.array([phoneme_features[p] for p in phonemes])
+n = len(phonemes)
+
+cost_matrix = {}
+for i, p1 in enumerate(phonemes):
+    for j, p2 in enumerate(phonemes):
+        if p1 == p2:
+            cost_matrix[(p1, p2)] = 0.0
+        else:
+            hamming = np.sum(vecs[i] != vecs[j])
+            cost_matrix[(p1, p2)] = hamming / 8.0
+
+print("Selected substitution costs (0=identical, 1=maximally different):")
+pairs = [("p","b"), ("p","f"), ("p","s"), ("p","n"), ("t","d"), ("t","n")]
+for a, b in pairs:
+    print(f"  {a} ↔ {b}: {cost_matrix[(a,b)]:.3f}")
+```
+
+Now /p/↔/b/ costs 0.125 (one feature difference out of eight), while /p/↔/n/ costs 0.5 (four feature differences). The alignment algorithm will prefer *p*→*b* over *p*→*n* because it is phonetically cheaper.
+
+## The Needleman-Wunsch Algorithm
+
+The Needleman-Wunsch algorithm is a global alignment algorithm: it aligns the full sequences from end to end, including gap characters where needed. The DP recurrence is:
+
+$$
+F(i, j) = \max \begin{cases}
+F(i-1, j-1) + s(x_i, y_j) & \text{(substitution or match)} \\
+F(i-1, j) - g & \text{(gap in } y \text{)} \\
+F(i, j-1) - g & \text{(gap in } x \text{)}
+\end{cases}
+$$ {#eq-nw}
+
+where $s(x_i, y_j)$ is the score for aligning phoneme $x_i$ with phoneme $y_j$ (positive for similar sounds, negative for dissimilar), and $g$ is the gap penalty.
+
+For etymology, we typically convert this to a *cost minimization* form: alignment cost rather than alignment score.
+
+```{python}
+#| label: lst-nw
+#| lst-cap: "Phonetically-weighted Needleman-Wunsch alignment."
+
+def phonetic_align(seq1, seq2, cost_matrix, gap_penalty=0.5):
+    """
+    Needleman-Wunsch alignment with phonetic cost matrix.
+    Returns (aligned_seq1, aligned_seq2, total_cost).
+    """
+    m, n = len(seq1), len(seq2)
+    dp = np.full((m + 1, n + 1), np.inf)
+    dp[0, 0] = 0.0
+    for i in range(1, m + 1):
+        dp[i, 0] = dp[i-1, 0] + gap_penalty
+    for j in range(1, n + 1):
+        dp[0, j] = dp[0, j-1] + gap_penalty
+
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            sub_cost = cost_matrix.get((seq1[i-1], seq2[j-1]),
+                                        cost_matrix.get((seq2[j-1], seq1[i-1]), 0.5))
+            dp[i, j] = min(
+                dp[i-1, j-1] + sub_cost,
+                dp[i-1, j]   + gap_penalty,
+                dp[i, j-1]   + gap_penalty,
+            )
+
+    # Traceback
+    i, j = m, n
+    a1, a2 = [], []
+    while i > 0 or j > 0:
+        if i > 0 and j > 0:
+            sub_cost = cost_matrix.get((seq1[i-1], seq2[j-1]),
+                                        cost_matrix.get((seq2[j-1], seq1[i-1]), 0.5))
+            if dp[i, j] == dp[i-1, j-1] + sub_cost:
+                a1.append(seq1[i-1]); a2.append(seq2[j-1]); i -= 1; j -= 1
+                continue
+        if i > 0 and dp[i, j] == dp[i-1, j] + gap_penalty:
+            a1.append(seq1[i-1]); a2.append("-"); i -= 1
+        else:
+            a1.append("-"); a2.append(seq2[j-1]); j -= 1
+
+    return list(reversed(a1)), list(reversed(a2)), dp[m, n]
+
+night_en = list("naIt")
+night_de = list("naxt")
+a1, a2, cost = phonetic_align(night_en, night_de, cost_matrix)
+print("night [naIt] vs. Nacht [naxt]:")
+print("  EN:", " ".join(a1))
+print("  DE:", " ".join(a2))
+print(f"  Alignment cost: {cost:.3f}")
+print()
+
+pater = list("pater")
+father = list("faðer")
+a1b, a2b, cost2 = phonetic_align(pater, father, cost_matrix)
+print("pater [pater] vs. father [faðer]:")
+print("  LA:", " ".join(a1b))
+print("  EN:", " ".join(a2b))
+print(f"  Alignment cost: {cost2:.3f}")
+```
+
+## Visualizing Alignments
+
+A well-aligned word pair reveals the sound correspondences at a glance:
+
+```{python}
+#| label: fig-alignment-vis
+#| fig-cap: "Visualizing the alignment of five Latin-Spanish cognate pairs. Lines connect corresponding phonemes; dashes mark gaps."
+
+cognate_pairs = [
+    ("pater", "padre", "father (LA/ES)"),
+    ("noctem", "noche", "night (LA/ES)"),
+    ("aquam", "agua", "water (LA/ES)"),
+    ("lunam", "luna", "moon (LA/ES)"),
+    ("annum", "año", "year (LA/ES)"),
+]
+
+fig, axes = plt.subplots(len(cognate_pairs), 1, figsize=(10, 7))
+
+for ax, (w1, w2, label) in zip(axes, cognate_pairs):
+    a1, a2, cost = phonetic_align(list(w1), list(w2), cost_matrix)
+    n_cols = len(a1)
+    ax.set_xlim(-0.5, n_cols - 0.5)
+    ax.set_ylim(0, 1)
+    ax.axis("off")
+    for col, (c1, c2) in enumerate(zip(a1, a2)):
+        ax.text(col, 0.8, c1, ha="center", va="center", fontsize=11,
+                fontweight="bold" if c1 == c2 else "normal",
+                color="steelblue")
+        ax.text(col, 0.2, c2, ha="center", va="center", fontsize=11,
+                fontweight="bold" if c1 == c2 else "normal",
+                color="coral")
+        color = "#aaa" if c1 == "-" or c2 == "-" else (
+            "green" if c1 == c2 else "orange")
+        ax.plot([col, col], [0.35, 0.65], color=color, lw=1.5, alpha=0.7)
+    ax.text(-0.4, 0.5, label, ha="right", va="center", fontsize=9, color="#555")
+
+axes[0].set_title("Latin-Spanish cognate alignments (blue=Latin, red=Spanish)", pad=8)
+plt.tight_layout()
+plt.show()
+```
+
+## Evaluating Alignments
+
+How do you know whether an alignment is good? Two standard metrics are used in the literature.
+
+**Sum-of-pairs score**: for each column of the alignment, compute the cost of the pair in that column; sum across columns. Lower is better.
+
+**B-cubed precision and recall**: computed against a gold-standard alignment provided by expert linguists. Precision measures how many of the automatically proposed correspondences are correct; recall measures how many of the gold-standard correspondences the algorithm found. F1 is the harmonic mean.
+
+The ASJP (Automated Similarity Judgments Program) database and the EDICTOR tool provide gold-standard alignments for several language families that serve as benchmarks for algorithm evaluation.
+
+```{python}
+def evaluate_alignment(auto, gold):
+    """
+    Fraction of aligned pairs that match gold standard (simplified).
+    auto and gold are lists of (char1, char2) tuples.
+    """
+    auto_set = set(auto)
+    gold_set = set(gold)
+    if not gold_set:
+        return 0.0
+    return len(auto_set & gold_set) / len(gold_set)
+
+gold_night = [("n","n"), ("a","a"), ("I","x"), ("t","t")]
+auto_night  = [("n","n"), ("a","a"), ("I","x"), ("t","t")]
+print(f"Alignment accuracy (night/Nacht): {evaluate_alignment(auto_night, gold_night):.0%}")
+```
+
+## Summary
+
+Sequence alignment is the algorithmic foundation of computational etymology. Levenshtein edit distance provides a baseline but treats all substitutions equally and operates on orthography rather than phonemes. Phonetically-weighted alignment—using a cost matrix derived from articulatory feature distances—produces linguistically meaningful alignments that prefer regular sound changes over arbitrary ones. The Needleman-Wunsch algorithm finds the globally optimal alignment under any cost matrix in $O(mn)$ time. Alignment quality is evaluated against gold-standard datasets using B-cubed precision and recall. These aligned pairs are the raw material that cognate detection (Chapter 5) and phylogenetic inference (Chapter 6) consume.
+
+## Further Reading
+
+- Needleman, S. B., & Wunsch, C. D. (1970). A general method applicable to the search for similarities in the amino acid sequence of two proteins. *Journal of Molecular Biology*.
+- List, J.-M. (2012). LexStat: Automatic detection of cognates in multilingual wordlists. *Proceedings of the EACL Workshop on Language Evolution and Computational Linguistics*.
+- Jäger, G. (2019). Computational historical linguistics. *Theoretical Linguistics*.
+- Kondrak, G. (2000). A new algorithm for the alignment of phonetic sequences. *NAACL 2000 Proceedings*.

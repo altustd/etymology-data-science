@@ -1,0 +1,170 @@
+# What Is Etymology? A Data Perspective {#sec-intro}
+
+```{python}
+#| echo: false
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+```
+
+::: {.callout-note}
+## Learning Objectives
+
+By the end of this chapter, you will be able to:
+
+- Define etymology and explain what distinguishes it from ordinary vocabulary study
+- Describe the comparative method in plain English
+- Identify cognates in a wordlist using pattern recognition
+- Frame the five core problems of computational etymology as data science tasks
+- Write basic Python code to explore a multilingual wordlist
+:::
+
+## The Detective Problem
+
+In 1786, a British judge named William Jones stood up at the Asiatic Society in Calcutta and delivered what may be the most consequential sentence ever spoken at an academic dinner. Having spent years studying Sanskrit—the ancient liturgical language of India—he announced that Sanskrit bore "a stronger affinity" to Greek and Latin "than could possibly have been produced by accident." So strong was this affinity, he suggested, that all three languages must have descended from a common source.
+
+The sentence launched a century of scholarship. Within fifty years, scholars across Europe had worked out the main skeleton of the Indo-European language family: Sanskrit, Greek, Latin, Gothic, Old Persian, Lithuanian, Old Slavic—all cousins, all descended from a proto-language no one had ever written down, spoken by people who left no other records. The method they used was the comparative method, and it remains, in its essentials, the foundation of etymology today.
+
+What Jones had noticed—what the Sanskrit word *pitar*, the Greek *patḗr*, and the Latin *pater* share—is something more than a family resemblance. The sounds correspond *systematically*. The *p* at the start, the vowel, the *t* in the middle, the *r* at the end: these are not random coincidences. They are the fingerprints of a common ancestor.
+
+That is what etymology studies. Not just where words come from, but *why they look the way they do*, and how you can infer the answer from patterns that survive across languages.
+
+## The Comparative Method in Plain English
+
+The comparative method can be summarized in three steps.
+
+**Step 1: Gather cognates.** A *cognate* is a pair of words in different languages that descend from the same ancestral word. English *night* and German *Nacht* are cognates. English *night* and French *nuit* are also cognates—both descend from the Latin *nox*, which descends further from the Proto-Indo-European root *\*nókʷts*. Cognates are not the same as loanwords: English *beef* comes from French *bœuf*, but that is borrowing, not shared descent. The distinction matters.
+
+**Step 2: Identify sound correspondences.** When you line up cognates across multiple languages, patterns emerge. Latin *p* systematically corresponds to English *f* in the same word positions. Latin *pater*, English *father*; Latin *piscis*, English *fish*; Latin *pes/ped-*, English *foot*. This is Grimm's Law—a systematic shift of stops to fricatives that swept through the Germanic languages roughly two thousand years ago, like a wave passing through water.
+
+**Step 3: Reconstruct the proto-form.** Given enough cognates and enough correspondences, you can infer what the ancestral form must have looked like. The asterisk (*) marks reconstructed forms—words no one ever recorded, deduced entirely from their surviving descendants. The fact that such deductions can be verified against actual discoveries (when ancient texts surface) is what makes the comparative method science rather than educated guessing.
+
+## Etymology as Data
+
+Here is where things get interesting.
+
+Notice what the comparative method is actually doing. It is taking a set of strings—words, transcribed as sequences of sounds—and detecting patterns of similarity and difference across them. It is grouping those strings by hypothesized ancestry. It is inferring hidden variables (the proto-forms) from observable ones (the modern words). It is, in short, doing data science on a structured dataset.
+
+The dataset in question is a *wordlist*: a table where rows are concepts (FATHER, WATER, NIGHT, FIRE) and columns are languages, with cells containing the word for that concept in that language. This is the fundamental data structure of historical linguistics, and it is, conveniently, exactly the kind of tabular data that Python's pandas library was designed to handle.
+
+```{python}
+#| label: tbl-cognates
+#| tbl-cap: "A minimal wordlist showing Indo-European cognates. The asterisk marks a reconstructed proto-form."
+
+data = {
+    "Concept":  ["father",  "water",  "night",  "fire",   "star"],
+    "Latin":    ["pater",   "aqua",   "nox",    "ignis",  "stella"],
+    "Greek":    ["patḗr",   "hydōr",  "nýks",   "pŷr",    "astḗr"],
+    "Sanskrit": ["pitar",   "udaka",  "nakta",  "agni",   "tara"],
+    "English":  ["father",  "water",  "night",  "fire",   "star"],
+    "PIE*":     ["*ph₂tḗr", "*wed-",  "*nókʷts","*h₁ngʷni","*h₂stḗr"],
+}
+
+df = pd.DataFrame(data)
+df
+```
+
+Look at the column for FATHER. Every entry except FIRE shares a recognizable similarity—the *p/f* at the start, the vowel in the middle, the *t/th* sound, the final *r*. FIRE is the odd one out: the Latin, Greek, and Sanskrit forms look nothing like each other, which suggests different roots, not a shared ancestor for this particular word.
+
+This is already a data analysis task: spotting which cells cluster with which other cells, and which are outliers. A trained linguist can do it by eye. A computer can do it at scale, across a hundred languages and ten thousand concepts, in seconds.
+
+## The Five Core Problems
+
+Computational etymology is organized around five problems, each of which maps cleanly onto a class of data science methods:
+
+**Problem 1: Cognate detection.** Given a pair of words from different languages, are they related by descent? This is a binary classification problem. Input: two word strings (or sequences of phonemes). Output: cognate or not. We will spend Chapter 5 building a classifier for this.
+
+**Problem 2: Sequence alignment.** When two cognates are identified, how do we align their sounds to identify which phoneme corresponds to which? English *night* [naɪt] and German *Nacht* [naxt]—the *n* matches *n*, the vowel has drifted, the final *t* matches *t*. But how do you determine that alignment algorithmically, especially when one word has more sounds than the other? This is a sequence alignment problem, borrowed directly from bioinformatics. Chapter 4.
+
+**Problem 3: Phylogenetic inference.** Given a set of languages and their cognate relationships, what is the most likely family tree? This is a tree inference problem. The same algorithms that evolutionary biologists use to reconstruct the evolutionary tree of species apply, with modifications, to languages. Chapter 6.
+
+**Problem 4: Proto-form reconstruction.** Given aligned cognates across multiple modern languages, can we predict the ancestral proto-form? This is a sequence-to-sequence prediction problem—the kind that neural networks handle well. Chapter 7.
+
+**Problem 5: Semantic drift.** Words change meaning over time. "Awful" once meant awe-inspiring; now it means terrible. "Nice" once meant foolish; now it means pleasant. Can we detect and quantify this drift using word embeddings trained on historical text corpora? Chapter 8.
+
+## Why Machine Learning Changes Everything
+
+The traditional comparative method works beautifully—for languages with large amounts of recorded history, spoken by cultures that kept written records, studied by teams of dedicated scholars over a century or more. But the world has approximately seven thousand living languages. Only a few hundred have been studied in any depth. Thousands more are vanishing without documentation.
+
+Machine learning does not replace the comparative method. It scales it. A cognate detector trained on well-studied language families can be applied to underdocumented ones. A neural proto-reconstructor trained on Romance language data generalizes to other families with appropriate retraining. The algorithms are not magic—they carry assumptions baked in from their training data—but they extend the reach of historical linguistics into territory that hand methods alone could never cover.
+
+The reverse transfer also runs. Etymology turns out to be an exceptionally good training ground for linguistic data science. The problems are well-defined, the ground truth is knowable, and the data has a satisfying structure. Concepts learned here—sequence alignment, phylogenetic inference, distributional semantics—transfer directly to speech recognition, machine translation, and clinical NLP.
+
+## Your First Wordlist
+
+Let us build the first practical object of this book: a multilingual wordlist in Python.
+
+```{python}
+#| label: fig-wordlist-heatmap
+#| fig-cap: "Edit distance between English words and their cognates across five languages. Darker = more similar (smaller distance). Note that WATER shows less similarity across languages because different roots were selected."
+
+from itertools import combinations
+
+def simple_edit_distance(s1, s2):
+    """Levenshtein distance between two strings."""
+    m, n = len(s1), len(s2)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    for i in range(m + 1):
+        dp[i][0] = i
+    for j in range(n + 1):
+        dp[0][j] = j
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if s1[i-1] == s2[j-1]:
+                dp[i][j] = dp[i-1][j-1]
+            else:
+                dp[i][j] = 1 + min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1])
+    return dp[m][n]
+
+wordlist = {
+    "father":  {"Latin": "pater",  "Greek": "pater",  "Sanskrit": "pitar",  "German": "vater"},
+    "water":   {"Latin": "aqua",   "Greek": "hydor",  "Sanskrit": "udaka",  "German": "wasser"},
+    "night":   {"Latin": "noctem", "Greek": "nykta",  "Sanskrit": "nakta",  "German": "nacht"},
+    "new":     {"Latin": "novum",  "Greek": "neon",   "Sanskrit": "navam",  "German": "neu"},
+    "star":    {"Latin": "stella", "Greek": "aster",  "Sanskrit": "tara",   "German": "stern"},
+}
+
+langs = ["Latin", "Greek", "Sanskrit", "German"]
+concepts = list(wordlist.keys())
+english = {"father": "father", "water": "water", "night": "night",
+           "new": "new", "star": "star"}
+
+dist_matrix = np.zeros((len(concepts), len(langs)))
+for i, concept in enumerate(concepts):
+    eng = english[concept]
+    for j, lang in enumerate(langs):
+        foreign = wordlist[concept][lang]
+        dist_matrix[i, j] = simple_edit_distance(eng.lower(), foreign.lower())
+
+fig, ax = plt.subplots(figsize=(8, 4))
+im = ax.imshow(dist_matrix, cmap="YlOrRd_r", aspect="auto")
+ax.set_xticks(range(len(langs)))
+ax.set_yticks(range(len(concepts)))
+ax.set_xticklabels(langs)
+ax.set_yticklabels(concepts)
+for i in range(len(concepts)):
+    for j in range(len(langs)):
+        ax.text(j, i, f"{dist_matrix[i,j]:.0f}", ha="center", va="center",
+                color="black", fontsize=10)
+ax.set_title("Edit Distance from English (lower = more similar)")
+plt.colorbar(im, ax=ax, label="Edit distance")
+plt.tight_layout()
+plt.show()
+```
+
+The heatmap already tells a story. FATHER and NEW show consistently low edit distances—the words are recognizably similar across all four comparison languages. NIGHT is a medium case. WATER is the outlier: *aqua* and *hydor* look nothing like the English word because the Germanic languages preserved one Indo-European root (*\*wed-*) while Latin and Greek preserve different ones.
+
+This is, in miniature, exactly the pattern-detection that the comparative method does at scale. And this is, in miniature, the kind of exploratory analysis you will do throughout this book—start with the data, visualize it, let the pattern lead you to the hypothesis.
+
+## Summary
+
+Etymology studies the origin and historical development of words. The comparative method—identifying cognates, mapping sound correspondences, and reconstructing proto-forms—has been the core tool of historical linguistics for two centuries. Computational approaches do not replace this method; they automate and scale it. The five core problems (cognate detection, sequence alignment, phylogenetic inference, proto-form reconstruction, and semantic drift tracking) each map onto established data science techniques. The data structure underlying all of this is the multilingual wordlist: a table of concepts by languages, with each cell containing a phonetically transcribed word.
+
+The remaining chapters build these tools, one layer at a time.
+
+## Further Reading
+
+- Jones, W. (1786). *The third anniversary discourse to the Asiatic Society*. The speech that started it all.
+- Campbell, L. (2013). *Historical Linguistics: An Introduction* (3rd ed.). MIT Press. The standard textbook reference for the comparative method.
+- List, J.-M., Greenhill, S., & Gray, R. (2017). The potential of automatic word comparison for historical linguistics. *PLOS ONE*. A good overview of the computational turn in the field.
+- Etymonline.com — for exploratory etymological browsing, nothing beats it.
