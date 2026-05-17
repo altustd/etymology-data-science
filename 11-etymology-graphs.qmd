@@ -152,6 +152,16 @@ plt.tight_layout()
 plt.show()
 ```
 
+## Why Graphs Beat Tables for Etymology
+
+A relational database of etymological data—the obvious first choice for anyone with a data engineering background—runs into structural problems quickly.
+
+Consider how you would store the relationship between Latin *nox* and English *night*. In a table, you might have a row for Latin *nox* and a row for English *night*, connected by a foreign key indicating "descended from the same proto-form." But what if you also want to store that Latin *nox* is the source of the English borrowings *nocturnal*, *equinox*, and *noctule* (a species of bat)? And that *noctule* was borrowed in the eighteenth century while *equinox* was borrowed in the fourteenth? And that *equinox* is itself a compound of *nox* and a form of *aequus*? And that *aequus* has its own descendants?
+
+A table can store all of this—but querying it requires recursive joins, which are cumbersome in standard SQL and catastrophically slow on large datasets. The query "find all English words that, through any chain of derivation or descent, trace back to Proto-Indo-European root \*nókʷts" is a transitive closure query—the exact operation that relational databases are worst at and that graph databases are optimized for.
+
+The graph model is the natural fit because etymology *is* a graph. Words are not independent items in a list; they are nodes in a network of relationships, and the interesting questions about etymology are almost all about paths through that network. Which words share a common ancestor? How many steps separates two apparently unrelated words? Which roots have the most descendants? These are graph traversal questions, not table lookup questions, and the right data structure for graph traversal questions is a graph.
+
 ## Graph Queries
 
 The power of graph representation is queryability. Here are canonical queries for etymological research:

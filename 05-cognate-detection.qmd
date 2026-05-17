@@ -33,6 +33,16 @@ The question for a machine learning system is: can we capture that difference in
 
 The answer is yes—and the resulting systems, benchmarked against expert cognate judgments, achieve precision and recall above 85% on held-out data. This is not perfect, but it is good enough to be scientifically useful: it can process hundreds of languages and thousands of concepts in the time a human expert would spend on one language pair.
 
+## A Short History of Automated Cognate Detection
+
+The first attempts to automate cognate detection date to the 1990s and came not from linguists but from information retrieval researchers interested in cross-lingual text matching. These early systems used simple orthographic similarity measures—edit distance, shared character n-grams—and worked reasonably well for closely related languages like Spanish and Portuguese but failed badly on more distantly related pairs where sound changes had made cognates superficially dissimilar.
+
+The key advance came when researchers started incorporating phonological knowledge. Grzegorz Kondrak's 2000 algorithm introduced the idea of using phonetic feature overlap rather than character identity as the basis for similarity measurement. Instead of asking "are these two characters the same?", it asked "how close are these two sounds in articulatory feature space?". This allowed the algorithm to recognize that Latin *pater* and English *father* are similar even though no character is shared: *p* and *f* are closely related (one feature difference), *a* and *a* match, *t* and *th* are closely related, *e* and *e* match, *r* and *r* match.
+
+Johann-Mattis List's LexStat algorithm (2012) added the crucial innovation of a permutation baseline. Rather than using absolute alignment scores—which depend on the phoneme inventories of the specific languages being compared—LexStat computes scores relative to a random baseline derived by shuffling the phonemes in the dataset. This normalization controls for the fact that some languages happen to have more similar phoneme inventories by chance, regardless of genetic relationship. The normalized score is much more stable across different language pairs than the raw alignment score.
+
+The 2010s and 2020s brought deep learning approaches: recurrent neural networks, convolutional networks, and eventually transformers trained on large cognate datasets. These systems learn feature representations automatically rather than relying on hand-coded articulatory features, and on sufficiently large training sets they outperform feature-based systems. On small datasets—typical for underdocumented languages—feature-based systems like LexStat remain competitive because they encode prior knowledge that the neural systems must learn from scratch.
+
 ## The Dataset
 
 We will work with a simulated dataset based on Romance language cognates. The positive class (cognates) consists of word pairs descended from a common Latin root. The negative class (non-cognates) consists of word pairs that look similar by chance or that involve borrowing from unrelated roots.

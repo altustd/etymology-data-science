@@ -207,6 +207,16 @@ plt.tight_layout()
 plt.show()
 ```
 
+## What the Model Actually Learns
+
+It is tempting to describe what the neural model does as "learning the sound laws in reverse"—and this is approximately right, but the approximation hides something interesting.
+
+A traditional linguist reconstructing *noctem* from Romance descendants works through a series of explicitly stated rules: French *nuit* reflects *\*nok-te-m* → *\*noite* → *nuit* through a series of documented changes. Each step is labeled, justified, and reversible. The model does not work this way. It learns a direct mapping from the set of modern forms to the proto-form, without any explicit intermediate representation of the sound change rules.
+
+What the attention mechanism learns—and this has been partially interpretable through visualization—is something that looks like a learned sound correspondence table. At each output position, the attention weights over the input languages tend to cluster around specific positions in the input sequences. When the model is generating a consonant that was preserved differently in different languages (e.g., the *kt* cluster in NIGHT), it learns to weight Latin and Lithuanian more heavily because those languages preserve the cluster more faithfully than French or Spanish. When it is generating a vowel that was preserved in some languages and lost in others, it learns to weight the languages that retained it.
+
+This is not quite the same as applying the comparative method—it lacks the step-by-step justification and the explicit rules—but it is learning a representation of the same underlying regularities. The model's output is not a black box producing arbitrary outputs; it is a differentiable approximation of expert linguistic reasoning, with all the strengths (speed, scale) and weaknesses (no explicit justification, failure on out-of-distribution inputs) that implies.
+
 ## Where Models Fail
 
 Neural reconstruction models fail in characteristic ways:

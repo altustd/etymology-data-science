@@ -198,6 +198,18 @@ plt.tight_layout()
 plt.show()
 ```
 
+## The Social Life of Borrowed Words
+
+Borrowing is not random. It follows social patterns with remarkable consistency across cultures and time periods.
+
+**Prestige borrowing** is the most common type in recorded history. When a language community is in contact with another community that has higher social, military, or economic prestige, vocabulary flows from the prestigious language into the lower-prestige one—not the reverse. Norman French provided English with an enormous lexicon of administrative, legal, culinary, and artistic terms precisely because French was the language of power after 1066. English speakers who wanted to participate in the ruling culture learned French words; French speakers rarely needed to learn English ones. The asymmetry of the borrowing records the asymmetry of social power.
+
+**Domain-specific borrowing** reflects which culture innovated in which domain. English borrowed heavily from Greek for scientific and medical terms because Greek was the language of the Hellenistic scientific tradition. It borrowed from Arabic for mathematical and astronomical terms (*algebra, algorithm, zenith, nadir*) because the Islamic world preserved and extended Greek mathematics during the European Middle Ages. It borrowed from Italian for musical terms (*allegro, soprano, forte, piano*) because Italian opera and instrumental music dominated European culture in the seventeenth and eighteenth centuries. Each borrowing stratum is a map of intellectual and cultural contact.
+
+**Phonological assimilation over time** is the process by which borrowed words are gradually adapted to the phonological patterns of the borrowing language. A word borrowed yesterday sounds foreign; a word borrowed a thousand years ago sounds native. English *street* (from Latin *strata via*, paved road) has been adapted so thoroughly to English phonological patterns that it is indistinguishable from inherited Germanic vocabulary by most metrics. Only comparative reconstruction can reveal its origin.
+
+The computational implication: borrowing detection must be calibrated to the expected time depth of the loans being detected. A system trained to detect recent French borrowings in English will fail on ancient Latin borrowings because the features that signal foreignness erode with time.
+
 ## Why Ancient vs. Recent Borrowing Looks Different
 
 Not all loanwords are equally detectable. The key variable is time.

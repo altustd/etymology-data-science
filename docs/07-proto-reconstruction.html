@@ -347,9 +347,10 @@ window.Quarto = {
   <li><a href="#attention-what-the-decoder-looks-at" id="toc-attention-what-the-decoder-looks-at" class="nav-link" data-scroll-target="#attention-what-the-decoder-looks-at"><span class="header-section-number">8.4</span> Attention: What the Decoder Looks At</a></li>
   <li><a href="#a-rule-based-baseline" id="toc-a-rule-based-baseline" class="nav-link" data-scroll-target="#a-rule-based-baseline"><span class="header-section-number">8.5</span> A Rule-Based Baseline</a></li>
   <li><a href="#model-evaluation-character-error-rate" id="toc-model-evaluation-character-error-rate" class="nav-link" data-scroll-target="#model-evaluation-character-error-rate"><span class="header-section-number">8.6</span> Model Evaluation: Character Error Rate</a></li>
-  <li><a href="#where-models-fail" id="toc-where-models-fail" class="nav-link" data-scroll-target="#where-models-fail"><span class="header-section-number">8.7</span> Where Models Fail</a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">8.8</span> Summary</a></li>
-  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">8.9</span> Further Reading</a></li>
+  <li><a href="#what-the-model-actually-learns" id="toc-what-the-model-actually-learns" class="nav-link" data-scroll-target="#what-the-model-actually-learns"><span class="header-section-number">8.7</span> What the Model Actually Learns</a></li>
+  <li><a href="#where-models-fail" id="toc-where-models-fail" class="nav-link" data-scroll-target="#where-models-fail"><span class="header-section-number">8.8</span> Where Models Fail</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">8.9</span> Summary</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">8.10</span> Further Reading</a></li>
   </ul>
 </nav>
     </div>
@@ -695,20 +696,27 @@ Figure&nbsp;8.2: Character error rate (CER) comparison across reconstruction met
 </div>
 </div>
 </section>
-<section id="where-models-fail" class="level2" data-number="8.7">
-<h2 data-number="8.7" class="anchored" data-anchor-id="where-models-fail"><span class="header-section-number">8.7</span> Where Models Fail</h2>
+<section id="what-the-model-actually-learns" class="level2" data-number="8.7">
+<h2 data-number="8.7" class="anchored" data-anchor-id="what-the-model-actually-learns"><span class="header-section-number">8.7</span> What the Model Actually Learns</h2>
+<p>It is tempting to describe what the neural model does as “learning the sound laws in reverse”—and this is approximately right, but the approximation hides something interesting.</p>
+<p>A traditional linguist reconstructing <em>noctem</em> from Romance descendants works through a series of explicitly stated rules: French <em>nuit</em> reflects <em>*nok-te-m</em> → <em>*noite</em> → <em>nuit</em> through a series of documented changes. Each step is labeled, justified, and reversible. The model does not work this way. It learns a direct mapping from the set of modern forms to the proto-form, without any explicit intermediate representation of the sound change rules.</p>
+<p>What the attention mechanism learns—and this has been partially interpretable through visualization—is something that looks like a learned sound correspondence table. At each output position, the attention weights over the input languages tend to cluster around specific positions in the input sequences. When the model is generating a consonant that was preserved differently in different languages (e.g., the <em>kt</em> cluster in NIGHT), it learns to weight Latin and Lithuanian more heavily because those languages preserve the cluster more faithfully than French or Spanish. When it is generating a vowel that was preserved in some languages and lost in others, it learns to weight the languages that retained it.</p>
+<p>This is not quite the same as applying the comparative method—it lacks the step-by-step justification and the explicit rules—but it is learning a representation of the same underlying regularities. The model’s output is not a black box producing arbitrary outputs; it is a differentiable approximation of expert linguistic reasoning, with all the strengths (speed, scale) and weaknesses (no explicit justification, failure on out-of-distribution inputs) that implies.</p>
+</section>
+<section id="where-models-fail" class="level2" data-number="8.8">
+<h2 data-number="8.8" class="anchored" data-anchor-id="where-models-fail"><span class="header-section-number">8.8</span> Where Models Fail</h2>
 <p>Neural reconstruction models fail in characteristic ways:</p>
 <p><strong>Morphological endings</strong>: Modern Romance languages have largely dropped Latin case endings. The accusative <em>-m</em> and <em>-em</em> endings are invisible in modern forms. Models trained on the accusative forms learn to append <em>-m</em> frequently but often predict the wrong vowel before it.</p>
 <p><strong>Rare sound changes</strong>: Irregular correspondences—sounds that changed differently in one language due to a phonological environment that no longer exists—are hard to learn from limited training data.</p>
 <p><strong>Low-frequency vocabulary</strong>: The model generalizes from common patterns. Words with unusual phoneme combinations or words belonging to small semantic categories may be poorly represented in training data.</p>
 <p><strong>Unattested languages</strong>: A model trained on Romance languages cannot directly reconstruct Proto-Indo-European—the training distribution is too different. Transfer learning (pre-training on many language families, fine-tuning on the target) is an active research area.</p>
 </section>
-<section id="summary" class="level2" data-number="8.8">
-<h2 data-number="8.8" class="anchored" data-anchor-id="summary"><span class="header-section-number">8.8</span> Summary</h2>
+<section id="summary" class="level2" data-number="8.9">
+<h2 data-number="8.9" class="anchored" data-anchor-id="summary"><span class="header-section-number">8.9</span> Summary</h2>
 <p>Proto-language reconstruction is a sequence-to-sequence problem: map a set of aligned modern reflexes to their ancestral proto-form. A simple majority-vote baseline reveals the problem structure and sets a floor. Encoder-decoder neural models—particularly transformers with attention over multiple input languages—achieve character error rates of 12–15% on the Romance benchmark, substantially better than earlier methods. Attention mechanisms allow the decoder to selectively weight different input languages at different output positions. Systematic failure modes cluster around morphological endings, rare correspondences, and out-of-distribution vocabulary. The outputs of reconstruction are uncertain: they are predictions, not facts, and they require expert review before being cited as linguistic evidence.</p>
 </section>
-<section id="further-reading" class="level2" data-number="8.9">
-<h2 data-number="8.9" class="anchored" data-anchor-id="further-reading"><span class="header-section-number">8.9</span> Further Reading</h2>
+<section id="further-reading" class="level2" data-number="8.10">
+<h2 data-number="8.10" class="anchored" data-anchor-id="further-reading"><span class="header-section-number">8.10</span> Further Reading</h2>
 <ul>
 <li>Ciobanu, A. M., &amp; Dinu, L. P. (2018). Ab Initio: Automatic Latin Proto-word reconstruction. <em>COLING 2018</em>.</li>
 <li>Meloni, C., et al.&nbsp;(2021). Ab Antiquo: Neural proto-language reconstruction. <em>NAACL 2021</em>. Transformer approach.</li>
@@ -1394,28 +1402,38 @@ Figure&nbsp;8.2: Character error rate (CER) comparison across reconstruction met
 <span id="cb6-217"><a href="#cb6-217" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
 <span id="cb6-218"><a href="#cb6-218" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb6-219"><a href="#cb6-219" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-220"><a href="#cb6-220" aria-hidden="true" tabindex="-1"></a><span class="fu">## Where Models Fail</span></span>
+<span id="cb6-220"><a href="#cb6-220" aria-hidden="true" tabindex="-1"></a><span class="fu">## What the Model Actually Learns</span></span>
 <span id="cb6-221"><a href="#cb6-221" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-222"><a href="#cb6-222" aria-hidden="true" tabindex="-1"></a>Neural reconstruction models fail in characteristic ways:</span>
+<span id="cb6-222"><a href="#cb6-222" aria-hidden="true" tabindex="-1"></a>It is tempting to describe what the neural model does as "learning the sound laws in reverse"—and this is approximately right, but the approximation hides something interesting.</span>
 <span id="cb6-223"><a href="#cb6-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-224"><a href="#cb6-224" aria-hidden="true" tabindex="-1"></a>**Morphological endings**: Modern Romance languages have largely dropped Latin case endings. The accusative *-m* and *-em* endings are invisible in modern forms. Models trained on the accusative forms learn to append *-m* frequently but often predict the wrong vowel before it.</span>
+<span id="cb6-224"><a href="#cb6-224" aria-hidden="true" tabindex="-1"></a>A traditional linguist reconstructing *noctem* from Romance descendants works through a series of explicitly stated rules: French *nuit* reflects *\*nok-te-m* → *\*noite* → *nuit* through a series of documented changes. Each step is labeled, justified, and reversible. The model does not work this way. It learns a direct mapping from the set of modern forms to the proto-form, without any explicit intermediate representation of the sound change rules.</span>
 <span id="cb6-225"><a href="#cb6-225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-226"><a href="#cb6-226" aria-hidden="true" tabindex="-1"></a>**Rare sound changes**: Irregular correspondences—sounds that changed differently in one language due to a phonological environment that no longer exists—are hard to learn from limited training data.</span>
+<span id="cb6-226"><a href="#cb6-226" aria-hidden="true" tabindex="-1"></a>What the attention mechanism learns—and this has been partially interpretable through visualization—is something that looks like a learned sound correspondence table. At each output position, the attention weights over the input languages tend to cluster around specific positions in the input sequences. When the model is generating a consonant that was preserved differently in different languages (e.g., the *kt* cluster in NIGHT), it learns to weight Latin and Lithuanian more heavily because those languages preserve the cluster more faithfully than French or Spanish. When it is generating a vowel that was preserved in some languages and lost in others, it learns to weight the languages that retained it.</span>
 <span id="cb6-227"><a href="#cb6-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-228"><a href="#cb6-228" aria-hidden="true" tabindex="-1"></a>**Low-frequency vocabulary**: The model generalizes from common patterns. Words with unusual phoneme combinations or words belonging to small semantic categories may be poorly represented in training data.</span>
+<span id="cb6-228"><a href="#cb6-228" aria-hidden="true" tabindex="-1"></a>This is not quite the same as applying the comparative method—it lacks the step-by-step justification and the explicit rules—but it is learning a representation of the same underlying regularities. The model's output is not a black box producing arbitrary outputs; it is a differentiable approximation of expert linguistic reasoning, with all the strengths (speed, scale) and weaknesses (no explicit justification, failure on out-of-distribution inputs) that implies.</span>
 <span id="cb6-229"><a href="#cb6-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-230"><a href="#cb6-230" aria-hidden="true" tabindex="-1"></a>**Unattested languages**: A model trained on Romance languages cannot directly reconstruct Proto-Indo-European—the training distribution is too different. Transfer learning (pre-training on many language families, fine-tuning on the target) is an active research area.</span>
+<span id="cb6-230"><a href="#cb6-230" aria-hidden="true" tabindex="-1"></a><span class="fu">## Where Models Fail</span></span>
 <span id="cb6-231"><a href="#cb6-231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-232"><a href="#cb6-232" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
+<span id="cb6-232"><a href="#cb6-232" aria-hidden="true" tabindex="-1"></a>Neural reconstruction models fail in characteristic ways:</span>
 <span id="cb6-233"><a href="#cb6-233" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-234"><a href="#cb6-234" aria-hidden="true" tabindex="-1"></a>Proto-language reconstruction is a sequence-to-sequence problem: map a set of aligned modern reflexes to their ancestral proto-form. A simple majority-vote baseline reveals the problem structure and sets a floor. Encoder-decoder neural models—particularly transformers with attention over multiple input languages—achieve character error rates of 12–15% on the Romance benchmark, substantially better than earlier methods. Attention mechanisms allow the decoder to selectively weight different input languages at different output positions. Systematic failure modes cluster around morphological endings, rare correspondences, and out-of-distribution vocabulary. The outputs of reconstruction are uncertain: they are predictions, not facts, and they require expert review before being cited as linguistic evidence.</span>
+<span id="cb6-234"><a href="#cb6-234" aria-hidden="true" tabindex="-1"></a>**Morphological endings**: Modern Romance languages have largely dropped Latin case endings. The accusative *-m* and *-em* endings are invisible in modern forms. Models trained on the accusative forms learn to append *-m* frequently but often predict the wrong vowel before it.</span>
 <span id="cb6-235"><a href="#cb6-235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-236"><a href="#cb6-236" aria-hidden="true" tabindex="-1"></a><span class="fu">## Further Reading</span></span>
+<span id="cb6-236"><a href="#cb6-236" aria-hidden="true" tabindex="-1"></a>**Rare sound changes**: Irregular correspondences—sounds that changed differently in one language due to a phonological environment that no longer exists—are hard to learn from limited training data.</span>
 <span id="cb6-237"><a href="#cb6-237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-238"><a href="#cb6-238" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Ciobanu, A. M., &amp; Dinu, L. P. (2018). Ab Initio: Automatic Latin Proto-word reconstruction. *COLING 2018*.</span>
-<span id="cb6-239"><a href="#cb6-239" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Meloni, C., et al. (2021). Ab Antiquo: Neural proto-language reconstruction. *NAACL 2021*. Transformer approach.</span>
-<span id="cb6-240"><a href="#cb6-240" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Sutskever, I., Vinyals, O., &amp; Le, Q. V. (2014). Sequence to sequence learning with neural networks. *NIPS 2014*.</span>
-<span id="cb6-241"><a href="#cb6-241" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Bahdanau, D., Cho, K., &amp; Bengio, Y. (2015). Neural machine translation by jointly learning to align and translate. *ICLR 2015*. The original attention paper.</span>
+<span id="cb6-238"><a href="#cb6-238" aria-hidden="true" tabindex="-1"></a>**Low-frequency vocabulary**: The model generalizes from common patterns. Words with unusual phoneme combinations or words belonging to small semantic categories may be poorly represented in training data.</span>
+<span id="cb6-239"><a href="#cb6-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-240"><a href="#cb6-240" aria-hidden="true" tabindex="-1"></a>**Unattested languages**: A model trained on Romance languages cannot directly reconstruct Proto-Indo-European—the training distribution is too different. Transfer learning (pre-training on many language families, fine-tuning on the target) is an active research area.</span>
+<span id="cb6-241"><a href="#cb6-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-242"><a href="#cb6-242" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
+<span id="cb6-243"><a href="#cb6-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-244"><a href="#cb6-244" aria-hidden="true" tabindex="-1"></a>Proto-language reconstruction is a sequence-to-sequence problem: map a set of aligned modern reflexes to their ancestral proto-form. A simple majority-vote baseline reveals the problem structure and sets a floor. Encoder-decoder neural models—particularly transformers with attention over multiple input languages—achieve character error rates of 12–15% on the Romance benchmark, substantially better than earlier methods. Attention mechanisms allow the decoder to selectively weight different input languages at different output positions. Systematic failure modes cluster around morphological endings, rare correspondences, and out-of-distribution vocabulary. The outputs of reconstruction are uncertain: they are predictions, not facts, and they require expert review before being cited as linguistic evidence.</span>
+<span id="cb6-245"><a href="#cb6-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-246"><a href="#cb6-246" aria-hidden="true" tabindex="-1"></a><span class="fu">## Further Reading</span></span>
+<span id="cb6-247"><a href="#cb6-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-248"><a href="#cb6-248" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Ciobanu, A. M., &amp; Dinu, L. P. (2018). Ab Initio: Automatic Latin Proto-word reconstruction. *COLING 2018*.</span>
+<span id="cb6-249"><a href="#cb6-249" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Meloni, C., et al. (2021). Ab Antiquo: Neural proto-language reconstruction. *NAACL 2021*. Transformer approach.</span>
+<span id="cb6-250"><a href="#cb6-250" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Sutskever, I., Vinyals, O., &amp; Le, Q. V. (2014). Sequence to sequence learning with neural networks. *NIPS 2014*.</span>
+<span id="cb6-251"><a href="#cb6-251" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Bahdanau, D., Cho, K., &amp; Bengio, Y. (2015). Neural machine translation by jointly learning to align and translate. *ICLR 2015*. The original attention paper.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

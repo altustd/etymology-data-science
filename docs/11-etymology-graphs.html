@@ -311,11 +311,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#the-web-behind-the-words" id="toc-the-web-behind-the-words" class="nav-link active" data-scroll-target="#the-web-behind-the-words"><span class="header-section-number">12.1</span> The Web Behind the Words</a></li>
   <li><a href="#graph-schema-for-etymology" id="toc-graph-schema-for-etymology" class="nav-link" data-scroll-target="#graph-schema-for-etymology"><span class="header-section-number">12.2</span> Graph Schema for Etymology</a></li>
-  <li><a href="#graph-queries" id="toc-graph-queries" class="nav-link" data-scroll-target="#graph-queries"><span class="header-section-number">12.3</span> Graph Queries</a></li>
-  <li><a href="#scaling-up-wiktionary-as-a-graph" id="toc-scaling-up-wiktionary-as-a-graph" class="nav-link" data-scroll-target="#scaling-up-wiktionary-as-a-graph"><span class="header-section-number">12.4</span> Scaling Up: Wiktionary as a Graph</a></li>
-  <li><a href="#community-detection-natural-clusters-in-etymology" id="toc-community-detection-natural-clusters-in-etymology" class="nav-link" data-scroll-target="#community-detection-natural-clusters-in-etymology"><span class="header-section-number">12.5</span> Community Detection: Natural Clusters in Etymology</a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">12.6</span> Summary</a></li>
-  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">12.7</span> Further Reading</a></li>
+  <li><a href="#why-graphs-beat-tables-for-etymology" id="toc-why-graphs-beat-tables-for-etymology" class="nav-link" data-scroll-target="#why-graphs-beat-tables-for-etymology"><span class="header-section-number">12.3</span> Why Graphs Beat Tables for Etymology</a></li>
+  <li><a href="#graph-queries" id="toc-graph-queries" class="nav-link" data-scroll-target="#graph-queries"><span class="header-section-number">12.4</span> Graph Queries</a></li>
+  <li><a href="#scaling-up-wiktionary-as-a-graph" id="toc-scaling-up-wiktionary-as-a-graph" class="nav-link" data-scroll-target="#scaling-up-wiktionary-as-a-graph"><span class="header-section-number">12.5</span> Scaling Up: Wiktionary as a Graph</a></li>
+  <li><a href="#community-detection-natural-clusters-in-etymology" id="toc-community-detection-natural-clusters-in-etymology" class="nav-link" data-scroll-target="#community-detection-natural-clusters-in-etymology"><span class="header-section-number">12.6</span> Community Detection: Natural Clusters in Etymology</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">12.7</span> Summary</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">12.8</span> Further Reading</a></li>
   </ul>
 </nav>
     </div>
@@ -431,21 +432,21 @@ Listing&nbsp;12.1: Building an etymology graph for the PIE root *nekʷ-t- (night
 <pre><code>Graph: 16 nodes, 15 edges
 
 Descendants of PIE:*nókʷts:
-  ES:noche
-  FR:nuit
-  Lat:noctem
-  OE:niht
   DE:Nacht
-  PGmc:*naht-
-  Eng:night
-  OIr:nochd
-  Lat:nox
-  Lat:nocturnal
+  FR:nuit
   Eng:nocturnal
+  Skt:nakta-
+  Lat:noctem
+  PGmc:*naht-
   Grk:nýks
   Lat:equinox
-  Skt:nakta-
-  IT:notte</code></pre>
+  ES:noche
+  Lat:nocturnal
+  Lat:nox
+  Eng:night
+  IT:notte
+  OIr:nochd
+  OE:niht</code></pre>
 </div>
 </div>
 </figure>
@@ -517,8 +518,15 @@ Figure&nbsp;12.1: Etymology graph for PIE *nókʷts (night) and its descendants.
 </div>
 </div>
 </section>
-<section id="graph-queries" class="level2" data-number="12.3">
-<h2 data-number="12.3" class="anchored" data-anchor-id="graph-queries"><span class="header-section-number">12.3</span> Graph Queries</h2>
+<section id="why-graphs-beat-tables-for-etymology" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="why-graphs-beat-tables-for-etymology"><span class="header-section-number">12.3</span> Why Graphs Beat Tables for Etymology</h2>
+<p>A relational database of etymological data—the obvious first choice for anyone with a data engineering background—runs into structural problems quickly.</p>
+<p>Consider how you would store the relationship between Latin <em>nox</em> and English <em>night</em>. In a table, you might have a row for Latin <em>nox</em> and a row for English <em>night</em>, connected by a foreign key indicating “descended from the same proto-form.” But what if you also want to store that Latin <em>nox</em> is the source of the English borrowings <em>nocturnal</em>, <em>equinox</em>, and <em>noctule</em> (a species of bat)? And that <em>noctule</em> was borrowed in the eighteenth century while <em>equinox</em> was borrowed in the fourteenth? And that <em>equinox</em> is itself a compound of <em>nox</em> and a form of <em>aequus</em>? And that <em>aequus</em> has its own descendants?</p>
+<p>A table can store all of this—but querying it requires recursive joins, which are cumbersome in standard SQL and catastrophically slow on large datasets. The query “find all English words that, through any chain of derivation or descent, trace back to Proto-Indo-European root *nókʷts” is a transitive closure query—the exact operation that relational databases are worst at and that graph databases are optimized for.</p>
+<p>The graph model is the natural fit because etymology <em>is</em> a graph. Words are not independent items in a list; they are nodes in a network of relationships, and the interesting questions about etymology are almost all about paths through that network. Which words share a common ancestor? How many steps separates two apparently unrelated words? Which roots have the most descendants? These are graph traversal questions, not table lookup questions, and the right data structure for graph traversal questions is a graph.</p>
+</section>
+<section id="graph-queries" class="level2" data-number="12.4">
+<h2 data-number="12.4" class="anchored" data-anchor-id="graph-queries"><span class="header-section-number">12.4</span> Graph Queries</h2>
 <p>The power of graph representation is queryability. Here are canonical queries for etymological research:</p>
 <div id="lst-queries" class="cell listing quarto-float quarto-figure quarto-figure-left anchored" data-execution_count="4">
 <figure class="quarto-float quarto-float-lst figure">
@@ -568,7 +576,7 @@ Listing&nbsp;12.2: Etymological graph queries using NetworkX.
 <span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>pair_list[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> ↔ </span><span class="sc">{</span>pair_list[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>English descendants of PIE *nókʷts: ['Eng:night', 'Eng:nocturnal']
+<pre><code>English descendants of PIE *nókʷts: ['Eng:nocturnal', 'Eng:night']
 
 No directed path found.
 
@@ -582,17 +590,17 @@ Top nodes by number of direct descendants:
 Cognate pairs in graph: 91
 Sample cognate pairs:
   FR:nuit ↔ OIr:nochd
-  OE:niht ↔ Lat:nocturnal
-  ES:noche ↔ IT:notte
-  Skt:nakta- ↔ OIr:nochd
-  Lat:nocturnal ↔ Lat:noctem</code></pre>
+  Lat:nox ↔ Lat:noctem
+  DE:Nacht ↔ IT:notte
+  Lat:nox ↔ Skt:nakta-
+  Eng:nocturnal ↔ OIr:nochd</code></pre>
 </div>
 </div>
 </figure>
 </div>
 </section>
-<section id="scaling-up-wiktionary-as-a-graph" class="level2" data-number="12.4">
-<h2 data-number="12.4" class="anchored" data-anchor-id="scaling-up-wiktionary-as-a-graph"><span class="header-section-number">12.4</span> Scaling Up: Wiktionary as a Graph</h2>
+<section id="scaling-up-wiktionary-as-a-graph" class="level2" data-number="12.5">
+<h2 data-number="12.5" class="anchored" data-anchor-id="scaling-up-wiktionary-as-a-graph"><span class="header-section-number">12.5</span> Scaling Up: Wiktionary as a Graph</h2>
 <p>The same schema applies at scale. Wiktionary’s English edition has been parsed into machine-readable format by the EtymWordNet and EtymoLinks projects. A full Wiktionary etymology graph contains:</p>
 <ul>
 <li>~1.2 million word nodes</li>
@@ -606,8 +614,8 @@ Sample cognate pairs:
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># RETURN w.form, r.form, length(path) as hops</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ORDER BY hops ASC</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="community-detection-natural-clusters-in-etymology" class="level2" data-number="12.5">
-<h2 data-number="12.5" class="anchored" data-anchor-id="community-detection-natural-clusters-in-etymology"><span class="header-section-number">12.5</span> Community Detection: Natural Clusters in Etymology</h2>
+<section id="community-detection-natural-clusters-in-etymology" class="level2" data-number="12.6">
+<h2 data-number="12.6" class="anchored" data-anchor-id="community-detection-natural-clusters-in-etymology"><span class="header-section-number">12.6</span> Community Detection: Natural Clusters in Etymology</h2>
 <p>Etymology graphs have community structure: clusters of words that are more densely connected to each other than to the rest of the graph. These communities often correspond to meaningful linguistic groupings.</p>
 <div id="cell-fig-community" class="cell" data-execution_count="5">
 <details class="code-fold">
@@ -658,12 +666,12 @@ Figure&nbsp;12.2: Community structure in the etymology graph (simulated larger g
 </div>
 </div>
 </section>
-<section id="summary" class="level2" data-number="12.6">
-<h2 data-number="12.6" class="anchored" data-anchor-id="summary"><span class="header-section-number">12.6</span> Summary</h2>
+<section id="summary" class="level2" data-number="12.7">
+<h2 data-number="12.7" class="anchored" data-anchor-id="summary"><span class="header-section-number">12.7</span> Summary</h2>
 <p>Etymology graphs represent words as nodes and historical relationships (descent, borrowing, derivation) as typed, directed edges. This representation enables queries that are impossible in prose: finding all descendants of a proto-root, computing the shortest path between two words through their common ancestor, identifying the most productive roots (by number of descendants), and detecting cognate pairs automatically from transitive descent relationships. At the scale of a single language family, NetworkX provides all necessary tools. At Wiktionary scale (millions of nodes), graph databases like Neo4j are required. Community detection algorithms applied to etymology graphs recover linguistically meaningful clusters that correspond to language families and borrowing strata. The structured etymology dataset produced in Chapter 10 feeds directly into the graph construction pipeline described here.</p>
 </section>
-<section id="further-reading" class="level2" data-number="12.7">
-<h2 data-number="12.7" class="anchored" data-anchor-id="further-reading"><span class="header-section-number">12.7</span> Further Reading</h2>
+<section id="further-reading" class="level2" data-number="12.8">
+<h2 data-number="12.8" class="anchored" data-anchor-id="further-reading"><span class="header-section-number">12.8</span> Further Reading</h2>
 <ul>
 <li>Navigli, R., &amp; Ponzetto, S. P. (2012). BabelNet: The automatic construction, evaluation and application of a wide-coverage multilingual semantic network. <em>Artificial Intelligence</em>.</li>
 <li>Tahmasebi, N., et al.&nbsp;(2018). On the uses of word sense change for research in the digital humanities. <em>Historical Methods</em>.</li>
@@ -1294,124 +1302,134 @@ Figure&nbsp;12.2: Community structure in the etymology graph (simulated larger g
 <span id="cb8-158"><a href="#cb8-158" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
 <span id="cb8-159"><a href="#cb8-159" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb8-160"><a href="#cb8-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-161"><a href="#cb8-161" aria-hidden="true" tabindex="-1"></a><span class="fu">## Graph Queries</span></span>
+<span id="cb8-161"><a href="#cb8-161" aria-hidden="true" tabindex="-1"></a><span class="fu">## Why Graphs Beat Tables for Etymology</span></span>
 <span id="cb8-162"><a href="#cb8-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-163"><a href="#cb8-163" aria-hidden="true" tabindex="-1"></a>The power of graph representation is queryability. Here are canonical queries for etymological research:</span>
+<span id="cb8-163"><a href="#cb8-163" aria-hidden="true" tabindex="-1"></a>A relational database of etymological data—the obvious first choice for anyone with a data engineering background—runs into structural problems quickly.</span>
 <span id="cb8-164"><a href="#cb8-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-167"><a href="#cb8-167" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb8-168"><a href="#cb8-168" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: lst-queries</span></span>
-<span id="cb8-169"><a href="#cb8-169" aria-hidden="true" tabindex="-1"></a><span class="co">#| lst-cap: "Etymological graph queries using NetworkX."</span></span>
+<span id="cb8-165"><a href="#cb8-165" aria-hidden="true" tabindex="-1"></a>Consider how you would store the relationship between Latin *nox* and English *night*. In a table, you might have a row for Latin *nox* and a row for English *night*, connected by a foreign key indicating "descended from the same proto-form." But what if you also want to store that Latin *nox* is the source of the English borrowings *nocturnal*, *equinox*, and *noctule* (a species of bat)? And that *noctule* was borrowed in the eighteenth century while *equinox* was borrowed in the fourteenth? And that *equinox* is itself a compound of *nox* and a form of *aequus*? And that *aequus* has its own descendants?</span>
+<span id="cb8-166"><a href="#cb8-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-167"><a href="#cb8-167" aria-hidden="true" tabindex="-1"></a>A table can store all of this—but querying it requires recursive joins, which are cumbersome in standard SQL and catastrophically slow on large datasets. The query "find all English words that, through any chain of derivation or descent, trace back to Proto-Indo-European root <span class="sc">\*</span>nókʷts" is a transitive closure query—the exact operation that relational databases are worst at and that graph databases are optimized for.</span>
+<span id="cb8-168"><a href="#cb8-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-169"><a href="#cb8-169" aria-hidden="true" tabindex="-1"></a>The graph model is the natural fit because etymology *is* a graph. Words are not independent items in a list; they are nodes in a network of relationships, and the interesting questions about etymology are almost all about paths through that network. Which words share a common ancestor? How many steps separates two apparently unrelated words? Which roots have the most descendants? These are graph traversal questions, not table lookup questions, and the right data structure for graph traversal questions is a graph.</span>
 <span id="cb8-170"><a href="#cb8-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-171"><a href="#cb8-171" aria-hidden="true" tabindex="-1"></a><span class="co"># Q1: All English words descended (transitively) from a given root</span></span>
-<span id="cb8-172"><a href="#cb8-172" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> descendants_in_language(G, root_node, language_prefix):</span>
-<span id="cb8-173"><a href="#cb8-173" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [n <span class="cf">for</span> n <span class="kw">in</span> nx.descendants(G, root_node) <span class="cf">if</span> n.startswith(language_prefix)]</span>
+<span id="cb8-171"><a href="#cb8-171" aria-hidden="true" tabindex="-1"></a><span class="fu">## Graph Queries</span></span>
+<span id="cb8-172"><a href="#cb8-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-173"><a href="#cb8-173" aria-hidden="true" tabindex="-1"></a>The power of graph representation is queryability. Here are canonical queries for etymological research:</span>
 <span id="cb8-174"><a href="#cb8-174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-175"><a href="#cb8-175" aria-hidden="true" tabindex="-1"></a>eng_descendants <span class="op">=</span> descendants_in_language(G, <span class="st">"PIE:*nókʷts"</span>, <span class="st">"Eng:"</span>)</span>
-<span id="cb8-176"><a href="#cb8-176" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"English descendants of PIE *nókʷts: </span><span class="sc">{</span>eng_descendants<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb8-177"><a href="#cb8-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-178"><a href="#cb8-178" aria-hidden="true" tabindex="-1"></a><span class="co"># Q2: Shortest path between two words (common ancestor chain)</span></span>
-<span id="cb8-179"><a href="#cb8-179" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
-<span id="cb8-180"><a href="#cb8-180" aria-hidden="true" tabindex="-1"></a>    path <span class="op">=</span> nx.shortest_path(G.reverse(), <span class="st">"Eng:night"</span>, <span class="st">"FR:nuit"</span>)</span>
-<span id="cb8-181"><a href="#cb8-181" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Path Eng:night ← FR:nuit (common ancestor): </span><span class="sc">{</span>path<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb8-182"><a href="#cb8-182" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> nx.NetworkXNoPath:</span>
-<span id="cb8-183"><a href="#cb8-183" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">No directed path found."</span>)</span>
+<span id="cb8-177"><a href="#cb8-177" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb8-178"><a href="#cb8-178" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: lst-queries</span></span>
+<span id="cb8-179"><a href="#cb8-179" aria-hidden="true" tabindex="-1"></a><span class="co">#| lst-cap: "Etymological graph queries using NetworkX."</span></span>
+<span id="cb8-180"><a href="#cb8-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-181"><a href="#cb8-181" aria-hidden="true" tabindex="-1"></a><span class="co"># Q1: All English words descended (transitively) from a given root</span></span>
+<span id="cb8-182"><a href="#cb8-182" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> descendants_in_language(G, root_node, language_prefix):</span>
+<span id="cb8-183"><a href="#cb8-183" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [n <span class="cf">for</span> n <span class="kw">in</span> nx.descendants(G, root_node) <span class="cf">if</span> n.startswith(language_prefix)]</span>
 <span id="cb8-184"><a href="#cb8-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-185"><a href="#cb8-185" aria-hidden="true" tabindex="-1"></a><span class="co"># Q3: Most influential nodes (highest out-degree = most descendants)</span></span>
-<span id="cb8-186"><a href="#cb8-186" aria-hidden="true" tabindex="-1"></a>out_degrees <span class="op">=</span> <span class="bu">sorted</span>(G.out_degree(), key<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="dv">1</span>], reverse<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb8-187"><a href="#cb8-187" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Top nodes by number of direct descendants:"</span>)</span>
-<span id="cb8-188"><a href="#cb8-188" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> node, deg <span class="kw">in</span> out_degrees[:<span class="dv">5</span>]:</span>
-<span id="cb8-189"><a href="#cb8-189" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>node<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>deg<span class="sc">}</span><span class="ss"> direct descendants"</span>)</span>
-<span id="cb8-190"><a href="#cb8-190" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-191"><a href="#cb8-191" aria-hidden="true" tabindex="-1"></a><span class="co"># Q4: Find all cognate pairs (share a common proto-ancestor)</span></span>
-<span id="cb8-192"><a href="#cb8-192" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> find_cognates(G):</span>
-<span id="cb8-193"><a href="#cb8-193" aria-hidden="true" tabindex="-1"></a>    cognate_pairs <span class="op">=</span> <span class="bu">set</span>()</span>
-<span id="cb8-194"><a href="#cb8-194" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> node <span class="kw">in</span> G.nodes():</span>
-<span id="cb8-195"><a href="#cb8-195" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> G.nodes[node].get(<span class="st">"type"</span>) <span class="op">==</span> <span class="st">"root"</span>:</span>
-<span id="cb8-196"><a href="#cb8-196" aria-hidden="true" tabindex="-1"></a>            descendants <span class="op">=</span> <span class="bu">list</span>(nx.descendants(G, node))</span>
-<span id="cb8-197"><a href="#cb8-197" aria-hidden="true" tabindex="-1"></a>            words <span class="op">=</span> [d <span class="cf">for</span> d <span class="kw">in</span> descendants <span class="cf">if</span> G.nodes[d].get(<span class="st">"type"</span>) <span class="op">==</span> <span class="st">"word"</span>]</span>
-<span id="cb8-198"><a href="#cb8-198" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> i, w1 <span class="kw">in</span> <span class="bu">enumerate</span>(words):</span>
-<span id="cb8-199"><a href="#cb8-199" aria-hidden="true" tabindex="-1"></a>                <span class="cf">for</span> w2 <span class="kw">in</span> words[i<span class="op">+</span><span class="dv">1</span>:]:</span>
-<span id="cb8-200"><a href="#cb8-200" aria-hidden="true" tabindex="-1"></a>                    cognate_pairs.add(<span class="bu">frozenset</span>([w1, w2]))</span>
-<span id="cb8-201"><a href="#cb8-201" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> cognate_pairs</span>
-<span id="cb8-202"><a href="#cb8-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-203"><a href="#cb8-203" aria-hidden="true" tabindex="-1"></a>cognates <span class="op">=</span> find_cognates(G)</span>
-<span id="cb8-204"><a href="#cb8-204" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Cognate pairs in graph: </span><span class="sc">{</span><span class="bu">len</span>(cognates)<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb8-205"><a href="#cb8-205" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Sample cognate pairs:"</span>)</span>
-<span id="cb8-206"><a href="#cb8-206" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> pair <span class="kw">in</span> <span class="bu">list</span>(cognates)[:<span class="dv">5</span>]:</span>
-<span id="cb8-207"><a href="#cb8-207" aria-hidden="true" tabindex="-1"></a>    pair_list <span class="op">=</span> <span class="bu">list</span>(pair)</span>
-<span id="cb8-208"><a href="#cb8-208" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>pair_list[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> ↔ </span><span class="sc">{</span>pair_list[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb8-209"><a href="#cb8-209" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-210"><a href="#cb8-210" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-211"><a href="#cb8-211" aria-hidden="true" tabindex="-1"></a><span class="fu">## Scaling Up: Wiktionary as a Graph</span></span>
+<span id="cb8-185"><a href="#cb8-185" aria-hidden="true" tabindex="-1"></a>eng_descendants <span class="op">=</span> descendants_in_language(G, <span class="st">"PIE:*nókʷts"</span>, <span class="st">"Eng:"</span>)</span>
+<span id="cb8-186"><a href="#cb8-186" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"English descendants of PIE *nókʷts: </span><span class="sc">{</span>eng_descendants<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb8-187"><a href="#cb8-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-188"><a href="#cb8-188" aria-hidden="true" tabindex="-1"></a><span class="co"># Q2: Shortest path between two words (common ancestor chain)</span></span>
+<span id="cb8-189"><a href="#cb8-189" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb8-190"><a href="#cb8-190" aria-hidden="true" tabindex="-1"></a>    path <span class="op">=</span> nx.shortest_path(G.reverse(), <span class="st">"Eng:night"</span>, <span class="st">"FR:nuit"</span>)</span>
+<span id="cb8-191"><a href="#cb8-191" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Path Eng:night ← FR:nuit (common ancestor): </span><span class="sc">{</span>path<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb8-192"><a href="#cb8-192" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> nx.NetworkXNoPath:</span>
+<span id="cb8-193"><a href="#cb8-193" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">No directed path found."</span>)</span>
+<span id="cb8-194"><a href="#cb8-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-195"><a href="#cb8-195" aria-hidden="true" tabindex="-1"></a><span class="co"># Q3: Most influential nodes (highest out-degree = most descendants)</span></span>
+<span id="cb8-196"><a href="#cb8-196" aria-hidden="true" tabindex="-1"></a>out_degrees <span class="op">=</span> <span class="bu">sorted</span>(G.out_degree(), key<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="dv">1</span>], reverse<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb8-197"><a href="#cb8-197" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Top nodes by number of direct descendants:"</span>)</span>
+<span id="cb8-198"><a href="#cb8-198" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> node, deg <span class="kw">in</span> out_degrees[:<span class="dv">5</span>]:</span>
+<span id="cb8-199"><a href="#cb8-199" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>node<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>deg<span class="sc">}</span><span class="ss"> direct descendants"</span>)</span>
+<span id="cb8-200"><a href="#cb8-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-201"><a href="#cb8-201" aria-hidden="true" tabindex="-1"></a><span class="co"># Q4: Find all cognate pairs (share a common proto-ancestor)</span></span>
+<span id="cb8-202"><a href="#cb8-202" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> find_cognates(G):</span>
+<span id="cb8-203"><a href="#cb8-203" aria-hidden="true" tabindex="-1"></a>    cognate_pairs <span class="op">=</span> <span class="bu">set</span>()</span>
+<span id="cb8-204"><a href="#cb8-204" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> node <span class="kw">in</span> G.nodes():</span>
+<span id="cb8-205"><a href="#cb8-205" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> G.nodes[node].get(<span class="st">"type"</span>) <span class="op">==</span> <span class="st">"root"</span>:</span>
+<span id="cb8-206"><a href="#cb8-206" aria-hidden="true" tabindex="-1"></a>            descendants <span class="op">=</span> <span class="bu">list</span>(nx.descendants(G, node))</span>
+<span id="cb8-207"><a href="#cb8-207" aria-hidden="true" tabindex="-1"></a>            words <span class="op">=</span> [d <span class="cf">for</span> d <span class="kw">in</span> descendants <span class="cf">if</span> G.nodes[d].get(<span class="st">"type"</span>) <span class="op">==</span> <span class="st">"word"</span>]</span>
+<span id="cb8-208"><a href="#cb8-208" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> i, w1 <span class="kw">in</span> <span class="bu">enumerate</span>(words):</span>
+<span id="cb8-209"><a href="#cb8-209" aria-hidden="true" tabindex="-1"></a>                <span class="cf">for</span> w2 <span class="kw">in</span> words[i<span class="op">+</span><span class="dv">1</span>:]:</span>
+<span id="cb8-210"><a href="#cb8-210" aria-hidden="true" tabindex="-1"></a>                    cognate_pairs.add(<span class="bu">frozenset</span>([w1, w2]))</span>
+<span id="cb8-211"><a href="#cb8-211" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> cognate_pairs</span>
 <span id="cb8-212"><a href="#cb8-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-213"><a href="#cb8-213" aria-hidden="true" tabindex="-1"></a>The same schema applies at scale. Wiktionary's English edition has been parsed into machine-readable format by the EtymWordNet and EtymoLinks projects. A full Wiktionary etymology graph contains:</span>
-<span id="cb8-214"><a href="#cb8-214" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-215"><a href="#cb8-215" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>~1.2 million word nodes</span>
-<span id="cb8-216"><a href="#cb8-216" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>~50 languages with substantial coverage</span>
-<span id="cb8-217"><a href="#cb8-217" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>~3 million etymological edges (descent, borrowing, derivation)</span>
-<span id="cb8-218"><a href="#cb8-218" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-219"><a href="#cb8-219" aria-hidden="true" tabindex="-1"></a>At this scale, NetworkX becomes slow (it is not designed for graphs of millions of nodes). Production systems use Neo4j (a dedicated graph database) or Apache Spark GraphX for distributed processing.</span>
+<span id="cb8-213"><a href="#cb8-213" aria-hidden="true" tabindex="-1"></a>cognates <span class="op">=</span> find_cognates(G)</span>
+<span id="cb8-214"><a href="#cb8-214" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Cognate pairs in graph: </span><span class="sc">{</span><span class="bu">len</span>(cognates)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb8-215"><a href="#cb8-215" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Sample cognate pairs:"</span>)</span>
+<span id="cb8-216"><a href="#cb8-216" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> pair <span class="kw">in</span> <span class="bu">list</span>(cognates)[:<span class="dv">5</span>]:</span>
+<span id="cb8-217"><a href="#cb8-217" aria-hidden="true" tabindex="-1"></a>    pair_list <span class="op">=</span> <span class="bu">list</span>(pair)</span>
+<span id="cb8-218"><a href="#cb8-218" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>pair_list[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> ↔ </span><span class="sc">{</span>pair_list[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb8-219"><a href="#cb8-219" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb8-220"><a href="#cb8-220" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-221"><a href="#cb8-221" aria-hidden="true" tabindex="-1"></a>Query languages change: instead of Python graph traversal, you write Cypher queries (Neo4j's SQL-like graph query language):</span>
+<span id="cb8-221"><a href="#cb8-221" aria-hidden="true" tabindex="-1"></a><span class="fu">## Scaling Up: Wiktionary as a Graph</span></span>
 <span id="cb8-222"><a href="#cb8-222" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-223"><a href="#cb8-223" aria-hidden="true" tabindex="-1"></a><span class="in">```python</span></span>
-<span id="cb8-224"><a href="#cb8-224" aria-hidden="true" tabindex="-1"></a><span class="co"># Find all English words with Latin roots (in Neo4j Cypher, not executable here)</span></span>
-<span id="cb8-225"><a href="#cb8-225" aria-hidden="true" tabindex="-1"></a><span class="co"># MATCH path = (w:Word {language:'English'})-[:DESCENDED_FROM*]-&gt;(r:Word {language:'Latin'})</span></span>
-<span id="cb8-226"><a href="#cb8-226" aria-hidden="true" tabindex="-1"></a><span class="co"># RETURN w.form, r.form, length(path) as hops</span></span>
-<span id="cb8-227"><a href="#cb8-227" aria-hidden="true" tabindex="-1"></a><span class="co"># ORDER BY hops ASC</span></span>
-<span id="cb8-228"><a href="#cb8-228" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-229"><a href="#cb8-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-230"><a href="#cb8-230" aria-hidden="true" tabindex="-1"></a><span class="fu">## Community Detection: Natural Clusters in Etymology</span></span>
-<span id="cb8-231"><a href="#cb8-231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-232"><a href="#cb8-232" aria-hidden="true" tabindex="-1"></a>Etymology graphs have community structure: clusters of words that are more densely connected to each other than to the rest of the graph. These communities often correspond to meaningful linguistic groupings.</span>
-<span id="cb8-233"><a href="#cb8-233" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-236"><a href="#cb8-236" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb8-237"><a href="#cb8-237" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-community</span></span>
-<span id="cb8-238"><a href="#cb8-238" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Community structure in the etymology graph (simulated larger graph). Colors represent detected communities. Communities roughly correspond to language families and borrowing strata."</span></span>
+<span id="cb8-223"><a href="#cb8-223" aria-hidden="true" tabindex="-1"></a>The same schema applies at scale. Wiktionary's English edition has been parsed into machine-readable format by the EtymWordNet and EtymoLinks projects. A full Wiktionary etymology graph contains:</span>
+<span id="cb8-224"><a href="#cb8-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-225"><a href="#cb8-225" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>~1.2 million word nodes</span>
+<span id="cb8-226"><a href="#cb8-226" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>~50 languages with substantial coverage</span>
+<span id="cb8-227"><a href="#cb8-227" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>~3 million etymological edges (descent, borrowing, derivation)</span>
+<span id="cb8-228"><a href="#cb8-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-229"><a href="#cb8-229" aria-hidden="true" tabindex="-1"></a>At this scale, NetworkX becomes slow (it is not designed for graphs of millions of nodes). Production systems use Neo4j (a dedicated graph database) or Apache Spark GraphX for distributed processing.</span>
+<span id="cb8-230"><a href="#cb8-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-231"><a href="#cb8-231" aria-hidden="true" tabindex="-1"></a>Query languages change: instead of Python graph traversal, you write Cypher queries (Neo4j's SQL-like graph query language):</span>
+<span id="cb8-232"><a href="#cb8-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-233"><a href="#cb8-233" aria-hidden="true" tabindex="-1"></a><span class="in">```python</span></span>
+<span id="cb8-234"><a href="#cb8-234" aria-hidden="true" tabindex="-1"></a><span class="co"># Find all English words with Latin roots (in Neo4j Cypher, not executable here)</span></span>
+<span id="cb8-235"><a href="#cb8-235" aria-hidden="true" tabindex="-1"></a><span class="co"># MATCH path = (w:Word {language:'English'})-[:DESCENDED_FROM*]-&gt;(r:Word {language:'Latin'})</span></span>
+<span id="cb8-236"><a href="#cb8-236" aria-hidden="true" tabindex="-1"></a><span class="co"># RETURN w.form, r.form, length(path) as hops</span></span>
+<span id="cb8-237"><a href="#cb8-237" aria-hidden="true" tabindex="-1"></a><span class="co"># ORDER BY hops ASC</span></span>
+<span id="cb8-238"><a href="#cb8-238" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb8-239"><a href="#cb8-239" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-240"><a href="#cb8-240" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">42</span>)</span>
-<span id="cb8-241"><a href="#cb8-241" aria-hidden="true" tabindex="-1"></a>G_large <span class="op">=</span> nx.stochastic_block_model(</span>
-<span id="cb8-242"><a href="#cb8-242" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">8</span>, <span class="dv">8</span>, <span class="dv">8</span>, <span class="dv">6</span>],</span>
-<span id="cb8-243"><a href="#cb8-243" aria-hidden="true" tabindex="-1"></a>    [[<span class="fl">0.6</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>, <span class="fl">0.15</span>],</span>
-<span id="cb8-244"><a href="#cb8-244" aria-hidden="true" tabindex="-1"></a>     [<span class="fl">0.1</span>, <span class="fl">0.6</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>],</span>
-<span id="cb8-245"><a href="#cb8-245" aria-hidden="true" tabindex="-1"></a>     [<span class="fl">0.05</span>, <span class="fl">0.1</span>, <span class="fl">0.65</span>, <span class="fl">0.05</span>],</span>
-<span id="cb8-246"><a href="#cb8-246" aria-hidden="true" tabindex="-1"></a>     [<span class="fl">0.15</span>, <span class="fl">0.05</span>, <span class="fl">0.05</span>, <span class="fl">0.5</span>]],</span>
-<span id="cb8-247"><a href="#cb8-247" aria-hidden="true" tabindex="-1"></a>    seed<span class="op">=</span><span class="dv">42</span></span>
-<span id="cb8-248"><a href="#cb8-248" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-240"><a href="#cb8-240" aria-hidden="true" tabindex="-1"></a><span class="fu">## Community Detection: Natural Clusters in Etymology</span></span>
+<span id="cb8-241"><a href="#cb8-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-242"><a href="#cb8-242" aria-hidden="true" tabindex="-1"></a>Etymology graphs have community structure: clusters of words that are more densely connected to each other than to the rest of the graph. These communities often correspond to meaningful linguistic groupings.</span>
+<span id="cb8-243"><a href="#cb8-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-246"><a href="#cb8-246" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb8-247"><a href="#cb8-247" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-community</span></span>
+<span id="cb8-248"><a href="#cb8-248" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Community structure in the etymology graph (simulated larger graph). Colors represent detected communities. Communities roughly correspond to language families and borrowing strata."</span></span>
 <span id="cb8-249"><a href="#cb8-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-250"><a href="#cb8-250" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> {i: <span class="ss">f"w</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(G_large.number_of_nodes())}</span>
-<span id="cb8-251"><a href="#cb8-251" aria-hidden="true" tabindex="-1"></a>community_colors <span class="op">=</span> []</span>
-<span id="cb8-252"><a href="#cb8-252" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(G_large.number_of_nodes()):</span>
-<span id="cb8-253"><a href="#cb8-253" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> i <span class="op">&lt;</span> <span class="dv">8</span>: community_colors.append(<span class="st">"steelblue"</span>)</span>
-<span id="cb8-254"><a href="#cb8-254" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> i <span class="op">&lt;</span> <span class="dv">16</span>: community_colors.append(<span class="st">"coral"</span>)</span>
-<span id="cb8-255"><a href="#cb8-255" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> i <span class="op">&lt;</span> <span class="dv">24</span>: community_colors.append(<span class="st">"seagreen"</span>)</span>
-<span id="cb8-256"><a href="#cb8-256" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>: community_colors.append(<span class="st">"gold"</span>)</span>
-<span id="cb8-257"><a href="#cb8-257" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-258"><a href="#cb8-258" aria-hidden="true" tabindex="-1"></a>pos_large <span class="op">=</span> nx.spring_layout(G_large, seed<span class="op">=</span><span class="dv">42</span>)</span>
-<span id="cb8-259"><a href="#cb8-259" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
-<span id="cb8-260"><a href="#cb8-260" aria-hidden="true" tabindex="-1"></a>nx.draw_networkx(G_large, pos_large, node_color<span class="op">=</span>community_colors,</span>
-<span id="cb8-261"><a href="#cb8-261" aria-hidden="true" tabindex="-1"></a>                 node_size<span class="op">=</span><span class="dv">200</span>, with_labels<span class="op">=</span><span class="va">False</span>, ax<span class="op">=</span>ax, alpha<span class="op">=</span><span class="fl">0.8</span>,</span>
-<span id="cb8-262"><a href="#cb8-262" aria-hidden="true" tabindex="-1"></a>                 edge_color<span class="op">=</span><span class="st">"#ccc"</span>, width<span class="op">=</span><span class="fl">0.5</span>)</span>
-<span id="cb8-263"><a href="#cb8-263" aria-hidden="true" tabindex="-1"></a>handles <span class="op">=</span> [plt.Line2D([<span class="dv">0</span>],[<span class="dv">0</span>],marker<span class="op">=</span><span class="st">'o'</span>,color<span class="op">=</span><span class="st">'w'</span>,markerfacecolor<span class="op">=</span>c,label<span class="op">=</span>l,markersize<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb8-264"><a href="#cb8-264" aria-hidden="true" tabindex="-1"></a>           <span class="cf">for</span> c, l <span class="kw">in</span> [(<span class="st">"steelblue"</span>,<span class="st">"Germanic"</span>),(<span class="st">"coral"</span>,<span class="st">"Romance"</span>),</span>
-<span id="cb8-265"><a href="#cb8-265" aria-hidden="true" tabindex="-1"></a>                        (<span class="st">"seagreen"</span>,<span class="st">"Greek/Latin roots"</span>),(<span class="st">"gold"</span>,<span class="st">"Contact loans"</span>)]]</span>
-<span id="cb8-266"><a href="#cb8-266" aria-hidden="true" tabindex="-1"></a>ax.legend(handles<span class="op">=</span>handles, loc<span class="op">=</span><span class="st">"lower right"</span>)</span>
-<span id="cb8-267"><a href="#cb8-267" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Community Structure in Etymology Graph (simulated)"</span>)</span>
-<span id="cb8-268"><a href="#cb8-268" aria-hidden="true" tabindex="-1"></a>ax.axis(<span class="st">"off"</span>)</span>
-<span id="cb8-269"><a href="#cb8-269" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb8-270"><a href="#cb8-270" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb8-271"><a href="#cb8-271" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-272"><a href="#cb8-272" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-273"><a href="#cb8-273" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
-<span id="cb8-274"><a href="#cb8-274" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-275"><a href="#cb8-275" aria-hidden="true" tabindex="-1"></a>Etymology graphs represent words as nodes and historical relationships (descent, borrowing, derivation) as typed, directed edges. This representation enables queries that are impossible in prose: finding all descendants of a proto-root, computing the shortest path between two words through their common ancestor, identifying the most productive roots (by number of descendants), and detecting cognate pairs automatically from transitive descent relationships. At the scale of a single language family, NetworkX provides all necessary tools. At Wiktionary scale (millions of nodes), graph databases like Neo4j are required. Community detection algorithms applied to etymology graphs recover linguistically meaningful clusters that correspond to language families and borrowing strata. The structured etymology dataset produced in Chapter 10 feeds directly into the graph construction pipeline described here.</span>
-<span id="cb8-276"><a href="#cb8-276" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-277"><a href="#cb8-277" aria-hidden="true" tabindex="-1"></a><span class="fu">## Further Reading</span></span>
-<span id="cb8-278"><a href="#cb8-278" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-279"><a href="#cb8-279" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Navigli, R., &amp; Ponzetto, S. P. (2012). BabelNet: The automatic construction, evaluation and application of a wide-coverage multilingual semantic network. *Artificial Intelligence*.</span>
-<span id="cb8-280"><a href="#cb8-280" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Tahmasebi, N., et al. (2018). On the uses of word sense change for research in the digital humanities. *Historical Methods*.</span>
-<span id="cb8-281"><a href="#cb8-281" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>EtymWordNet: https://etym.org — Browse etymological graphs derived from Wiktionary.</span>
-<span id="cb8-282"><a href="#cb8-282" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Kirov, C., et al. (2016). Very-large scale parsing and normalization of Wiktionary morphological paradigms. *LREC 2016*.</span>
+<span id="cb8-250"><a href="#cb8-250" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">42</span>)</span>
+<span id="cb8-251"><a href="#cb8-251" aria-hidden="true" tabindex="-1"></a>G_large <span class="op">=</span> nx.stochastic_block_model(</span>
+<span id="cb8-252"><a href="#cb8-252" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">8</span>, <span class="dv">8</span>, <span class="dv">8</span>, <span class="dv">6</span>],</span>
+<span id="cb8-253"><a href="#cb8-253" aria-hidden="true" tabindex="-1"></a>    [[<span class="fl">0.6</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>, <span class="fl">0.15</span>],</span>
+<span id="cb8-254"><a href="#cb8-254" aria-hidden="true" tabindex="-1"></a>     [<span class="fl">0.1</span>, <span class="fl">0.6</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>],</span>
+<span id="cb8-255"><a href="#cb8-255" aria-hidden="true" tabindex="-1"></a>     [<span class="fl">0.05</span>, <span class="fl">0.1</span>, <span class="fl">0.65</span>, <span class="fl">0.05</span>],</span>
+<span id="cb8-256"><a href="#cb8-256" aria-hidden="true" tabindex="-1"></a>     [<span class="fl">0.15</span>, <span class="fl">0.05</span>, <span class="fl">0.05</span>, <span class="fl">0.5</span>]],</span>
+<span id="cb8-257"><a href="#cb8-257" aria-hidden="true" tabindex="-1"></a>    seed<span class="op">=</span><span class="dv">42</span></span>
+<span id="cb8-258"><a href="#cb8-258" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-259"><a href="#cb8-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-260"><a href="#cb8-260" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> {i: <span class="ss">f"w</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(G_large.number_of_nodes())}</span>
+<span id="cb8-261"><a href="#cb8-261" aria-hidden="true" tabindex="-1"></a>community_colors <span class="op">=</span> []</span>
+<span id="cb8-262"><a href="#cb8-262" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(G_large.number_of_nodes()):</span>
+<span id="cb8-263"><a href="#cb8-263" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> i <span class="op">&lt;</span> <span class="dv">8</span>: community_colors.append(<span class="st">"steelblue"</span>)</span>
+<span id="cb8-264"><a href="#cb8-264" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> i <span class="op">&lt;</span> <span class="dv">16</span>: community_colors.append(<span class="st">"coral"</span>)</span>
+<span id="cb8-265"><a href="#cb8-265" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> i <span class="op">&lt;</span> <span class="dv">24</span>: community_colors.append(<span class="st">"seagreen"</span>)</span>
+<span id="cb8-266"><a href="#cb8-266" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>: community_colors.append(<span class="st">"gold"</span>)</span>
+<span id="cb8-267"><a href="#cb8-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-268"><a href="#cb8-268" aria-hidden="true" tabindex="-1"></a>pos_large <span class="op">=</span> nx.spring_layout(G_large, seed<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb8-269"><a href="#cb8-269" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb8-270"><a href="#cb8-270" aria-hidden="true" tabindex="-1"></a>nx.draw_networkx(G_large, pos_large, node_color<span class="op">=</span>community_colors,</span>
+<span id="cb8-271"><a href="#cb8-271" aria-hidden="true" tabindex="-1"></a>                 node_size<span class="op">=</span><span class="dv">200</span>, with_labels<span class="op">=</span><span class="va">False</span>, ax<span class="op">=</span>ax, alpha<span class="op">=</span><span class="fl">0.8</span>,</span>
+<span id="cb8-272"><a href="#cb8-272" aria-hidden="true" tabindex="-1"></a>                 edge_color<span class="op">=</span><span class="st">"#ccc"</span>, width<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb8-273"><a href="#cb8-273" aria-hidden="true" tabindex="-1"></a>handles <span class="op">=</span> [plt.Line2D([<span class="dv">0</span>],[<span class="dv">0</span>],marker<span class="op">=</span><span class="st">'o'</span>,color<span class="op">=</span><span class="st">'w'</span>,markerfacecolor<span class="op">=</span>c,label<span class="op">=</span>l,markersize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb8-274"><a href="#cb8-274" aria-hidden="true" tabindex="-1"></a>           <span class="cf">for</span> c, l <span class="kw">in</span> [(<span class="st">"steelblue"</span>,<span class="st">"Germanic"</span>),(<span class="st">"coral"</span>,<span class="st">"Romance"</span>),</span>
+<span id="cb8-275"><a href="#cb8-275" aria-hidden="true" tabindex="-1"></a>                        (<span class="st">"seagreen"</span>,<span class="st">"Greek/Latin roots"</span>),(<span class="st">"gold"</span>,<span class="st">"Contact loans"</span>)]]</span>
+<span id="cb8-276"><a href="#cb8-276" aria-hidden="true" tabindex="-1"></a>ax.legend(handles<span class="op">=</span>handles, loc<span class="op">=</span><span class="st">"lower right"</span>)</span>
+<span id="cb8-277"><a href="#cb8-277" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Community Structure in Etymology Graph (simulated)"</span>)</span>
+<span id="cb8-278"><a href="#cb8-278" aria-hidden="true" tabindex="-1"></a>ax.axis(<span class="st">"off"</span>)</span>
+<span id="cb8-279"><a href="#cb8-279" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb8-280"><a href="#cb8-280" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb8-281"><a href="#cb8-281" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-282"><a href="#cb8-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-283"><a href="#cb8-283" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
+<span id="cb8-284"><a href="#cb8-284" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-285"><a href="#cb8-285" aria-hidden="true" tabindex="-1"></a>Etymology graphs represent words as nodes and historical relationships (descent, borrowing, derivation) as typed, directed edges. This representation enables queries that are impossible in prose: finding all descendants of a proto-root, computing the shortest path between two words through their common ancestor, identifying the most productive roots (by number of descendants), and detecting cognate pairs automatically from transitive descent relationships. At the scale of a single language family, NetworkX provides all necessary tools. At Wiktionary scale (millions of nodes), graph databases like Neo4j are required. Community detection algorithms applied to etymology graphs recover linguistically meaningful clusters that correspond to language families and borrowing strata. The structured etymology dataset produced in Chapter 10 feeds directly into the graph construction pipeline described here.</span>
+<span id="cb8-286"><a href="#cb8-286" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-287"><a href="#cb8-287" aria-hidden="true" tabindex="-1"></a><span class="fu">## Further Reading</span></span>
+<span id="cb8-288"><a href="#cb8-288" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-289"><a href="#cb8-289" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Navigli, R., &amp; Ponzetto, S. P. (2012). BabelNet: The automatic construction, evaluation and application of a wide-coverage multilingual semantic network. *Artificial Intelligence*.</span>
+<span id="cb8-290"><a href="#cb8-290" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Tahmasebi, N., et al. (2018). On the uses of word sense change for research in the digital humanities. *Historical Methods*.</span>
+<span id="cb8-291"><a href="#cb8-291" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>EtymWordNet: https://etym.org — Browse etymological graphs derived from Wiktionary.</span>
+<span id="cb8-292"><a href="#cb8-292" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Kirov, C., et al. (2016). Very-large scale parsing and normalization of Wiktionary morphological paradigms. *LREC 2016*.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

@@ -80,6 +80,14 @@ plt.show()
 
 Vowels are organized differently: by the position of the tongue (front, central, back) and the height of the jaw (high, mid, low), plus lip rounding. The vowel *i* (as in *machine*) is high front unrounded. The vowel *u* (as in *food*) is high back rounded. The vowel *a* (as in *father*) is low central unrounded.
 
+## The IPA's Origin Story
+
+The IPA was not invented by a committee of professional linguists, which may explain why it works. It was created by Paul Passy, a French phonetician, in 1886, with the explicit goal of producing a practical tool for language teachers who needed to write down the sounds of foreign languages without ambiguity. The first version covered French, English, and German; subsequent revisions expanded it to cover the phonemic inventories of languages around the world, including the click consonants of Southern African languages (represented by symbols like ǀ and ǁ), the tonal systems of Southeast Asian languages, and the complex vowel systems of Caucasian languages.
+
+The discipline this imposed was genuinely liberating. Before the IPA, a German writing down the sounds of Zulu would use German spelling conventions; an Englishman would use English ones; a Frenchman, French ones. The same sound would appear in a dozen incompatible orthographies across different researchers' fieldnotes, making comparison impossible. The IPA gave everyone the same notation and the same categories.
+
+For computational work, the IPA has a crucial additional virtue: it maps cleanly to Unicode. Every IPA symbol has a unique Unicode code point, which means that IPA-transcribed data can be stored, compared, and processed by standard text-handling software without loss. The practical consequence is that a wordlist stored as IPA text is directly machine-readable, while a wordlist stored in language-specific orthographies requires a separate transliteration step for each language.
+
 ## Phonemic Transcription vs. Phonetic Transcription
 
 There is an important distinction you will encounter throughout this book.
@@ -152,6 +160,16 @@ ax.set_title("Phoneme-to-phoneme Hamming distances (feature space)")
 plt.tight_layout()
 plt.show()
 ```
+
+## What a Phoneme Actually Is
+
+The concept of a phoneme is subtler than it first appears, and worth thinking through carefully because it shapes every subsequent analysis in this book.
+
+A phoneme is not a physical sound. It is a mental category—the abstract unit that speakers of a language use to distinguish words from each other. The English phoneme /p/ covers a range of physically different sounds: the aspirated [pʰ] in *pin*, the unaspirated [p] in *spin*, and the unreleased [p̚] at the end of *tip*. A native English speaker perceives all three as "the same sound" because in English they never distinguish different words. In Thai, by contrast, aspirated [pʰ] and unaspirated [p] do distinguish different words—they are different phonemes. The same physical distinction that English speakers treat as irrelevant, Thai speakers must track.
+
+This matters for our computational work in two ways. First, when we segment a word into phonemes for alignment, we need to use the phonemic distinctions of the language being analyzed—not an external standard. Second, when we compute distances between phonemes for alignment algorithms, we should use a feature system that reflects what distinctions are linguistically meaningful, not just what is physically measureable. A pitch difference of 50 Hz might or might not be phonemically significant depending on the language. Our feature vectors should encode meaningful distinctions, not raw acoustic measurements.
+
+The feature-based approach—representing each phoneme as a vector of binary articulatory features—is the right engineering decision here, and the reason will become clearer in Chapter 4: phonetically similar sounds are geometrically close in feature space, which means that substituting one similar sound for another in an alignment costs less than substituting a dissimilar one. This is linguistically correct behavior.
 
 ## The CLDF Standard
 

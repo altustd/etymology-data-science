@@ -37,6 +37,42 @@ This was not accident. This was sound change: a systematic shift in how an entir
 
 The comparative method is the technique for reading these waves backward—tracing from the modern shoreline back to the stone that fell in the water.
 
+## Grimm's Law in Detail
+
+It is worth pausing to appreciate what Grimm actually described, because it is more elegant than a simple list of correspondences suggests.
+
+The Indo-European stop consonants—the sounds you make by briefly closing the airstream completely—come in three varieties: voiceless stops (*p, t, k*), voiced stops (*b, d, g*), and voiced aspirates (*bʰ, dʰ, gʰ*, pronounced with a puff of air following the closure, like the *bh* in Sanskrit *bhrata*, "brother"). Grimm's Law describes a *rotation* among these three categories in the Germanic languages:
+
+- **Voiceless stops became fricatives**: PIE *p* → *f*, PIE *t* → *þ* (as in *think*), PIE *k* → *h*
+- **Voiced stops became voiceless stops**: PIE *b* → *p*, PIE *d* → *t*, PIE *g* → *k*
+- **Voiced aspirates became voiced fricatives, then voiced stops**: PIE *bʰ* → *b*, PIE *dʰ* → *d*, PIE *gʰ* → *g*
+
+Each set of sounds shifted into the slot vacated by the preceding set—like a chain of musical chairs. Voiceless stops moved toward fricatives, making room for voiced stops to move into the vacated positions, making room for voiced aspirates to simplify into plain voiced stops. The elegance of this rotation is what convinced nineteenth-century linguists they were dealing with a real phenomenon and not a coincidence. Random changes do not rotate. Systematic physical changes of articulation might.
+
+A quick sampling of the correspondences in action:
+
+| PIE root | Meaning | Latin | English (reflex) |
+|---|---|---|---|
+| *\*pōds* | foot | *pēs/pedis* | *foot* |
+| *\*piscis* | fish | *piscis* | *fish* |
+| *\*ph₂tḗr* | father | *pater* | *father* |
+| *\*treies* | three | *trēs* | *three* |
+| *\*deḱm̥* | ten | *decem* | *ten* |
+| *\*gʷen-* | woman | *-* | *queen* |
+| *\*ḱerd-* | heart | *cor/cordis* | *heart* |
+
+Every *p* in the Latin column corresponds to an *f* in the English column. Every *t* corresponds to a *th* or *t* sound depending on position. The pattern holds without exception across thousands of word pairs.
+
+## Verner's Law: The Exception That Confirmed the Rule
+
+If Grimm's Law was the triumph of regularity, Verner's Law was its vindication.
+
+Within years of Grimm's formulation, scholars noticed a problem: some words that should have followed Grimm's Law did not. Latin *pater* becomes English *father* as expected—but Latin *frater* becomes English *brother*, not *frother*. The *t* in *frater* became a *th* in some Germanic words but a *d* or *ð* in others. Was the principle of regularity already failing?
+
+In 1875, a young Danish linguist named Karl Verner proposed an answer. The exceptions were not random. They clustered in words where the Indo-European accent (stress) fell in a particular position. Germanic languages inherited the Indo-European pitch accent before the accent was later regularized to the first syllable. Words where the accent fell immediately before the consonant in question followed Grimm's Law; words where the accent fell elsewhere underwent a different change.
+
+The point was not just that Verner had explained the exceptions. The point was that the exceptions were themselves regular—governed by a rule that had simply not been discovered yet. This confirmed the Neogrammarian position more strongly than Grimm's Law itself had done: apparent exceptions are almost always the result of an undiscovered conditioning factor, not evidence that sound change is irregular. This methodological principle—*hunt for the rule before declaring an exception*—remains the working assumption of historical linguistics to this day, and it is embedded in the way we build automated cognate detection systems.
+
 ## Step-by-Step: The Four Operations
 
 The comparative method proceeds in four operations, applied iteratively.
@@ -161,9 +197,39 @@ The answer, proposed by the Neogrammarians in the 1870s and still essentially co
 
 This is why exceptions tend to cluster: words borrowed from another language arrive after the change, so they do not carry its effects. Words used in very formal or religious contexts may be pronounced conservatively. These patterns are not noise; they are diagnostic.
 
-## The Limits of the Method
+## A Worked Example: Reconstructing a Proto-Word
 
-The comparative method is powerful, but it has a horizon.
+Let us trace a single reconstruction through the four operations, concretely.
+
+**Target**: Reconstruct the Proto-Indo-European word for NIGHT from its descendants.
+
+**Step 1 — Collect cognates**:
+
+| Language | Form | Romanization |
+|---|---|---|
+| Sanskrit | नक्त | *nakta-* |
+| Greek | νύξ (gen. νυκτός) | *nýks* (gen. *nyktos*) |
+| Latin | nox (gen. noctis) | *nox* |
+| Gothic | nahts | *nahts* |
+| Old English | niht | *niht* |
+| Lithuanian | naktis | *naktis* |
+| Old Irish | nocht | *nocht* |
+
+**Step 2 — Identify correspondences**:
+
+In word-initial position, all forms have *n*. This is the easiest call: *\*n*.
+
+The vowel in the first syllable varies: Sanskrit *a*, Greek *y* (which represents an older *u*-like sound), Latin *o*, Gothic/OE *a*. These are characteristic reflexes of a single PIE vowel, and comparison with other words exhibiting the same pattern points to *\*o*.
+
+The medial consonant cluster: Sanskrit *kt*, Greek *kt* (in the genitive *nyktos*), Latin *ct*, Gothic *ht*, Lithuanian *kt*, Old Irish *cht*. The variation *kt / ct / ht / cht* is exactly the pattern expected for a PIE sequence *\*kʷ* (labiovelar) followed by *\*t*.
+
+The final consonant *s* appears in Greek, Latin, Gothic, Lithuanian—this is the nominative singular ending.
+
+**Step 3 — Reconstruct**: Assembling the evidence: *\*nókʷts*. The asterisk marks it as reconstructed; the diacritics mark accent and vowel quality.
+
+**Step 4 — Verify**: When the Hittite archives were deciphered in the early twentieth century, scholars discovered the Hittite word for night was *nekuz*—consistent with an ancestor *\*nókʷts* if you apply the sound changes of Anatolian languages. A prediction made from comparative work before Hittite was known turned out to be correct.
+
+This is the comparative method at its best: not a guess, but a constrained inference that can be tested against newly discovered data.
 
 **Time depth.** Sound changes accumulate. After roughly 8,000–10,000 years of separation, the resemblances between related languages may have eroded below the threshold of reliable detection. This is why reconstructing proto-forms deeper than Proto-Indo-European is controversial: there may be too little signal left in the noise.
 

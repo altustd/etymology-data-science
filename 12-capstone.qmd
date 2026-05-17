@@ -13,6 +13,16 @@ By the end of this chapter, you will be able to:
 - Identify and honestly state the limitations of your findings
 :::
 
+## A Note on Intellectual Honesty
+
+Before describing the capstone options, a word on what makes research in this field credible—and what undermines it.
+
+Computational etymology has a reproducibility problem that it shares with many data-intensive fields. The algorithms are complex enough that results depend heavily on parameter choices, data preprocessing decisions, and evaluation metric selection. A cognate detector with 85% F1 on one benchmark may have 60% F1 on another benchmark covering different language families, because it has been implicitly tuned to the characteristics of its training distribution. A phylogenetic tree that matches the expert consensus for major groupings may disagree on the fine structure of one subgroup—and whether the computational tree or the expert consensus is right may be genuinely unclear.
+
+Honest reporting in this context means: stating clearly which benchmark you evaluated on, what threshold or parameter values you used, how sensitive your results are to those choices, and what the known limitations of your method are. It means not cherry-picking the evaluation that makes your system look best. It means distinguishing between "our method recovers the expert consensus" (a validation) and "our method disagrees with the expert consensus" (which could be an improvement or an error, and requires careful argument to determine which).
+
+The capstone project is an opportunity to practice this kind of honesty. A result that says "our method achieves 75% accuracy on 10 concepts from the Indo-European family, with the following three specific failure modes" is more valuable than a result that says "our method successfully identifies language families" without specifying conditions or limitations. Specificity and honesty are the same virtue in empirical research.
+
 ## The Point of All This
 
 There is a particular kind of satisfaction that arrives when a technique you have learned in the abstract produces a result that surprises you. You run the alignment algorithm on a word pair you thought would look boring, and the gap falls exactly where the historical record says a sound was lost. You cluster a language family and the dendrogram recovers a branching that linguists spent decades debating—and your dataset is forty words and one Python script. The technique is not magic, but it is doing something real.

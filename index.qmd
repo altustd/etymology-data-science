@@ -29,7 +29,35 @@ What Jones had noticed—what the Sanskrit word *pitar*, the Greek *patḗr*, an
 
 That is what etymology studies. Not just where words come from, but *why they look the way they do*, and how you can infer the answer from patterns that survive across languages.
 
-## The Comparative Method in Plain English
+## Why Words Have Histories Worth Studying
+
+Before we get to algorithms, it is worth spending a moment on why any of this matters. Etymology can seem like an elaborate parlor game—impressive at dinner parties, useless for anything practical. This impression is wrong in at least three ways.
+
+**It is evidence about human prehistory.** Before writing, before pottery we can radiocarbon-date, before almost anything else, there was language. Words carry information about the world their speakers inhabited. Proto-Indo-European, the ancestor of languages from Iceland to Bangladesh, had words for snow, for wheel, for cattle, for the number one hundred. It lacked a word for ocean. From this, linguists infer that its speakers lived inland, in a temperate climate, sometime before roughly 3500 BCE when wheeled vehicles first appeared in the archaeological record. Etymology is archaeology conducted through language—slower, more ambiguous, but capable of reaching places where no shovel can go.
+
+**It explains why languages look the way they do.** English is a notoriously difficult language to learn. Why is *knight* spelled with a *k* and a *gh* that have been silent for five hundred years? Because when the spelling was fixed, those sounds were still pronounced: Middle English speakers said something like *kni-cht*, rhyming roughly with the Scottish *loch*. The spelling is a fossil. Most of the bizarre irregularities of English orthography, French grammar, and German word order make sense once you know the history. Etymology does not just explain the past; it makes the present legible.
+
+**It is a testing ground for computational linguistics.** The problems of historical linguistics—comparing sequences, inferring hidden variables from observable ones, building trees from similarity data—are mathematically clean versions of problems that appear everywhere in NLP. Sequence alignment in etymology is the same algorithm as sequence alignment in bioinformatics, and closely related to the alignment step in machine translation. Phylogenetic inference in linguistics is the same mathematical procedure used to reconstruct evolutionary trees in genomics. Learning etymology computationally is, among other things, learning the shared substrate of a dozen applied fields.
+
+## A Brief History of the Science
+
+William Jones's 1786 dinner speech was the spark, but the fire had been building for decades. European scholars who had learned Sanskrit while working for the East India Company had been privately noting its resemblance to Latin and Greek for years; Jones simply said it publicly, at sufficient volume, to the right audience.
+
+What followed was one of the most productive fifty years in the history of science—not well remembered, because it produced nothing dramatic like a device or a vaccine, only the reorganization of what people knew about the past. Rasmus Rask, a Danish linguist working in the 1810s, established the systematic sound correspondences between Old Norse, Gothic, Greek, and Latin. Jakob Grimm—better known today for the fairy tales he collected with his brother—formalized the Germanic consonant shift in 1822 in what became Grimm's Law. Franz Bopp showed that Sanskrit, Greek, Latin, Gothic, and Persian all shared the same verb conjugation system, and that this shared structure was too detailed to be coincidence.
+
+By 1870, the field had cohered into something recognizable as a discipline. A group of young German scholars calling themselves the Junggrammatiker—the Neogrammarians—made a provocative claim: sound changes are exceptionless. Not mostly regular. Not regular with some exceptions. Exceptionless, operating on the physics of articulation rather than the meaning of words. This was controversial enough that their older colleagues accused them of recklessness. It turned out to be substantially correct, and the principle of regularity became the discipline's bedrock.
+
+The twentieth century brought refinement but not revolution: better statistical methods, larger datasets, more languages documented before they vanished. The twenty-first century brought something more transformative: machine learning systems that could handle the scale that hand methods could not.
+
+## The Scale Problem
+
+Here is the uncomfortable arithmetic of historical linguistics. The world has approximately 7,000 living languages. Of these, perhaps 500 have been studied to the point where a competent descriptive grammar exists. Fewer than 200 have been analyzed with the depth needed for serious comparative work. The rest—the vast majority—are documented at the level of a word list and a handful of texts, if that.
+
+Languages are going extinct faster than linguists can document them. By the end of this century, the most optimistic estimates suggest that 3,000 of the world's 7,000 languages will have gone silent. Each extinction takes with it not just words but a unique way of encoding human experience—and a unique source of data for the comparative method.
+
+This is where computational etymology is not merely convenient but necessary. A human linguist working with the comparative method can analyze perhaps one language family in a career. Automated systems, once trained, can process thousands of language pairs in hours. The cognate detectors and proto-reconstructors we build in this book are not toys; they are the infrastructure of an emergency documentation effort operating against a deadline.
+
+The 2010s and 2020s saw the field accelerate rapidly. The CLDF (Cross-Linguistic Data Formats) initiative standardized data collection across research groups. Automated cognate detection reached expert-level accuracy on benchmark tasks. Neural proto-reconstruction produced credible ancestral forms for entire language families. Phylogenetic inference using Bayesian methods dated the Indo-European expansion with precision that surprised even specialists. The methods of this book are not speculative; they are the working tools of active research.
 
 The comparative method can be summarized in three steps.
 
@@ -89,6 +117,10 @@ The traditional comparative method works beautifully—for languages with large 
 Machine learning does not replace the comparative method. It scales it. A cognate detector trained on well-studied language families can be applied to underdocumented ones. A neural proto-reconstructor trained on Romance language data generalizes to other families with appropriate retraining. The algorithms are not magic—they carry assumptions baked in from their training data—but they extend the reach of historical linguistics into territory that hand methods alone could never cover.
 
 The reverse transfer also runs. Etymology turns out to be an exceptionally good training ground for linguistic data science. The problems are well-defined, the ground truth is knowable, and the data has a satisfying structure. Concepts learned here—sequence alignment, phylogenetic inference, distributional semantics—transfer directly to speech recognition, machine translation, and clinical NLP.
+
+One specific example illustrates the difference in scale. In 2018, a team at the Max Planck Institute for the Science of Human History published an automated analysis of Indo-European language relationships using a dataset of 52 languages and 208 Swadesh concepts—10,816 data cells in total. A human expert working by hand could analyze perhaps 50 language pairs per year in serious depth; the automated pipeline processed all $\binom{52}{2} = 1326$ pairs in an afternoon, with accuracy competitive with expert annotation. The result was a phylogenetic tree that agreed with the expert consensus on major groupings and suggested a divergence timeline consistent with the Pontic steppe hypothesis for Indo-European origins.
+
+This is the pattern throughout the field: automation does not exceed human accuracy on a single well-studied pair, but it closes the gap enough to be scientifically useful while operating at a scale that human effort simply cannot match. The tools of this book put that capability in your hands.
 
 ## Your First Wordlist
 

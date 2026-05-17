@@ -33,6 +33,16 @@ Large language models are, among other things, prose-reading machines. They have
 
 The answer, as of current models, is: yes, with significant caveats.
 
+## What LLMs Actually Know About Etymology
+
+Before designing an extraction system, it is worth understanding what large language models actually know about etymology—and what they do not.
+
+LLMs trained on internet-scale corpora have been exposed to an enormous amount of etymological content: dictionary entries, Wiktionary articles, linguistics papers, Wikipedia articles on language families, etymology discussion forums, and secondary sources that cite etymological information in passing. This means that a capable LLM, when presented with a common English word, can often produce accurate etymological information for it—not because it has learned linguistic rules, but because it has memorized information from its training data.
+
+This creates an interesting asymmetry. For high-frequency words with well-documented etymologies—words like *father*, *night*, *water*, words that appear in every introduction to linguistics—a capable LLM's output is likely to be accurate because the correct information appeared many times in training data. For low-frequency words, rare words, words from underdocumented languages, or words whose etymologies are genuinely contested, the model is likely to hallucinate: producing a plausible-sounding but incorrect etymology, often by analogy to a superficially similar word it does know well.
+
+The practical implication for extraction systems is that coverage and accuracy are inversely related in a way that tracks word frequency. You can build a high-precision extraction system for common words by trusting the model's output; you need extensive human review for uncommon words. This is not a defect of the model—it is an accurate reflection of the distribution of etymological knowledge in the text the model learned from. Common words have been studied more, written about more, and are better represented in both the model's training data and in the gold-standard sources we would use for evaluation.
+
 ## The Extraction Task
 
 We want to convert unstructured dictionary prose into structured records.

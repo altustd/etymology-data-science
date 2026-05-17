@@ -207,6 +207,18 @@ plt.tight_layout()
 plt.show()
 ```
 
+## The Geometry of Meaning
+
+One of the most striking results from the word embedding literature is that the geometry of the embedding space is not arbitrary. Semantic relationships are encoded as geometric relationships in a surprisingly consistent way.
+
+The famous example is the "king − man + woman ≈ queen" arithmetic. But the pattern extends much further. Capital cities are related to their countries by approximately the same vector: *Paris − France ≈ Berlin − Germany ≈ Tokyo − Japan*. Verb tenses are related by approximately the same vector: *walked − walk ≈ ran − run ≈ swam − swim*. Comparative adjectives form consistent patterns: *bigger − big ≈ taller − tall ≈ faster − fast*.
+
+These regularities arise not because anyone designed them in but because they are present in the statistical structure of language use. Texts that mention France typically also mention Paris; texts that mention Japan typically also mention Tokyo. The model learns to associate these through their shared contexts, and the resulting geometry reflects the structure of the associations.
+
+For diachronic work, this geometry provides a concrete definition of semantic change: a word has changed meaning if its embedding—its position in the semantic space—has moved relative to its neighboring words. The word "computer" sat near "calculator" and "adding machine" in 1950 and near "smartphone," "software," and "internet" in 2020. The movement in embedding space over those seventy years is a quantitative record of that change.
+
+What makes this more than metaphor is that the movement is *measurable* and *comparable*. We can ask not just whether "computer" changed more than "water" (it did, dramatically) but by how much, and in which direction in the semantic space, and whether the trajectory was continuous or involved sudden jumps corresponding to specific technological inflection points. The embedding approach turns a qualitative observation—"this word has changed meaning"—into a quantitative measurement that can be plotted, modeled, and tested statistically.
+
 ## Known Cases of Semantic Drift
 
 The Hamilton et al. (2016) study examined semantic change in English using corpora from 1800 to 2000 and found several consistent patterns:

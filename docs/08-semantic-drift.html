@@ -345,10 +345,11 @@ window.Quarto = {
   <li><a href="#the-distributional-hypothesis" id="toc-the-distributional-hypothesis" class="nav-link" data-scroll-target="#the-distributional-hypothesis"><span class="header-section-number">9.2</span> The Distributional Hypothesis</a></li>
   <li><a href="#word2vec-the-key-idea" id="toc-word2vec-the-key-idea" class="nav-link" data-scroll-target="#word2vec-the-key-idea"><span class="header-section-number">9.3</span> Word2Vec: The Key Idea</a></li>
   <li><a href="#diachronic-embeddings-meaning-over-time" id="toc-diachronic-embeddings-meaning-over-time" class="nav-link" data-scroll-target="#diachronic-embeddings-meaning-over-time"><span class="header-section-number">9.4</span> Diachronic Embeddings: Meaning Over Time</a></li>
-  <li><a href="#known-cases-of-semantic-drift" id="toc-known-cases-of-semantic-drift" class="nav-link" data-scroll-target="#known-cases-of-semantic-drift"><span class="header-section-number">9.5</span> Known Cases of Semantic Drift</a></li>
-  <li><a href="#evaluating-semantic-change-detection" id="toc-evaluating-semantic-change-detection" class="nav-link" data-scroll-target="#evaluating-semantic-change-detection"><span class="header-section-number">9.6</span> Evaluating Semantic Change Detection</a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">9.7</span> Summary</a></li>
-  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">9.8</span> Further Reading</a></li>
+  <li><a href="#the-geometry-of-meaning" id="toc-the-geometry-of-meaning" class="nav-link" data-scroll-target="#the-geometry-of-meaning"><span class="header-section-number">9.5</span> The Geometry of Meaning</a></li>
+  <li><a href="#known-cases-of-semantic-drift" id="toc-known-cases-of-semantic-drift" class="nav-link" data-scroll-target="#known-cases-of-semantic-drift"><span class="header-section-number">9.6</span> Known Cases of Semantic Drift</a></li>
+  <li><a href="#evaluating-semantic-change-detection" id="toc-evaluating-semantic-change-detection" class="nav-link" data-scroll-target="#evaluating-semantic-change-detection"><span class="header-section-number">9.7</span> Evaluating Semantic Change Detection</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">9.8</span> Summary</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">9.9</span> Further Reading</a></li>
   </ul>
 </nav>
     </div>
@@ -614,8 +615,16 @@ Figure&nbsp;9.2: Simulated semantic change trajectories for five target words ac
 </div>
 </div>
 </section>
-<section id="known-cases-of-semantic-drift" class="level2" data-number="9.5">
-<h2 data-number="9.5" class="anchored" data-anchor-id="known-cases-of-semantic-drift"><span class="header-section-number">9.5</span> Known Cases of Semantic Drift</h2>
+<section id="the-geometry-of-meaning" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="the-geometry-of-meaning"><span class="header-section-number">9.5</span> The Geometry of Meaning</h2>
+<p>One of the most striking results from the word embedding literature is that the geometry of the embedding space is not arbitrary. Semantic relationships are encoded as geometric relationships in a surprisingly consistent way.</p>
+<p>The famous example is the “king − man + woman ≈ queen” arithmetic. But the pattern extends much further. Capital cities are related to their countries by approximately the same vector: <em>Paris − France ≈ Berlin − Germany ≈ Tokyo − Japan</em>. Verb tenses are related by approximately the same vector: <em>walked − walk ≈ ran − run ≈ swam − swim</em>. Comparative adjectives form consistent patterns: <em>bigger − big ≈ taller − tall ≈ faster − fast</em>.</p>
+<p>These regularities arise not because anyone designed them in but because they are present in the statistical structure of language use. Texts that mention France typically also mention Paris; texts that mention Japan typically also mention Tokyo. The model learns to associate these through their shared contexts, and the resulting geometry reflects the structure of the associations.</p>
+<p>For diachronic work, this geometry provides a concrete definition of semantic change: a word has changed meaning if its embedding—its position in the semantic space—has moved relative to its neighboring words. The word “computer” sat near “calculator” and “adding machine” in 1950 and near “smartphone,” “software,” and “internet” in 2020. The movement in embedding space over those seventy years is a quantitative record of that change.</p>
+<p>What makes this more than metaphor is that the movement is <em>measurable</em> and <em>comparable</em>. We can ask not just whether “computer” changed more than “water” (it did, dramatically) but by how much, and in which direction in the semantic space, and whether the trajectory was continuous or involved sudden jumps corresponding to specific technological inflection points. The embedding approach turns a qualitative observation—“this word has changed meaning”—into a quantitative measurement that can be plotted, modeled, and tested statistically.</p>
+</section>
+<section id="known-cases-of-semantic-drift" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="known-cases-of-semantic-drift"><span class="header-section-number">9.6</span> Known Cases of Semantic Drift</h2>
 <p>The Hamilton et al.&nbsp;(2016) study examined semantic change in English using corpora from 1800 to 2000 and found several consistent patterns:</p>
 <p><strong>Pejoration</strong>: words that referred to neutral or positive things acquire negative connotations. “Villain” originally meant a serf or farm laborer. “Hussy” originally meant housewife.</p>
 <p><strong>Amelioration</strong>: words that were pejorative become neutral or positive. “Fond” once meant foolish. “Knight” once meant a boy or servant.</p>
@@ -735,18 +744,18 @@ Table&nbsp;9.1: Selected cases of semantic drift in English, with type and appro
 </div>
 </div>
 </section>
-<section id="evaluating-semantic-change-detection" class="level2" data-number="9.6">
-<h2 data-number="9.6" class="anchored" data-anchor-id="evaluating-semantic-change-detection"><span class="header-section-number">9.6</span> Evaluating Semantic Change Detection</h2>
+<section id="evaluating-semantic-change-detection" class="level2" data-number="9.7">
+<h2 data-number="9.7" class="anchored" data-anchor-id="evaluating-semantic-change-detection"><span class="header-section-number">9.7</span> Evaluating Semantic Change Detection</h2>
 <p>The standard benchmark for semantic change detection uses words with known change histories (from etymological dictionaries) as positive examples, and stable words as negatives. Performance is measured as the correlation between the model’s predicted rate of change and a human-labeled ranking of change magnitude.</p>
 <p>Published results on the SemEval-2020 Task 1 benchmark (English, German, Latin, Swedish): - Best system: Spearman correlation ≈ 0.77 (English) - Median system: Spearman correlation ≈ 0.50 - Simple cosine distance baseline: Spearman correlation ≈ 0.40–0.50</p>
 <p>The gaps between systems are smaller than they appear: the task is inherently noisy because human annotators disagree about which words have changed and by how much.</p>
 </section>
-<section id="summary" class="level2" data-number="9.7">
-<h2 data-number="9.7" class="anchored" data-anchor-id="summary"><span class="header-section-number">9.7</span> Summary</h2>
+<section id="summary" class="level2" data-number="9.8">
+<h2 data-number="9.8" class="anchored" data-anchor-id="summary"><span class="header-section-number">9.8</span> Summary</h2>
 <p>Semantic drift is the process by which word meanings shift over time—through pejoration, amelioration, broadening, narrowing, and metaphorical extension. The distributional hypothesis provides the theoretical foundation for measuring meaning computationally: words in similar contexts have similar meanings. Word embeddings encode distributional similarity as vector proximity, enabling arithmetic operations that capture semantic relationships. Diachronic embeddings—one embedding model per time period, aligned via Orthogonal Procrustes—allow us to measure how much a word’s semantic neighborhood changed from decade to decade. Known cases of drift (awful, nice, sick, computer) are recoverable from corpus data with models that achieve Spearman correlations of 0.50–0.77 against human judgments.</p>
 </section>
-<section id="further-reading" class="level2" data-number="9.8">
-<h2 data-number="9.8" class="anchored" data-anchor-id="further-reading"><span class="header-section-number">9.8</span> Further Reading</h2>
+<section id="further-reading" class="level2" data-number="9.9">
+<h2 data-number="9.9" class="anchored" data-anchor-id="further-reading"><span class="header-section-number">9.9</span> Further Reading</h2>
 <ul>
 <li>Hamilton, W. L., Leskovec, J., &amp; Jurafsky, D. (2016). Diachronic word embeddings reveal statistical laws of semantic change. <em>ACL 2016</em>.</li>
 <li>Mikolov, T., et al.&nbsp;(2013). Distributed representations of words and phrases and their compositionality. <em>NIPS 2013</em>.</li>
@@ -1432,60 +1441,72 @@ Table&nbsp;9.1: Selected cases of semantic drift in English, with type and appro
 <span id="cb8-217"><a href="#cb8-217" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
 <span id="cb8-218"><a href="#cb8-218" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb8-219"><a href="#cb8-219" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-220"><a href="#cb8-220" aria-hidden="true" tabindex="-1"></a><span class="fu">## Known Cases of Semantic Drift</span></span>
+<span id="cb8-220"><a href="#cb8-220" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Geometry of Meaning</span></span>
 <span id="cb8-221"><a href="#cb8-221" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-222"><a href="#cb8-222" aria-hidden="true" tabindex="-1"></a>The Hamilton et al. (2016) study examined semantic change in English using corpora from 1800 to 2000 and found several consistent patterns:</span>
+<span id="cb8-222"><a href="#cb8-222" aria-hidden="true" tabindex="-1"></a>One of the most striking results from the word embedding literature is that the geometry of the embedding space is not arbitrary. Semantic relationships are encoded as geometric relationships in a surprisingly consistent way.</span>
 <span id="cb8-223"><a href="#cb8-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-224"><a href="#cb8-224" aria-hidden="true" tabindex="-1"></a>**Pejoration**: words that referred to neutral or positive things acquire negative connotations. "Villain" originally meant a serf or farm laborer. "Hussy" originally meant housewife.</span>
+<span id="cb8-224"><a href="#cb8-224" aria-hidden="true" tabindex="-1"></a>The famous example is the "king − man + woman ≈ queen" arithmetic. But the pattern extends much further. Capital cities are related to their countries by approximately the same vector: *Paris − France ≈ Berlin − Germany ≈ Tokyo − Japan*. Verb tenses are related by approximately the same vector: *walked − walk ≈ ran − run ≈ swam − swim*. Comparative adjectives form consistent patterns: *bigger − big ≈ taller − tall ≈ faster − fast*.</span>
 <span id="cb8-225"><a href="#cb8-225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-226"><a href="#cb8-226" aria-hidden="true" tabindex="-1"></a>**Amelioration**: words that were pejorative become neutral or positive. "Fond" once meant foolish. "Knight" once meant a boy or servant.</span>
+<span id="cb8-226"><a href="#cb8-226" aria-hidden="true" tabindex="-1"></a>These regularities arise not because anyone designed them in but because they are present in the statistical structure of language use. Texts that mention France typically also mention Paris; texts that mention Japan typically also mention Tokyo. The model learns to associate these through their shared contexts, and the resulting geometry reflects the structure of the associations.</span>
 <span id="cb8-227"><a href="#cb8-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-228"><a href="#cb8-228" aria-hidden="true" tabindex="-1"></a>**Broadening**: a word's meaning expands to cover more referents. "Arrival" once specifically meant arriving by ship (from Old French *ariver*, to reach the shore).</span>
+<span id="cb8-228"><a href="#cb8-228" aria-hidden="true" tabindex="-1"></a>For diachronic work, this geometry provides a concrete definition of semantic change: a word has changed meaning if its embedding—its position in the semantic space—has moved relative to its neighboring words. The word "computer" sat near "calculator" and "adding machine" in 1950 and near "smartphone," "software," and "internet" in 2020. The movement in embedding space over those seventy years is a quantitative record of that change.</span>
 <span id="cb8-229"><a href="#cb8-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-230"><a href="#cb8-230" aria-hidden="true" tabindex="-1"></a>**Narrowing**: a word's meaning contracts to cover fewer referents. "Meat" once meant food in general; now it means animal flesh specifically.</span>
+<span id="cb8-230"><a href="#cb8-230" aria-hidden="true" tabindex="-1"></a>What makes this more than metaphor is that the movement is *measurable* and *comparable*. We can ask not just whether "computer" changed more than "water" (it did, dramatically) but by how much, and in which direction in the semantic space, and whether the trajectory was continuous or involved sudden jumps corresponding to specific technological inflection points. The embedding approach turns a qualitative observation—"this word has changed meaning"—into a quantitative measurement that can be plotted, modeled, and tested statistically.</span>
 <span id="cb8-231"><a href="#cb8-231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-232"><a href="#cb8-232" aria-hidden="true" tabindex="-1"></a>**Metaphorical extension**: a concrete word acquires abstract senses. "Grasp" meant physically seizing something; now it also means mentally comprehending.</span>
+<span id="cb8-232"><a href="#cb8-232" aria-hidden="true" tabindex="-1"></a><span class="fu">## Known Cases of Semantic Drift</span></span>
 <span id="cb8-233"><a href="#cb8-233" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-236"><a href="#cb8-236" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb8-237"><a href="#cb8-237" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-semantic-drift-cases</span></span>
-<span id="cb8-238"><a href="#cb8-238" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Selected cases of semantic drift in English, with type and approximate time of shift."</span></span>
+<span id="cb8-234"><a href="#cb8-234" aria-hidden="true" tabindex="-1"></a>The Hamilton et al. (2016) study examined semantic change in English using corpora from 1800 to 2000 and found several consistent patterns:</span>
+<span id="cb8-235"><a href="#cb8-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-236"><a href="#cb8-236" aria-hidden="true" tabindex="-1"></a>**Pejoration**: words that referred to neutral or positive things acquire negative connotations. "Villain" originally meant a serf or farm laborer. "Hussy" originally meant housewife.</span>
+<span id="cb8-237"><a href="#cb8-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-238"><a href="#cb8-238" aria-hidden="true" tabindex="-1"></a>**Amelioration**: words that were pejorative become neutral or positive. "Fond" once meant foolish. "Knight" once meant a boy or servant.</span>
 <span id="cb8-239"><a href="#cb8-239" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-240"><a href="#cb8-240" aria-hidden="true" tabindex="-1"></a>drift_cases <span class="op">=</span> {</span>
-<span id="cb8-241"><a href="#cb8-241" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Word"</span>: [<span class="st">"awful"</span>, <span class="st">"nice"</span>, <span class="st">"silly"</span>, <span class="st">"villain"</span>, <span class="st">"fond"</span>, <span class="st">"meat"</span>, <span class="st">"broadcast"</span>, <span class="st">"computer"</span>],</span>
-<span id="cb8-242"><a href="#cb8-242" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Original meaning"</span>: [<span class="st">"inspiring awe"</span>, <span class="st">"foolish/ignorant"</span>, <span class="st">"blessed/happy"</span>, <span class="st">"farm laborer"</span>,</span>
-<span id="cb8-243"><a href="#cb8-243" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"foolish"</span>, <span class="st">"any food"</span>, <span class="st">"scattered (seeds)"</span>, <span class="st">"one who computes (human)"</span>],</span>
-<span id="cb8-244"><a href="#cb8-244" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Modern meaning"</span>: [<span class="st">"very bad"</span>, <span class="st">"pleasant"</span>, <span class="st">"foolish/amusing"</span>, <span class="st">"criminal"</span>, <span class="st">"affectionate"</span>,</span>
-<span id="cb8-245"><a href="#cb8-245" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"animal flesh"</span>, <span class="st">"transmit media"</span>, <span class="st">"electronic device"</span>],</span>
-<span id="cb8-246"><a href="#cb8-246" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Type"</span>: [<span class="st">"pejoration"</span>, <span class="st">"amelioration"</span>, <span class="st">"narrowing"</span>, <span class="st">"pejoration"</span>, <span class="st">"amelioration"</span>,</span>
-<span id="cb8-247"><a href="#cb8-247" aria-hidden="true" tabindex="-1"></a>             <span class="st">"narrowing"</span>, <span class="st">"broadening"</span>, <span class="st">"metaphor/tech"</span>],</span>
-<span id="cb8-248"><a href="#cb8-248" aria-hidden="true" tabindex="-1"></a>    <span class="st">"~Era of shift"</span>: [<span class="st">"1700s–1900s"</span>, <span class="st">"1300s–1600s"</span>, <span class="st">"1200s–1500s"</span>, <span class="st">"1300s"</span>,</span>
-<span id="cb8-249"><a href="#cb8-249" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"1300s–1500s"</span>, <span class="st">"1300s–1700s"</span>, <span class="st">"1920s"</span>, <span class="st">"1940s–1960s"</span>],</span>
-<span id="cb8-250"><a href="#cb8-250" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-240"><a href="#cb8-240" aria-hidden="true" tabindex="-1"></a>**Broadening**: a word's meaning expands to cover more referents. "Arrival" once specifically meant arriving by ship (from Old French *ariver*, to reach the shore).</span>
+<span id="cb8-241"><a href="#cb8-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-242"><a href="#cb8-242" aria-hidden="true" tabindex="-1"></a>**Narrowing**: a word's meaning contracts to cover fewer referents. "Meat" once meant food in general; now it means animal flesh specifically.</span>
+<span id="cb8-243"><a href="#cb8-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-244"><a href="#cb8-244" aria-hidden="true" tabindex="-1"></a>**Metaphorical extension**: a concrete word acquires abstract senses. "Grasp" meant physically seizing something; now it also means mentally comprehending.</span>
+<span id="cb8-245"><a href="#cb8-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-248"><a href="#cb8-248" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb8-249"><a href="#cb8-249" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-semantic-drift-cases</span></span>
+<span id="cb8-250"><a href="#cb8-250" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Selected cases of semantic drift in English, with type and approximate time of shift."</span></span>
 <span id="cb8-251"><a href="#cb8-251" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-252"><a href="#cb8-252" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(drift_cases)</span>
-<span id="cb8-253"><a href="#cb8-253" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-254"><a href="#cb8-254" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-255"><a href="#cb8-255" aria-hidden="true" tabindex="-1"></a><span class="fu">## Evaluating Semantic Change Detection</span></span>
-<span id="cb8-256"><a href="#cb8-256" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-257"><a href="#cb8-257" aria-hidden="true" tabindex="-1"></a>The standard benchmark for semantic change detection uses words with known change histories (from etymological dictionaries) as positive examples, and stable words as negatives. Performance is measured as the correlation between the model's predicted rate of change and a human-labeled ranking of change magnitude.</span>
-<span id="cb8-258"><a href="#cb8-258" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-259"><a href="#cb8-259" aria-hidden="true" tabindex="-1"></a>Published results on the SemEval-2020 Task 1 benchmark (English, German, Latin, Swedish):</span>
-<span id="cb8-260"><a href="#cb8-260" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Best system: Spearman correlation ≈ 0.77 (English)</span>
-<span id="cb8-261"><a href="#cb8-261" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Median system: Spearman correlation ≈ 0.50</span>
-<span id="cb8-262"><a href="#cb8-262" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Simple cosine distance baseline: Spearman correlation ≈ 0.40–0.50</span>
+<span id="cb8-252"><a href="#cb8-252" aria-hidden="true" tabindex="-1"></a>drift_cases <span class="op">=</span> {</span>
+<span id="cb8-253"><a href="#cb8-253" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Word"</span>: [<span class="st">"awful"</span>, <span class="st">"nice"</span>, <span class="st">"silly"</span>, <span class="st">"villain"</span>, <span class="st">"fond"</span>, <span class="st">"meat"</span>, <span class="st">"broadcast"</span>, <span class="st">"computer"</span>],</span>
+<span id="cb8-254"><a href="#cb8-254" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Original meaning"</span>: [<span class="st">"inspiring awe"</span>, <span class="st">"foolish/ignorant"</span>, <span class="st">"blessed/happy"</span>, <span class="st">"farm laborer"</span>,</span>
+<span id="cb8-255"><a href="#cb8-255" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"foolish"</span>, <span class="st">"any food"</span>, <span class="st">"scattered (seeds)"</span>, <span class="st">"one who computes (human)"</span>],</span>
+<span id="cb8-256"><a href="#cb8-256" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Modern meaning"</span>: [<span class="st">"very bad"</span>, <span class="st">"pleasant"</span>, <span class="st">"foolish/amusing"</span>, <span class="st">"criminal"</span>, <span class="st">"affectionate"</span>,</span>
+<span id="cb8-257"><a href="#cb8-257" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"animal flesh"</span>, <span class="st">"transmit media"</span>, <span class="st">"electronic device"</span>],</span>
+<span id="cb8-258"><a href="#cb8-258" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Type"</span>: [<span class="st">"pejoration"</span>, <span class="st">"amelioration"</span>, <span class="st">"narrowing"</span>, <span class="st">"pejoration"</span>, <span class="st">"amelioration"</span>,</span>
+<span id="cb8-259"><a href="#cb8-259" aria-hidden="true" tabindex="-1"></a>             <span class="st">"narrowing"</span>, <span class="st">"broadening"</span>, <span class="st">"metaphor/tech"</span>],</span>
+<span id="cb8-260"><a href="#cb8-260" aria-hidden="true" tabindex="-1"></a>    <span class="st">"~Era of shift"</span>: [<span class="st">"1700s–1900s"</span>, <span class="st">"1300s–1600s"</span>, <span class="st">"1200s–1500s"</span>, <span class="st">"1300s"</span>,</span>
+<span id="cb8-261"><a href="#cb8-261" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"1300s–1500s"</span>, <span class="st">"1300s–1700s"</span>, <span class="st">"1920s"</span>, <span class="st">"1940s–1960s"</span>],</span>
+<span id="cb8-262"><a href="#cb8-262" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb8-263"><a href="#cb8-263" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-264"><a href="#cb8-264" aria-hidden="true" tabindex="-1"></a>The gaps between systems are smaller than they appear: the task is inherently noisy because human annotators disagree about which words have changed and by how much.</span>
-<span id="cb8-265"><a href="#cb8-265" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-266"><a href="#cb8-266" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
-<span id="cb8-267"><a href="#cb8-267" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-268"><a href="#cb8-268" aria-hidden="true" tabindex="-1"></a>Semantic drift is the process by which word meanings shift over time—through pejoration, amelioration, broadening, narrowing, and metaphorical extension. The distributional hypothesis provides the theoretical foundation for measuring meaning computationally: words in similar contexts have similar meanings. Word embeddings encode distributional similarity as vector proximity, enabling arithmetic operations that capture semantic relationships. Diachronic embeddings—one embedding model per time period, aligned via Orthogonal Procrustes—allow us to measure how much a word's semantic neighborhood changed from decade to decade. Known cases of drift (awful, nice, sick, computer) are recoverable from corpus data with models that achieve Spearman correlations of 0.50–0.77 against human judgments.</span>
-<span id="cb8-269"><a href="#cb8-269" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-270"><a href="#cb8-270" aria-hidden="true" tabindex="-1"></a><span class="fu">## Further Reading</span></span>
-<span id="cb8-271"><a href="#cb8-271" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-272"><a href="#cb8-272" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Hamilton, W. L., Leskovec, J., &amp; Jurafsky, D. (2016). Diachronic word embeddings reveal statistical laws of semantic change. *ACL 2016*.</span>
-<span id="cb8-273"><a href="#cb8-273" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Mikolov, T., et al. (2013). Distributed representations of words and phrases and their compositionality. *NIPS 2013*.</span>
-<span id="cb8-274"><a href="#cb8-274" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Tahmasebi, N., Borin, L., &amp; Jatowt, A. (2021). Survey of Computational Approaches to Lexical Semantic Change Detection. *Computational Approaches to Semantic Change*, Language Science Press.</span>
-<span id="cb8-275"><a href="#cb8-275" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Kutuzov, A., et al. (2018). Diachronic word embeddings and semantic shifts: A survey. *COLING 2018*.</span>
+<span id="cb8-264"><a href="#cb8-264" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(drift_cases)</span>
+<span id="cb8-265"><a href="#cb8-265" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-266"><a href="#cb8-266" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-267"><a href="#cb8-267" aria-hidden="true" tabindex="-1"></a><span class="fu">## Evaluating Semantic Change Detection</span></span>
+<span id="cb8-268"><a href="#cb8-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-269"><a href="#cb8-269" aria-hidden="true" tabindex="-1"></a>The standard benchmark for semantic change detection uses words with known change histories (from etymological dictionaries) as positive examples, and stable words as negatives. Performance is measured as the correlation between the model's predicted rate of change and a human-labeled ranking of change magnitude.</span>
+<span id="cb8-270"><a href="#cb8-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-271"><a href="#cb8-271" aria-hidden="true" tabindex="-1"></a>Published results on the SemEval-2020 Task 1 benchmark (English, German, Latin, Swedish):</span>
+<span id="cb8-272"><a href="#cb8-272" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Best system: Spearman correlation ≈ 0.77 (English)</span>
+<span id="cb8-273"><a href="#cb8-273" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Median system: Spearman correlation ≈ 0.50</span>
+<span id="cb8-274"><a href="#cb8-274" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Simple cosine distance baseline: Spearman correlation ≈ 0.40–0.50</span>
+<span id="cb8-275"><a href="#cb8-275" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-276"><a href="#cb8-276" aria-hidden="true" tabindex="-1"></a>The gaps between systems are smaller than they appear: the task is inherently noisy because human annotators disagree about which words have changed and by how much.</span>
+<span id="cb8-277"><a href="#cb8-277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-278"><a href="#cb8-278" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
+<span id="cb8-279"><a href="#cb8-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-280"><a href="#cb8-280" aria-hidden="true" tabindex="-1"></a>Semantic drift is the process by which word meanings shift over time—through pejoration, amelioration, broadening, narrowing, and metaphorical extension. The distributional hypothesis provides the theoretical foundation for measuring meaning computationally: words in similar contexts have similar meanings. Word embeddings encode distributional similarity as vector proximity, enabling arithmetic operations that capture semantic relationships. Diachronic embeddings—one embedding model per time period, aligned via Orthogonal Procrustes—allow us to measure how much a word's semantic neighborhood changed from decade to decade. Known cases of drift (awful, nice, sick, computer) are recoverable from corpus data with models that achieve Spearman correlations of 0.50–0.77 against human judgments.</span>
+<span id="cb8-281"><a href="#cb8-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-282"><a href="#cb8-282" aria-hidden="true" tabindex="-1"></a><span class="fu">## Further Reading</span></span>
+<span id="cb8-283"><a href="#cb8-283" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-284"><a href="#cb8-284" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Hamilton, W. L., Leskovec, J., &amp; Jurafsky, D. (2016). Diachronic word embeddings reveal statistical laws of semantic change. *ACL 2016*.</span>
+<span id="cb8-285"><a href="#cb8-285" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Mikolov, T., et al. (2013). Distributed representations of words and phrases and their compositionality. *NIPS 2013*.</span>
+<span id="cb8-286"><a href="#cb8-286" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Tahmasebi, N., Borin, L., &amp; Jatowt, A. (2021). Survey of Computational Approaches to Lexical Semantic Change Detection. *Computational Approaches to Semantic Change*, Language Science Press.</span>
+<span id="cb8-287"><a href="#cb8-287" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Kutuzov, A., et al. (2018). Diachronic word embeddings and semantic shifts: A survey. *COLING 2018*.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

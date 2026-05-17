@@ -30,6 +30,16 @@ The analogy is imperfect in illuminating ways. Species do not generally merge ba
 
 The result, applied to the world's documented languages, produces trees that match the expert consensus with remarkable fidelity, and that sometimes reveal relationships experts had debated for decades.
 
+## Why Trees? The Case for Bifurcating Models
+
+Before going further, it is worth asking why we model language relationships as trees at all. Real language history involves mergers (creoles, mixed languages), horizontal transfer (borrowing), geographic gradients (dialect continua), and periods of intense contact that a tree cannot represent.
+
+The answer is pragmatic. Trees are the simplest structure that can represent the core of the historical signal: that some languages are more closely related than others. For a first approximation—and especially for basic vocabulary, which is the most resistant to borrowing—the tree assumption holds remarkably well. English and German really do share a more recent common ancestor than either shares with French. Latin really is more closely related to Spanish than to Mandarin. The tree captures these facts.
+
+More importantly, trees are tractable. The number of possible trees for $n$ taxa is $(2n-3)!! = 1 \times 3 \times 5 \times \ldots \times (2n-3)$, which is enormous but finite and searchable. The number of possible networks is far larger and much harder to search. We start with trees because they are computationally feasible and because they explain most of the variance in the data; we add network structure where the residuals demand it.
+
+The analogy to linear regression is apt: you fit a line first, not because you believe the relationship is exactly linear, but because the linear approximation is useful and the residuals reveal where more complexity is warranted. The phylogenetic tree is the linear model of language history.
+
 ## From Cognates to Distances
 
 The raw material for tree inference is a *distance matrix*: a square matrix where entry $d_{ij}$ is the linguistic distance between language $i$ and language $j$.

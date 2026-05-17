@@ -94,6 +94,16 @@ plt.show()
 
 *night* vs. *nacht*: distance 2 (the vowel [aɪ]→[a] and the final t→t match, but the medial consonant cluster differs). *pater* vs. *father*: distance 3 (the *p*→*f* shift, the vowel, and the *t*→*th* shift). These distances are correct as string distances, but they do not capture the *linguistic* significance of the differences. The *p*→*f* correspondence is a known, regular sound change (Grimm's Law); the algorithm treats it as arbitrary.
 
+## Why Dynamic Programming Works
+
+The edit distance algorithm is an instance of *dynamic programming*—a technique for solving problems by breaking them into smaller subproblems and storing the results. It is worth understanding why this works, because the same structure appears in nearly every alignment algorithm in the book.
+
+The key insight is *optimal substructure*: the optimal alignment of two sequences must contain the optimal alignment of every prefix of those sequences. If the best alignment of *night* and *nacht* uses a particular path through the DP table, every initial segment of that path must also be optimal for the corresponding prefixes. If it were not—if some sub-alignment were suboptimal—you could replace it with a better one and improve the overall alignment, contradicting the assumption that you had found the optimum.
+
+This means you can build the optimal alignment for the full sequences by computing optimal alignments for progressively longer prefixes, reusing previously computed results at each step. The $O(mn)$ time complexity is the cost of filling a table of $m \times n$ cells, each requiring $O(1)$ work. Without dynamic programming, a naive search over all possible alignments would take exponential time—$O(3^{\max(m,n)})$—because there are exponentially many ways to insert gaps.
+
+For etymology, this matters practically: aligned cognate pairs from a language family of 50 languages and 200 concepts require aligning $\binom{50}{2} \times 200 = 245,000$ word pairs. At $O(mn)$ with average word length 6, that is roughly 8.8 million cell operations—trivial on modern hardware. Exponential time would make the computation impossible.
+
 ## The Problem with Orthographic Edit Distance
 
 Plain edit distance has three problems for etymology.
@@ -293,6 +303,16 @@ gold_night = [("n","n"), ("a","a"), ("I","x"), ("t","t")]
 auto_night  = [("n","n"), ("a","a"), ("I","x"), ("t","t")]
 print(f"Alignment accuracy (night/Nacht): {evaluate_alignment(auto_night, gold_night):.0%}")
 ```
+
+## Gap Penalties and Linguistic Reality
+
+One parameter in alignment algorithms that deserves more attention than it typically gets is the gap penalty—the cost of inserting a gap (representing an insertion or deletion in the evolutionary history of the word).
+
+In the uniform-cost version of edit distance, a gap costs the same regardless of where it falls. This is linguistically unrealistic. Word-final position is far more susceptible to sound loss than word-internal position—the process called *apocope* (loss of final sounds) is one of the most common types of sound change. Latin *noctem* became French *nuit* partly through loss of the final *-m* and then the *-ct-* cluster. Latin *filium* became French *fils*, losing multiple sounds. If our alignment algorithm charged the same penalty for a gap in word-final position as for a gap in word-initial position, it would systematically undervalue alignments that involve word-final loss.
+
+More sophisticated alignment algorithms use *affine gap penalties*: gap *opening* (the cost of starting a new run of gaps) is penalized more heavily than gap *extension* (the cost of continuing an existing gap). This reflects the empirical observation that a single deletion event often removes several adjacent sounds rather than isolated ones. A word that lost its final syllable lost multiple sounds in a single event; charging separately for each is historically misleading.
+
+LingPy's SCA (Sound Class Alignment) algorithm, the standard in the field, uses a gap penalty scheme tuned to the observed statistics of sound change across a large number of language families. The penalty values are not arbitrary; they are estimated from the empirical distribution of gap positions in gold-standard alignments. This is, in microcosm, the right approach to parameter selection in computational linguistics: let the data constrain the model rather than setting parameters by intuition.
 
 ## Summary
 
