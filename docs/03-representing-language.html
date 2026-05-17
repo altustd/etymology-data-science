@@ -153,14 +153,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">What Is Etymology? A Data Perspective</span></span></a>
+  <a href="./preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./preface.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Preface</span></span></a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">What Is Etymology? A Data Perspective</span></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -772,7 +772,7 @@ Listing&nbsp;4.1: Loading a simplified CLDF-style wordlist into pandas.
 <h2 data-number="4.8" class="anchored" data-anchor-id="segmentation"><span class="header-section-number">4.8</span> Segmentation</h2>
 <p>Segmenting a transcribed word into phonemes sounds trivial—just split on spaces—but the issue of <em>multigraphs</em> complicates things. In IPA, some sounds are represented by two characters: <em>tʃ</em> (the sound in <em>church</em>), <em>dʒ</em> (the sound in <em>judge</em>), <em>ts</em> (the sound in <em>cats</em>). If you split character-by-character rather than phoneme-by-phoneme, you get the wrong segmentation.</p>
 <p>LingPy, the Python library we will use extensively in Chapter 4, includes a segmentation function that handles these cases:</p>
-<div id="5711e22b" class="cell" data-execution_count="6">
+<div id="bb8ca5b3" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> lingpy <span class="im">import</span> ipa2tokens</span>

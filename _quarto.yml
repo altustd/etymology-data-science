@@ -9,8 +9,8 @@ book:
   date: "May 2026"
   repo-url: https://github.com/altustd/etymology-data-science
   chapters:
-    - index.qmd
     - preface.qmd
+    - index.qmd
     - part: "Part I: Foundations"
       chapters:
         - 02-comparative-method.qmd

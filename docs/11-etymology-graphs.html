@@ -150,14 +150,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">What Is Etymology? A Data Perspective</span></span></a>
+  <a href="./preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./preface.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Preface</span></span></a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">What Is Etymology? A Data Perspective</span></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -432,21 +432,21 @@ Listing&nbsp;12.1: Building an etymology graph for the PIE root *nekʷ-t- (night
 <pre><code>Graph: 16 nodes, 15 edges
 
 Descendants of PIE:*nókʷts:
-  DE:Nacht
-  FR:nuit
-  Eng:nocturnal
-  Skt:nakta-
-  Lat:noctem
-  PGmc:*naht-
   Grk:nýks
-  Lat:equinox
-  ES:noche
+  DE:Nacht
   Lat:nocturnal
-  Lat:nox
-  Eng:night
   IT:notte
   OIr:nochd
-  OE:niht</code></pre>
+  Lat:noctem
+  OE:niht
+  Eng:night
+  FR:nuit
+  PGmc:*naht-
+  Skt:nakta-
+  Eng:nocturnal
+  Lat:nox
+  Lat:equinox
+  ES:noche</code></pre>
 </div>
 </div>
 </figure>
@@ -576,7 +576,7 @@ Listing&nbsp;12.2: Etymological graph queries using NetworkX.
 <span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>pair_list[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> ↔ </span><span class="sc">{</span>pair_list[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>English descendants of PIE *nókʷts: ['Eng:nocturnal', 'Eng:night']
+<pre><code>English descendants of PIE *nókʷts: ['Eng:night', 'Eng:nocturnal']
 
 No directed path found.
 
@@ -589,11 +589,11 @@ Top nodes by number of direct descendants:
 
 Cognate pairs in graph: 91
 Sample cognate pairs:
-  FR:nuit ↔ OIr:nochd
-  Lat:nox ↔ Lat:noctem
-  DE:Nacht ↔ IT:notte
-  Lat:nox ↔ Skt:nakta-
-  Eng:nocturnal ↔ OIr:nochd</code></pre>
+  Grk:nýks ↔ OE:niht
+  Grk:nýks ↔ DE:Nacht
+  Lat:noctem ↔ Lat:nox
+  Grk:nýks ↔ Lat:nocturnal
+  Lat:nox ↔ ES:noche</code></pre>
 </div>
 </div>
 </figure>
