@@ -27,6 +27,7 @@ book:
         - 09-borrowing-detection.qmd
         - 10-llms-etymology.qmd
         - 11-etymology-graphs.qmd
+        - 12-borrowing-networks.qmd
     - part: "Part IV: Synthesis"
       chapters:
         - 12-capstone.qmd

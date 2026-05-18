@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>13&nbsp; Capstone Project – Etymology + Data Science</title>
+<title>14&nbsp; Capstone Project – Etymology + Data Science</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -69,7 +69,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./references.html" rel="next">
-<link href="./11-etymology-graphs.html" rel="prev">
+<link href="./12-borrowing-networks.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -120,7 +120,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./12-capstone.html">Part IV: Synthesis</a></li><li class="breadcrumb-item"><a href="./12-capstone.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Capstone Project</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./12-capstone.html">Part IV: Synthesis</a></li><li class="breadcrumb-item"><a href="./12-capstone.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Capstone Project</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -251,6 +251,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Etymology as Knowledge Graphs</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-borrowing-networks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Cross-Linguistic Borrowing Networks</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -265,7 +271,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./12-capstone.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Capstone Project</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Capstone Project</span></span></a>
   </div>
 </li>
       </ul>
@@ -309,25 +315,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#a-note-on-intellectual-honesty" id="toc-a-note-on-intellectual-honesty" class="nav-link active" data-scroll-target="#a-note-on-intellectual-honesty"><span class="header-section-number">13.1</span> A Note on Intellectual Honesty</a></li>
-  <li><a href="#the-point-of-all-this" id="toc-the-point-of-all-this" class="nav-link" data-scroll-target="#the-point-of-all-this"><span class="header-section-number">13.2</span> The Point of All This</a></li>
-  <li><a href="#capstone-option-a-trace-a-word-family" id="toc-capstone-option-a-trace-a-word-family" class="nav-link" data-scroll-target="#capstone-option-a-trace-a-word-family"><span class="header-section-number">13.3</span> Capstone Option A: Trace a Word Family</a></li>
-  <li><a href="#capstone-option-b-language-influence-study" id="toc-capstone-option-b-language-influence-study" class="nav-link" data-scroll-target="#capstone-option-b-language-influence-study"><span class="header-section-number">13.4</span> Capstone Option B: Language Influence Study</a></li>
-  <li><a href="#capstone-option-c-semantic-evolution-study" id="toc-capstone-option-c-semantic-evolution-study" class="nav-link" data-scroll-target="#capstone-option-c-semantic-evolution-study"><span class="header-section-number">13.5</span> Capstone Option C: Semantic Evolution Study</a></li>
-  <li><a href="#capstone-option-d-language-relationship-discovery" id="toc-capstone-option-d-language-relationship-discovery" class="nav-link" data-scroll-target="#capstone-option-d-language-relationship-discovery"><span class="header-section-number">13.6</span> Capstone Option D: Language Relationship Discovery</a></li>
-  <li><a href="#capstone-option-e-build-an-etymology-tool" id="toc-capstone-option-e-build-an-etymology-tool" class="nav-link" data-scroll-target="#capstone-option-e-build-an-etymology-tool"><span class="header-section-number">13.7</span> Capstone Option E: Build an Etymology Tool</a></li>
-  <li><a href="#report-structure-all-options" id="toc-report-structure-all-options" class="nav-link" data-scroll-target="#report-structure-all-options"><span class="header-section-number">13.8</span> Report Structure (All Options)</a></li>
-  <li><a href="#evaluation-rubric" id="toc-evaluation-rubric" class="nav-link" data-scroll-target="#evaluation-rubric"><span class="header-section-number">13.9</span> Evaluation Rubric</a></li>
-  <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started"><span class="header-section-number">13.10</span> Getting Started</a></li>
+  <li><a href="#a-note-on-intellectual-honesty" id="toc-a-note-on-intellectual-honesty" class="nav-link active" data-scroll-target="#a-note-on-intellectual-honesty"><span class="header-section-number">14.1</span> A Note on Intellectual Honesty</a></li>
+  <li><a href="#the-point-of-all-this" id="toc-the-point-of-all-this" class="nav-link" data-scroll-target="#the-point-of-all-this"><span class="header-section-number">14.2</span> The Point of All This</a></li>
+  <li><a href="#capstone-option-a-trace-a-word-family" id="toc-capstone-option-a-trace-a-word-family" class="nav-link" data-scroll-target="#capstone-option-a-trace-a-word-family"><span class="header-section-number">14.3</span> Capstone Option A: Trace a Word Family</a></li>
+  <li><a href="#capstone-option-b-language-influence-study" id="toc-capstone-option-b-language-influence-study" class="nav-link" data-scroll-target="#capstone-option-b-language-influence-study"><span class="header-section-number">14.4</span> Capstone Option B: Language Influence Study</a></li>
+  <li><a href="#capstone-option-c-semantic-evolution-study" id="toc-capstone-option-c-semantic-evolution-study" class="nav-link" data-scroll-target="#capstone-option-c-semantic-evolution-study"><span class="header-section-number">14.5</span> Capstone Option C: Semantic Evolution Study</a></li>
+  <li><a href="#capstone-option-d-language-relationship-discovery" id="toc-capstone-option-d-language-relationship-discovery" class="nav-link" data-scroll-target="#capstone-option-d-language-relationship-discovery"><span class="header-section-number">14.6</span> Capstone Option D: Language Relationship Discovery</a></li>
+  <li><a href="#capstone-option-e-build-an-etymology-tool" id="toc-capstone-option-e-build-an-etymology-tool" class="nav-link" data-scroll-target="#capstone-option-e-build-an-etymology-tool"><span class="header-section-number">14.7</span> Capstone Option E: Build an Etymology Tool</a></li>
+  <li><a href="#report-structure-all-options" id="toc-report-structure-all-options" class="nav-link" data-scroll-target="#report-structure-all-options"><span class="header-section-number">14.8</span> Report Structure (All Options)</a></li>
+  <li><a href="#evaluation-rubric" id="toc-evaluation-rubric" class="nav-link" data-scroll-target="#evaluation-rubric"><span class="header-section-number">14.9</span> Evaluation Rubric</a></li>
+  <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started"><span class="header-section-number">14.10</span> Getting Started</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./12-capstone.html">Part IV: Synthesis</a></li><li class="breadcrumb-item"><a href="./12-capstone.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Capstone Project</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./12-capstone.html">Part IV: Synthesis</a></li><li class="breadcrumb-item"><a href="./12-capstone.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Capstone Project</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span id="sec-capstone" class="quarto-section-identifier"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Capstone Project</span></span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span id="sec-capstone" class="quarto-section-identifier"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Capstone Project</span></span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -365,21 +371,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 </div>
 </div>
-<section id="a-note-on-intellectual-honesty" class="level2" data-number="13.1">
-<h2 data-number="13.1" class="anchored" data-anchor-id="a-note-on-intellectual-honesty"><span class="header-section-number">13.1</span> A Note on Intellectual Honesty</h2>
+<section id="a-note-on-intellectual-honesty" class="level2" data-number="14.1">
+<h2 data-number="14.1" class="anchored" data-anchor-id="a-note-on-intellectual-honesty"><span class="header-section-number">14.1</span> A Note on Intellectual Honesty</h2>
 <p>Before describing the capstone options, a word on what makes research in this field credible—and what undermines it.</p>
 <p>Computational etymology has a reproducibility problem that it shares with many data-intensive fields. The algorithms are complex enough that results depend heavily on parameter choices, data preprocessing decisions, and evaluation metric selection. A cognate detector with 85% F1 on one benchmark may have 60% F1 on another benchmark covering different language families, because it has been implicitly tuned to the characteristics of its training distribution. A phylogenetic tree that matches the expert consensus for major groupings may disagree on the fine structure of one subgroup—and whether the computational tree or the expert consensus is right may be genuinely unclear.</p>
 <p>Honest reporting in this context means: stating clearly which benchmark you evaluated on, what threshold or parameter values you used, how sensitive your results are to those choices, and what the known limitations of your method are. It means not cherry-picking the evaluation that makes your system look best. It means distinguishing between “our method recovers the expert consensus” (a validation) and “our method disagrees with the expert consensus” (which could be an improvement or an error, and requires careful argument to determine which).</p>
 <p>The capstone project is an opportunity to practice this kind of honesty. A result that says “our method achieves 75% accuracy on 10 concepts from the Indo-European family, with the following three specific failure modes” is more valuable than a result that says “our method successfully identifies language families” without specifying conditions or limitations. Specificity and honesty are the same virtue in empirical research.</p>
 </section>
-<section id="the-point-of-all-this" class="level2" data-number="13.2">
-<h2 data-number="13.2" class="anchored" data-anchor-id="the-point-of-all-this"><span class="header-section-number">13.2</span> The Point of All This</h2>
+<section id="the-point-of-all-this" class="level2" data-number="14.2">
+<h2 data-number="14.2" class="anchored" data-anchor-id="the-point-of-all-this"><span class="header-section-number">14.2</span> The Point of All This</h2>
 <p>There is a particular kind of satisfaction that arrives when a technique you have learned in the abstract produces a result that surprises you. You run the alignment algorithm on a word pair you thought would look boring, and the gap falls exactly where the historical record says a sound was lost. You cluster a language family and the dendrogram recovers a branching that linguists spent decades debating—and your dataset is forty words and one Python script. The technique is not magic, but it is doing something real.</p>
 <p>The capstone project is where this becomes personal. You choose a question, gather the data, apply the methods, and report what you find. The constraint is only this: the question must be genuinely open, at least to you. If you already know the answer, it is not a research question—it is an exercise.</p>
 <p>This chapter describes five capstone options in enough detail that you can begin one without further instruction. Each specifies the research question, the data sources, the methods to apply, and the deliverable format.</p>
 </section>
-<section id="capstone-option-a-trace-a-word-family" class="level2" data-number="13.3">
-<h2 data-number="13.3" class="anchored" data-anchor-id="capstone-option-a-trace-a-word-family"><span class="header-section-number">13.3</span> Capstone Option A: Trace a Word Family</h2>
+<section id="capstone-option-a-trace-a-word-family" class="level2" data-number="14.3">
+<h2 data-number="14.3" class="anchored" data-anchor-id="capstone-option-a-trace-a-word-family"><span class="header-section-number">14.3</span> Capstone Option A: Trace a Word Family</h2>
 <p><strong>Research question</strong>: Choose an English word whose etymology you find interesting. Trace it as far back as the record allows, documenting the cognates, sound changes, and meaning shifts along the way. Build a graph representation of the family.</p>
 <p><strong>Suggested words</strong> (chosen for richness of history): <em>heart</em>, <em>fire</em>, <em>star</em>, <em>name</em>, <em>wolf</em>, <em>speak</em>, <em>know</em>, <em>ten</em>, <em>give</em>, <em>stand</em>.</p>
 <p><strong>Data sources</strong>: - Etymonline.com for the initial trace - Wiktionary for cognates in related languages - Campbell (2013) <em>Historical Linguistics</em> for the comparative method context - LingPy for automated alignment of the cognate set</p>
@@ -387,8 +393,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Deliverable</strong>: Jupyter notebook with the full analysis + a 1,500-word markdown report covering: the word’s origin, the key sound changes, any meaning shifts, and a visualization of the family tree or graph. Cite every claim about etymology to a dictionary or scholarly source.</p>
 <hr>
 </section>
-<section id="capstone-option-b-language-influence-study" class="level2" data-number="13.4">
-<h2 data-number="13.4" class="anchored" data-anchor-id="capstone-option-b-language-influence-study"><span class="header-section-number">13.4</span> Capstone Option B: Language Influence Study</h2>
+<section id="capstone-option-b-language-influence-study" class="level2" data-number="14.4">
+<h2 data-number="14.4" class="anchored" data-anchor-id="capstone-option-b-language-influence-study"><span class="header-section-number">14.4</span> Capstone Option B: Language Influence Study</h2>
 <p><strong>Research question</strong>: Quantify the vocabulary that English borrowed from a specific source language during a defined historical period. What kinds of words were borrowed? What patterns characterize the loan vocabulary?</p>
 <p><strong>Suggested source languages</strong>: Norman French (post-1066), Old Norse (Danelaw), Classical Latin (Renaissance), Greek (scientific terminology).</p>
 <p><strong>Data sources</strong>: - The Oxford English Dictionary online (university library access) has dates of first attestation and source languages for over 600,000 words - Etymonline.com (free) for a substantial subset - The CELEX English lexical database (free academic license)</p>
@@ -396,16 +402,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Deliverable</strong>: A dataset of at least 500 classified words (inherited vs.&nbsp;borrowed from source language), with 5–8 visualizations and a 2,000-word analysis report.</p>
 <hr>
 </section>
-<section id="capstone-option-c-semantic-evolution-study" class="level2" data-number="13.5">
-<h2 data-number="13.5" class="anchored" data-anchor-id="capstone-option-c-semantic-evolution-study"><span class="header-section-number">13.5</span> Capstone Option C: Semantic Evolution Study</h2>
+<section id="capstone-option-c-semantic-evolution-study" class="level2" data-number="14.5">
+<h2 data-number="14.5" class="anchored" data-anchor-id="capstone-option-c-semantic-evolution-study"><span class="header-section-number">14.5</span> Capstone Option C: Semantic Evolution Study</h2>
 <p><strong>Research question</strong>: Choose 5–10 words and track how their meanings have changed over a period of at least 100 years using historical text corpora. Identify the type of change (pejoration, amelioration, broadening, narrowing, metaphorical extension) and estimate when it occurred.</p>
 <p><strong>Data sources</strong>: - Google Ngrams Viewer (books.google.com/ngrams) for frequency data - Corpus of Historical American English (COHA) — free access at corpus.byu.edu - Project Gutenberg for raw text by decade</p>
 <p><strong>Methods to apply</strong>: 1. Diachronic word embeddings (Chapter 8): train Word2Vec on text by decade 2. Orthogonal Procrustes alignment of embedding spaces 3. Cosine distance over time as a change measure 4. Nearest-neighbor analysis: what words cluster near the target word in each decade?</p>
 <p><strong>Deliverable</strong>: Embedding change trajectories for each target word, with nearest-neighbor tables by decade, and a 1,500-word narrative interpreting the results against known historical events or cultural shifts.</p>
 <hr>
 </section>
-<section id="capstone-option-d-language-relationship-discovery" class="level2" data-number="13.6">
-<h2 data-number="13.6" class="anchored" data-anchor-id="capstone-option-d-language-relationship-discovery"><span class="header-section-number">13.6</span> Capstone Option D: Language Relationship Discovery</h2>
+<section id="capstone-option-d-language-relationship-discovery" class="level2" data-number="14.6">
+<h2 data-number="14.6" class="anchored" data-anchor-id="capstone-option-d-language-relationship-discovery"><span class="header-section-number">14.6</span> Capstone Option D: Language Relationship Discovery</h2>
 <p><strong>Research question</strong>: Apply cognate detection and phylogenetic inference to a language family of your choice. Compare your computed tree to the expert consensus. Where do they agree and where do they disagree?</p>
 <p><strong>Suggested families</strong> (with available CLDF data): Austronesian, Bantu, Turkic, Dravidian, Sino-Tibetan.</p>
 <p><strong>Data sources</strong>: - CLLD (Cross-Linguistic Linked Data): https://clld.org — provides CLDF-format wordlists for many language families - LingPy ships with several built-in test datasets</p>
@@ -413,16 +419,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Deliverable</strong>: Both computed trees + the expert reference tree, RF distance calculation, and a 2,000-word discussion of where and why the methods agree or disagree with expert consensus.</p>
 <hr>
 </section>
-<section id="capstone-option-e-build-an-etymology-tool" class="level2" data-number="13.7">
-<h2 data-number="13.7" class="anchored" data-anchor-id="capstone-option-e-build-an-etymology-tool"><span class="header-section-number">13.7</span> Capstone Option E: Build an Etymology Tool</h2>
+<section id="capstone-option-e-build-an-etymology-tool" class="level2" data-number="14.7">
+<h2 data-number="14.7" class="anchored" data-anchor-id="capstone-option-e-build-an-etymology-tool"><span class="header-section-number">14.7</span> Capstone Option E: Build an Etymology Tool</h2>
 <p><strong>Research question</strong>: Design and build a computational tool that solves one specific etymological problem better (in some measurable dimension) than existing solutions.</p>
 <p><strong>Suggested tools</strong>: - A web scraper + LLM extractor that builds a structured cognate dataset from Wiktionary entries for a specific language family - A streamlit app that lets users input a wordlist and receive an automatic phylogenetic tree with cognate clusters highlighted - A semantic drift tracker that accepts a word and returns its 5-year semantic trajectory from COHA data</p>
 <p><strong>Methods to apply</strong>: All of the above, as appropriate to your tool.</p>
 <p><strong>Deliverable</strong>: A working Python application + a benchmark evaluation showing its performance on a held-out test set + documentation sufficient for another student to run it. Open-source on GitHub.</p>
 <hr>
 </section>
-<section id="report-structure-all-options" class="level2" data-number="13.8">
-<h2 data-number="13.8" class="anchored" data-anchor-id="report-structure-all-options"><span class="header-section-number">13.8</span> Report Structure (All Options)</h2>
+<section id="report-structure-all-options" class="level2" data-number="14.8">
+<h2 data-number="14.8" class="anchored" data-anchor-id="report-structure-all-options"><span class="header-section-number">14.8</span> Report Structure (All Options)</h2>
 <p>Regardless of option, your final report should follow this structure:</p>
 <ol type="1">
 <li><strong>Introduction</strong> (200–400 words): What question are you answering and why does it matter?</li>
@@ -437,8 +443,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The goal is not to solve etymology. The goal is to do something real with the methods, report it clearly, and learn where they work and where they do not.</p>
 <hr>
 </section>
-<section id="evaluation-rubric" class="level2" data-number="13.9">
-<h2 data-number="13.9" class="anchored" data-anchor-id="evaluation-rubric"><span class="header-section-number">13.9</span> Evaluation Rubric</h2>
+<section id="evaluation-rubric" class="level2" data-number="14.9">
+<h2 data-number="14.9" class="anchored" data-anchor-id="evaluation-rubric"><span class="header-section-number">14.9</span> Evaluation Rubric</h2>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -489,8 +495,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The most common reason for low scores is overclaiming: asserting that a 75% F1 classifier “proves” a linguistic relationship, or interpreting a noisy semantic drift signal as definitive evidence of meaning change. Let the numbers speak for themselves.</p>
 <hr>
 </section>
-<section id="getting-started" class="level2" data-number="13.10">
-<h2 data-number="13.10" class="anchored" data-anchor-id="getting-started"><span class="header-section-number">13.10</span> Getting Started</h2>
+<section id="getting-started" class="level2" data-number="14.10">
+<h2 data-number="14.10" class="anchored" data-anchor-id="getting-started"><span class="header-section-number">14.10</span> Getting Started</h2>
 <p>Choose your option. Spend thirty minutes gathering data before you commit. If the data is unavailable, inaccessible, or thinner than expected, switch options before investing further. The data availability check is the most important step.</p>
 <p>Then: write the Introduction first. Before you run a single line of code, write two paragraphs about what you are trying to find out and why. This forces you to have a hypothesis, which is the difference between analysis and fishing.</p>
 <p>Good luck.</p>
@@ -954,8 +960,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./11-etymology-graphs.html" class="pagination-link" aria-label="Etymology as Knowledge Graphs">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Etymology as Knowledge Graphs</span></span>
+      <a href="./12-borrowing-networks.html" class="pagination-link" aria-label="Cross-Linguistic Borrowing Networks">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Cross-Linguistic Borrowing Networks</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

@@ -280,6 +280,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Etymology as Knowledge Graphs</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-borrowing-networks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Cross-Linguistic Borrowing Networks</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -294,7 +300,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./12-capstone.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Capstone Project</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Capstone Project</span></span></a>
   </div>
 </li>
       </ul>
@@ -691,7 +697,7 @@ Figure&nbsp;6.3: Random Forest feature importances. Normalized edit distance and
 <h2 data-number="6.8" class="anchored" data-anchor-id="beyond-feature-engineering-lexstat"><span class="header-section-number">6.8</span> Beyond Feature Engineering: LexStat</h2>
 <p>The LexStat algorithm, developed by Johann-Mattis List, goes beyond hand-crafted features. Its key insight is to use the alignment scores themselves as features, but computed relative to a <em>permuted baseline</em>: randomly shuffle the phonemes of all words in your dataset and compute alignment scores on the shuffled versions. The ratio of the real alignment score to the shuffled baseline score is a more informative feature than the raw score alone, because it controls for the baseline similarity of the phoneme inventories of the two languages.</p>
 <p>In practice, LexStat achieves F1 scores of 0.85–0.92 on held-out cognate datasets from the CLDF benchmark collection, competitive with trained human annotators on fast runs.</p>
-<div id="5a3b5543" class="cell" data-execution_count="8">
+<div id="e4900ef7" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> lingpy <span class="im">import</span> LexStat</span>

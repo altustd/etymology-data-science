@@ -68,7 +68,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./12-capstone.html" rel="next">
+<link href="./12-borrowing-networks.html" rel="next">
 <link href="./10-llms-etymology.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -251,6 +251,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Etymology as Knowledge Graphs</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-borrowing-networks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Cross-Linguistic Borrowing Networks</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -265,7 +271,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./12-capstone.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Capstone Project</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Capstone Project</span></span></a>
   </div>
 </li>
       </ul>
@@ -432,21 +438,21 @@ Listing&nbsp;12.1: Building an etymology graph for the PIE root *nekʷ-t- (night
 <pre><code>Graph: 16 nodes, 15 edges
 
 Descendants of PIE:*nókʷts:
-  Grk:nýks
+  Eng:night
+  ES:noche
+  Eng:nocturnal
+  Lat:noctem
   DE:Nacht
-  Lat:nocturnal
+  OE:niht
   IT:notte
   OIr:nochd
-  Lat:noctem
-  OE:niht
-  Eng:night
-  FR:nuit
-  PGmc:*naht-
-  Skt:nakta-
-  Eng:nocturnal
   Lat:nox
+  Grk:nýks
+  PGmc:*naht-
   Lat:equinox
-  ES:noche</code></pre>
+  Lat:nocturnal
+  FR:nuit
+  Skt:nakta-</code></pre>
 </div>
 </div>
 </figure>
@@ -589,11 +595,11 @@ Top nodes by number of direct descendants:
 
 Cognate pairs in graph: 91
 Sample cognate pairs:
-  Grk:nýks ↔ OE:niht
-  Grk:nýks ↔ DE:Nacht
-  Lat:noctem ↔ Lat:nox
-  Grk:nýks ↔ Lat:nocturnal
-  Lat:nox ↔ ES:noche</code></pre>
+  DE:Nacht ↔ OE:niht
+  Lat:equinox ↔ OE:niht
+  Lat:noctem ↔ ES:noche
+  Lat:noctem ↔ Skt:nakta-
+  Lat:nox ↔ Lat:noctem</code></pre>
 </div>
 </div>
 </figure>
@@ -1143,8 +1149,8 @@ Figure&nbsp;12.2: Community structure in the etymology graph (simulated larger g
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./12-capstone.html" class="pagination-link" aria-label="Capstone Project">
-        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Capstone Project</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./12-borrowing-networks.html" class="pagination-link" aria-label="Cross-Linguistic Borrowing Networks">
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Cross-Linguistic Borrowing Networks</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
