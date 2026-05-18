@@ -25,41 +25,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -370,7 +335,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Etymology + Data Science</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+<h1 class="title">Etymology + Data Science</h1>
 <p class="subtitle lead">A Computational Survey of Word Origins</p>
 </div>
 
@@ -460,20 +425,6 @@ window.Quarto = {
 <p>Notice what the comparative method is actually doing. It is taking a set of strings—words, transcribed as sequences of sounds—and detecting patterns of similarity and difference across them. It is grouping those strings by hypothesized ancestry. It is inferring hidden variables (the proto-forms) from observable ones (the modern words). It is, in short, doing data science on a structured dataset.</p>
 <p>The dataset in question is a <em>wordlist</em>: a table where rows are concepts (FATHER, WATER, NIGHT, FIRE) and columns are languages, with cells containing the word for that concept in that language. This is the fundamental data structure of historical linguistics, and it is, conveniently, exactly the kind of tabular data that Python’s pandas library was designed to handle.</p>
 <div class="cell" data-execution_count="2">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> {</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Concept"</span>:  [<span class="st">"father"</span>,  <span class="st">"water"</span>,  <span class="st">"night"</span>,  <span class="st">"fire"</span>,   <span class="st">"star"</span>],</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Latin"</span>:    [<span class="st">"pater"</span>,   <span class="st">"aqua"</span>,   <span class="st">"nox"</span>,    <span class="st">"ignis"</span>,  <span class="st">"stella"</span>],</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Greek"</span>:    [<span class="st">"patḗr"</span>,   <span class="st">"hydōr"</span>,  <span class="st">"nýks"</span>,   <span class="st">"pŷr"</span>,    <span class="st">"astḗr"</span>],</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Sanskrit"</span>: [<span class="st">"pitar"</span>,   <span class="st">"udaka"</span>,  <span class="st">"nakta"</span>,  <span class="st">"agni"</span>,   <span class="st">"tara"</span>],</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"English"</span>:  [<span class="st">"father"</span>,  <span class="st">"water"</span>,  <span class="st">"night"</span>,  <span class="st">"fire"</span>,   <span class="st">"star"</span>],</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"PIE*"</span>:     [<span class="st">"*ph₂tḗr"</span>, <span class="st">"*wed-"</span>,  <span class="st">"*nókʷts"</span>,<span class="st">"*h₁ngʷni"</span>,<span class="st">"*h₂stḗr"</span>],</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(data)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div id="tbl-cognates" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="2">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-cognates-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -575,61 +526,6 @@ Table&nbsp;1.1: A minimal wordlist showing Indo-European cognates. The asterisk 
 <h2 data-number="1.8" class="anchored" data-anchor-id="your-first-wordlist"><span class="header-section-number">1.8</span> Your First Wordlist</h2>
 <p>Let us build the first practical object of this book: a multilingual wordlist in Python.</p>
 <div id="cell-fig-wordlist-heatmap" class="cell" data-execution_count="3">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itertools <span class="im">import</span> combinations</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> simple_edit_distance(s1, s2):</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Levenshtein distance between two strings."""</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    m, n <span class="op">=</span> <span class="bu">len</span>(s1), <span class="bu">len</span>(s2)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    dp <span class="op">=</span> [[<span class="dv">0</span>] <span class="op">*</span> (n <span class="op">+</span> <span class="dv">1</span>) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(m <span class="op">+</span> <span class="dv">1</span>)]</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(m <span class="op">+</span> <span class="dv">1</span>):</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        dp[i][<span class="dv">0</span>] <span class="op">=</span> i</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(n <span class="op">+</span> <span class="dv">1</span>):</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        dp[<span class="dv">0</span>][j] <span class="op">=</span> j</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, m <span class="op">+</span> <span class="dv">1</span>):</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, n <span class="op">+</span> <span class="dv">1</span>):</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> s1[i<span class="op">-</span><span class="dv">1</span>] <span class="op">==</span> s2[j<span class="op">-</span><span class="dv">1</span>]:</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                dp[i][j] <span class="op">=</span> dp[i<span class="op">-</span><span class="dv">1</span>][j<span class="op">-</span><span class="dv">1</span>]</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>                dp[i][j] <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> <span class="bu">min</span>(dp[i<span class="op">-</span><span class="dv">1</span>][j], dp[i][j<span class="op">-</span><span class="dv">1</span>], dp[i<span class="op">-</span><span class="dv">1</span>][j<span class="op">-</span><span class="dv">1</span>])</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> dp[m][n]</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>wordlist <span class="op">=</span> {</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"father"</span>:  {<span class="st">"Latin"</span>: <span class="st">"pater"</span>,  <span class="st">"Greek"</span>: <span class="st">"pater"</span>,  <span class="st">"Sanskrit"</span>: <span class="st">"pitar"</span>,  <span class="st">"German"</span>: <span class="st">"vater"</span>},</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">"water"</span>:   {<span class="st">"Latin"</span>: <span class="st">"aqua"</span>,   <span class="st">"Greek"</span>: <span class="st">"hydor"</span>,  <span class="st">"Sanskrit"</span>: <span class="st">"udaka"</span>,  <span class="st">"German"</span>: <span class="st">"wasser"</span>},</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">"night"</span>:   {<span class="st">"Latin"</span>: <span class="st">"noctem"</span>, <span class="st">"Greek"</span>: <span class="st">"nykta"</span>,  <span class="st">"Sanskrit"</span>: <span class="st">"nakta"</span>,  <span class="st">"German"</span>: <span class="st">"nacht"</span>},</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">"new"</span>:     {<span class="st">"Latin"</span>: <span class="st">"novum"</span>,  <span class="st">"Greek"</span>: <span class="st">"neon"</span>,   <span class="st">"Sanskrit"</span>: <span class="st">"navam"</span>,  <span class="st">"German"</span>: <span class="st">"neu"</span>},</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">"star"</span>:    {<span class="st">"Latin"</span>: <span class="st">"stella"</span>, <span class="st">"Greek"</span>: <span class="st">"aster"</span>,  <span class="st">"Sanskrit"</span>: <span class="st">"tara"</span>,   <span class="st">"German"</span>: <span class="st">"stern"</span>},</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>langs <span class="op">=</span> [<span class="st">"Latin"</span>, <span class="st">"Greek"</span>, <span class="st">"Sanskrit"</span>, <span class="st">"German"</span>]</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>concepts <span class="op">=</span> <span class="bu">list</span>(wordlist.keys())</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>english <span class="op">=</span> {<span class="st">"father"</span>: <span class="st">"father"</span>, <span class="st">"water"</span>: <span class="st">"water"</span>, <span class="st">"night"</span>: <span class="st">"night"</span>,</span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>           <span class="st">"new"</span>: <span class="st">"new"</span>, <span class="st">"star"</span>: <span class="st">"star"</span>}</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>dist_matrix <span class="op">=</span> np.zeros((<span class="bu">len</span>(concepts), <span class="bu">len</span>(langs)))</span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, concept <span class="kw">in</span> <span class="bu">enumerate</span>(concepts):</span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    eng <span class="op">=</span> english[concept]</span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j, lang <span class="kw">in</span> <span class="bu">enumerate</span>(langs):</span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>        foreign <span class="op">=</span> wordlist[concept][lang]</span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>        dist_matrix[i, j] <span class="op">=</span> simple_edit_distance(eng.lower(), foreign.lower())</span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>im <span class="op">=</span> ax.imshow(dist_matrix, cmap<span class="op">=</span><span class="st">"YlOrRd_r"</span>, aspect<span class="op">=</span><span class="st">"auto"</span>)</span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>ax.set_xticks(<span class="bu">range</span>(<span class="bu">len</span>(langs)))</span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>ax.set_yticks(<span class="bu">range</span>(<span class="bu">len</span>(concepts)))</span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels(langs)</span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>ax.set_yticklabels(concepts)</span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(concepts)):</span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(langs)):</span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>        ax.text(j, i, <span class="ss">f"</span><span class="sc">{</span>dist_matrix[i,j]<span class="sc">:.0f}</span><span class="ss">"</span>, ha<span class="op">=</span><span class="st">"center"</span>, va<span class="op">=</span><span class="st">"center"</span>,</span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>                color<span class="op">=</span><span class="st">"black"</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Edit Distance from English (lower = more similar)"</span>)</span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>plt.colorbar(im, ax<span class="op">=</span>ax, label<span class="op">=</span><span class="st">"Edit distance"</span>)</span>
-<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-display">
 <div id="fig-wordlist-heatmap" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -660,8 +556,6 @@ Figure&nbsp;1.1: Edit distance between English words and their cognates across f
 <li>Etymonline.com — for exploratory etymological browsing, nothing beats it.</li>
 </ul>
 
-
-<!-- -->
 
 </section>
 </section>
@@ -737,57 +631,6 @@ Figure&nbsp;1.1: Edit distance between English words and their cognates across f
         container: window.document.getElementById('quarto-embedded-source-code-modal')
       });
       clipboardModal.on('success', onCopySuccess);
-    }
-    const viewSource = window.document.getElementById('quarto-view-source') ||
-                       window.document.getElementById('quarto-code-tools-source');
-    if (viewSource) {
-      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
-      viewSource.addEventListener("click", function(e) {
-        if (sourceUrl) {
-          // rstudio viewer pane
-          if (/\bcapabilities=\b/.test(window.location)) {
-            window.open(sourceUrl);
-          } else {
-            window.location.href = sourceUrl;
-          }
-        } else {
-          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
-          modal.show();
-        }
-        return false;
-      });
-    }
-    function toggleCodeHandler(show) {
-      return function(e) {
-        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-        for (let i=0; i<detailsSrc.length; i++) {
-          const details = detailsSrc[i].parentElement;
-          if (show) {
-            details.open = true;
-          } else {
-            details.removeAttribute("open");
-          }
-        }
-        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
-        const fromCls = show ? "hidden" : "unhidden";
-        const toCls = show ? "unhidden" : "hidden";
-        for (let i=0; i<cellCodeDivs.length; i++) {
-          const codeDiv = cellCodeDivs[i];
-          if (codeDiv.classList.contains(fromCls)) {
-            codeDiv.classList.remove(fromCls);
-            codeDiv.classList.add(toCls);
-          } 
-        }
-        return false;
-      }
-    }
-    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
-    if (hideAllCode) {
-      hideAllCode.addEventListener("click", toggleCodeHandler(false));
-    }
-    const showAllCode = window.document.getElementById("quarto-show-all-code");
-    if (showAllCode) {
-      showAllCode.addEventListener("click", toggleCodeHandler(true));
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
@@ -1129,211 +972,7 @@ Figure&nbsp;1.1: Edit distance between English words and their cognates across f
         <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The Comparative Method</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
-</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># What Is Etymology? A Data Perspective {#sec-intro}</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="fu">## Learning Objectives</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>By the end of this chapter, you will be able to:</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Define etymology and explain what distinguishes it from ordinary vocabulary study</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Describe the comparative method in plain English</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Identify cognates in a wordlist using pattern recognition</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Frame the five core problems of computational etymology as data science tasks</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Write basic Python code to explore a multilingual wordlist</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Detective Problem</span></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>In 1786, a British judge named William Jones stood up at the Asiatic Society in Calcutta and delivered what may be the most consequential sentence ever spoken at an academic dinner. Having spent years studying Sanskrit—the ancient liturgical language of India—he announced that Sanskrit bore "a stronger affinity" to Greek and Latin "than could possibly have been produced by accident." So strong was this affinity, he suggested, that all three languages must have descended from a common source.</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>The sentence launched a century of scholarship. Within fifty years, scholars across Europe had worked out the main skeleton of the Indo-European language family: Sanskrit, Greek, Latin, Gothic, Old Persian, Lithuanian, Old Slavic—all cousins, all descended from a proto-language no one had ever written down, spoken by people who left no other records. The method they used was the comparative method, and it remains, in its essentials, the foundation of etymology today.</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>What Jones had noticed—what the Sanskrit word *pitar*, the Greek *patḗr*, and the Latin *pater* share—is something more than a family resemblance. The sounds correspond *systematically*. The *p* at the start, the vowel, the *t* in the middle, the *r* at the end: these are not random coincidences. They are the fingerprints of a common ancestor.</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>That is what etymology studies. Not just where words come from, but *why they look the way they do*, and how you can infer the answer from patterns that survive across languages.</span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="fu">## Why Words Have Histories Worth Studying</span></span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>Before we get to algorithms, it is worth spending a moment on why any of this matters. Etymology can seem like an elaborate parlor game—impressive at dinner parties, useless for anything practical. This impression is wrong in at least three ways.</span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>**It is evidence about human prehistory.** Before writing, before pottery we can radiocarbon-date, before almost anything else, there was language. Words carry information about the world their speakers inhabited. Proto-Indo-European, the ancestor of languages from Iceland to Bangladesh, had words for snow, for wheel, for cattle, for the number one hundred. It lacked a word for ocean. From this, linguists infer that its speakers lived inland, in a temperate climate, sometime before roughly 3500 BCE when wheeled vehicles first appeared in the archaeological record. Etymology is archaeology conducted through language—slower, more ambiguous, but capable of reaching places where no shovel can go.</span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>**It explains why languages look the way they do.** English is a notoriously difficult language to learn. Why is *knight* spelled with a *k* and a *gh* that have been silent for five hundred years? Because when the spelling was fixed, those sounds were still pronounced: Middle English speakers said something like *kni-cht*, rhyming roughly with the Scottish *loch*. The spelling is a fossil. Most of the bizarre irregularities of English orthography, French grammar, and German word order make sense once you know the history. Etymology does not just explain the past; it makes the present legible.</span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>**It is a testing ground for computational linguistics.** The problems of historical linguistics—comparing sequences, inferring hidden variables from observable ones, building trees from similarity data—are mathematically clean versions of problems that appear everywhere in NLP. Sequence alignment in etymology is the same algorithm as sequence alignment in bioinformatics, and closely related to the alignment step in machine translation. Phylogenetic inference in linguistics is the same mathematical procedure used to reconstruct evolutionary trees in genomics. Learning etymology computationally is, among other things, learning the shared substrate of a dozen applied fields.</span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a><span class="fu">## A Brief History of the Science</span></span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>William Jones's 1786 dinner speech was the spark, but the fire had been building for decades. European scholars who had learned Sanskrit while working for the East India Company had been privately noting its resemblance to Latin and Greek for years; Jones simply said it publicly, at sufficient volume, to the right audience.</span>
-<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>What followed was one of the most productive fifty years in the history of science—not well remembered, because it produced nothing dramatic like a device or a vaccine, only the reorganization of what people knew about the past. Rasmus Rask, a Danish linguist working in the 1810s, established the systematic sound correspondences between Old Norse, Gothic, Greek, and Latin. Jakob Grimm—better known today for the fairy tales he collected with his brother—formalized the Germanic consonant shift in 1822 in what became Grimm's Law. Franz Bopp showed that Sanskrit, Greek, Latin, Gothic, and Persian all shared the same verb conjugation system, and that this shared structure was too detailed to be coincidence.</span>
-<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>By 1870, the field had cohered into something recognizable as a discipline. A group of young German scholars calling themselves the Junggrammatiker—the Neogrammarians—made a provocative claim: sound changes are exceptionless. Not mostly regular. Not regular with some exceptions. Exceptionless, operating on the physics of articulation rather than the meaning of words. This was controversial enough that their older colleagues accused them of recklessness. It turned out to be substantially correct, and the principle of regularity became the discipline's bedrock.</span>
-<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>The twentieth century brought refinement but not revolution: better statistical methods, larger datasets, more languages documented before they vanished. The twenty-first century brought something more transformative: machine learning systems that could handle the scale that hand methods could not.</span>
-<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Scale Problem</span></span>
-<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>Here is the uncomfortable arithmetic of historical linguistics. The world has approximately 7,000 living languages. Of these, perhaps 500 have been studied to the point where a competent descriptive grammar exists. Fewer than 200 have been analyzed with the depth needed for serious comparative work. The rest—the vast majority—are documented at the level of a word list and a handful of texts, if that.</span>
-<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>Languages are going extinct faster than linguists can document them. By the end of this century, the most optimistic estimates suggest that 3,000 of the world's 7,000 languages will have gone silent. Each extinction takes with it not just words but a unique way of encoding human experience—and a unique source of data for the comparative method.</span>
-<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>This is where computational etymology is not merely convenient but necessary. A human linguist working with the comparative method can analyze perhaps one language family in a career. Automated systems, once trained, can process thousands of language pairs in hours. The cognate detectors and proto-reconstructors we build in this book are not toys; they are the infrastructure of an emergency documentation effort operating against a deadline.</span>
-<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>The 2010s and 2020s saw the field accelerate rapidly. The CLDF (Cross-Linguistic Data Formats) initiative standardized data collection across research groups. Automated cognate detection reached expert-level accuracy on benchmark tasks. Neural proto-reconstruction produced credible ancestral forms for entire language families. Phylogenetic inference using Bayesian methods dated the Indo-European expansion with precision that surprised even specialists. The methods of this book are not speculative; they are the working tools of active research.</span>
-<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>The comparative method can be summarized in three steps.</span>
-<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>**Step 1: Gather cognates.** A *cognate* is a pair of words in different languages that descend from the same ancestral word. English *night* and German *Nacht* are cognates. English *night* and French *nuit* are also cognates—both descend from the Latin *nox*, which descends further from the Proto-Indo-European root *\*nókʷts*. Cognates are not the same as loanwords: English *beef* comes from French *bœuf*, but that is borrowing, not shared descent. The distinction matters.</span>
-<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>**Step 2: Identify sound correspondences.** When you line up cognates across multiple languages, patterns emerge. Latin *p* systematically corresponds to English *f* in the same word positions. Latin *pater*, English *father*; Latin *piscis*, English *fish*; Latin *pes/ped-*, English *foot*. This is Grimm's Law—a systematic shift of stops to fricatives that swept through the Germanic languages roughly two thousand years ago, like a wave passing through water.</span>
-<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>**Step 3: Reconstruct the proto-form.** Given enough cognates and enough correspondences, you can infer what the ancestral form must have looked like. The asterisk (*) marks reconstructed forms—words no one ever recorded, deduced entirely from their surviving descendants. The fact that such deductions can be verified against actual discoveries (when ancient texts surface) is what makes the comparative method science rather than educated guessing.</span>
-<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a><span class="fu">## Etymology as Data</span></span>
-<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>Here is where things get interesting.</span>
-<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>Notice what the comparative method is actually doing. It is taking a set of strings—words, transcribed as sequences of sounds—and detecting patterns of similarity and difference across them. It is grouping those strings by hypothesized ancestry. It is inferring hidden variables (the proto-forms) from observable ones (the modern words). It is, in short, doing data science on a structured dataset.</span>
-<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a>The dataset in question is a *wordlist*: a table where rows are concepts (FATHER, WATER, NIGHT, FIRE) and columns are languages, with cells containing the word for that concept in that language. This is the fundamental data structure of historical linguistics, and it is, conveniently, exactly the kind of tabular data that Python's pandas library was designed to handle.</span>
-<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-cognates</span></span>
-<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "A minimal wordlist showing Indo-European cognates. The asterisk marks a reconstructed proto-form."</span></span>
-<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> {</span>
-<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Concept"</span>:  [<span class="st">"father"</span>,  <span class="st">"water"</span>,  <span class="st">"night"</span>,  <span class="st">"fire"</span>,   <span class="st">"star"</span>],</span>
-<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Latin"</span>:    [<span class="st">"pater"</span>,   <span class="st">"aqua"</span>,   <span class="st">"nox"</span>,    <span class="st">"ignis"</span>,  <span class="st">"stella"</span>],</span>
-<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Greek"</span>:    [<span class="st">"patḗr"</span>,   <span class="st">"hydōr"</span>,  <span class="st">"nýks"</span>,   <span class="st">"pŷr"</span>,    <span class="st">"astḗr"</span>],</span>
-<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Sanskrit"</span>: [<span class="st">"pitar"</span>,   <span class="st">"udaka"</span>,  <span class="st">"nakta"</span>,  <span class="st">"agni"</span>,   <span class="st">"tara"</span>],</span>
-<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a>    <span class="st">"English"</span>:  [<span class="st">"father"</span>,  <span class="st">"water"</span>,  <span class="st">"night"</span>,  <span class="st">"fire"</span>,   <span class="st">"star"</span>],</span>
-<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a>    <span class="st">"PIE*"</span>:     [<span class="st">"*ph₂tḗr"</span>, <span class="st">"*wed-"</span>,  <span class="st">"*nókʷts"</span>,<span class="st">"*h₁ngʷni"</span>,<span class="st">"*h₂stḗr"</span>],</span>
-<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(data)</span>
-<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a>df</span>
-<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a>Look at the column for FATHER. Every entry except FIRE shares a recognizable similarity—the *p/f* at the start, the vowel in the middle, the *t/th* sound, the final *r*. FIRE is the odd one out: the Latin, Greek, and Sanskrit forms look nothing like each other, which suggests different roots, not a shared ancestor for this particular word.</span>
-<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a>This is already a data analysis task: spotting which cells cluster with which other cells, and which are outliers. A trained linguist can do it by eye. A computer can do it at scale, across a hundred languages and ten thousand concepts, in seconds.</span>
-<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Five Core Problems</span></span>
-<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a>Computational etymology is organized around five problems, each of which maps cleanly onto a class of data science methods:</span>
-<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a>**Problem 1: Cognate detection.** Given a pair of words from different languages, are they related by descent? This is a binary classification problem. Input: two word strings (or sequences of phonemes). Output: cognate or not. We will spend Chapter 5 building a classifier for this.</span>
-<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a>**Problem 2: Sequence alignment.** When two cognates are identified, how do we align their sounds to identify which phoneme corresponds to which? English *night* [naɪt] and German *Nacht* [naxt]—the *n* matches *n*, the vowel has drifted, the final *t* matches *t*. But how do you determine that alignment algorithmically, especially when one word has more sounds than the other? This is a sequence alignment problem, borrowed directly from bioinformatics. Chapter 4.</span>
-<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a>**Problem 3: Phylogenetic inference.** Given a set of languages and their cognate relationships, what is the most likely family tree? This is a tree inference problem. The same algorithms that evolutionary biologists use to reconstruct the evolutionary tree of species apply, with modifications, to languages. Chapter 6.</span>
-<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-113"><a href="#cb3-113" aria-hidden="true" tabindex="-1"></a>**Problem 4: Proto-form reconstruction.** Given aligned cognates across multiple modern languages, can we predict the ancestral proto-form? This is a sequence-to-sequence prediction problem—the kind that neural networks handle well. Chapter 7.</span>
-<span id="cb3-114"><a href="#cb3-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-115"><a href="#cb3-115" aria-hidden="true" tabindex="-1"></a>**Problem 5: Semantic drift.** Words change meaning over time. "Awful" once meant awe-inspiring; now it means terrible. "Nice" once meant foolish; now it means pleasant. Can we detect and quantify this drift using word embeddings trained on historical text corpora? Chapter 8.</span>
-<span id="cb3-116"><a href="#cb3-116" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-117"><a href="#cb3-117" aria-hidden="true" tabindex="-1"></a><span class="fu">## Why Machine Learning Changes Everything</span></span>
-<span id="cb3-118"><a href="#cb3-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-119"><a href="#cb3-119" aria-hidden="true" tabindex="-1"></a>The traditional comparative method works beautifully—for languages with large amounts of recorded history, spoken by cultures that kept written records, studied by teams of dedicated scholars over a century or more. But the world has approximately seven thousand living languages. Only a few hundred have been studied in any depth. Thousands more are vanishing without documentation.</span>
-<span id="cb3-120"><a href="#cb3-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-121"><a href="#cb3-121" aria-hidden="true" tabindex="-1"></a>Machine learning does not replace the comparative method. It scales it. A cognate detector trained on well-studied language families can be applied to underdocumented ones. A neural proto-reconstructor trained on Romance language data generalizes to other families with appropriate retraining. The algorithms are not magic—they carry assumptions baked in from their training data—but they extend the reach of historical linguistics into territory that hand methods alone could never cover.</span>
-<span id="cb3-122"><a href="#cb3-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-123"><a href="#cb3-123" aria-hidden="true" tabindex="-1"></a>The reverse transfer also runs. Etymology turns out to be an exceptionally good training ground for linguistic data science. The problems are well-defined, the ground truth is knowable, and the data has a satisfying structure. Concepts learned here—sequence alignment, phylogenetic inference, distributional semantics—transfer directly to speech recognition, machine translation, and clinical NLP.</span>
-<span id="cb3-124"><a href="#cb3-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-125"><a href="#cb3-125" aria-hidden="true" tabindex="-1"></a>One specific example illustrates the difference in scale. In 2018, a team at the Max Planck Institute for the Science of Human History published an automated analysis of Indo-European language relationships using a dataset of 52 languages and 208 Swadesh concepts—10,816 data cells in total. A human expert working by hand could analyze perhaps 50 language pairs per year in serious depth; the automated pipeline processed all $\binom{52}{2} = 1326$ pairs in an afternoon, with accuracy competitive with expert annotation. The result was a phylogenetic tree that agreed with the expert consensus on major groupings and suggested a divergence timeline consistent with the Pontic steppe hypothesis for Indo-European origins.</span>
-<span id="cb3-126"><a href="#cb3-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-127"><a href="#cb3-127" aria-hidden="true" tabindex="-1"></a>This is the pattern throughout the field: automation does not exceed human accuracy on a single well-studied pair, but it closes the gap enough to be scientifically useful while operating at a scale that human effort simply cannot match. The tools of this book put that capability in your hands.</span>
-<span id="cb3-128"><a href="#cb3-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-129"><a href="#cb3-129" aria-hidden="true" tabindex="-1"></a><span class="fu">## Your First Wordlist</span></span>
-<span id="cb3-130"><a href="#cb3-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-131"><a href="#cb3-131" aria-hidden="true" tabindex="-1"></a>Let us build the first practical object of this book: a multilingual wordlist in Python.</span>
-<span id="cb3-132"><a href="#cb3-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-135"><a href="#cb3-135" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb3-136"><a href="#cb3-136" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-wordlist-heatmap</span></span>
-<span id="cb3-137"><a href="#cb3-137" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Edit distance between English words and their cognates across five languages. Darker = more similar (smaller distance). Note that WATER shows less similarity across languages because different roots were selected."</span></span>
-<span id="cb3-138"><a href="#cb3-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-139"><a href="#cb3-139" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itertools <span class="im">import</span> combinations</span>
-<span id="cb3-140"><a href="#cb3-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-141"><a href="#cb3-141" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> simple_edit_distance(s1, s2):</span>
-<span id="cb3-142"><a href="#cb3-142" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Levenshtein distance between two strings."""</span></span>
-<span id="cb3-143"><a href="#cb3-143" aria-hidden="true" tabindex="-1"></a>    m, n <span class="op">=</span> <span class="bu">len</span>(s1), <span class="bu">len</span>(s2)</span>
-<span id="cb3-144"><a href="#cb3-144" aria-hidden="true" tabindex="-1"></a>    dp <span class="op">=</span> [[<span class="dv">0</span>] <span class="op">*</span> (n <span class="op">+</span> <span class="dv">1</span>) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(m <span class="op">+</span> <span class="dv">1</span>)]</span>
-<span id="cb3-145"><a href="#cb3-145" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(m <span class="op">+</span> <span class="dv">1</span>):</span>
-<span id="cb3-146"><a href="#cb3-146" aria-hidden="true" tabindex="-1"></a>        dp[i][<span class="dv">0</span>] <span class="op">=</span> i</span>
-<span id="cb3-147"><a href="#cb3-147" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(n <span class="op">+</span> <span class="dv">1</span>):</span>
-<span id="cb3-148"><a href="#cb3-148" aria-hidden="true" tabindex="-1"></a>        dp[<span class="dv">0</span>][j] <span class="op">=</span> j</span>
-<span id="cb3-149"><a href="#cb3-149" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, m <span class="op">+</span> <span class="dv">1</span>):</span>
-<span id="cb3-150"><a href="#cb3-150" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, n <span class="op">+</span> <span class="dv">1</span>):</span>
-<span id="cb3-151"><a href="#cb3-151" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> s1[i<span class="op">-</span><span class="dv">1</span>] <span class="op">==</span> s2[j<span class="op">-</span><span class="dv">1</span>]:</span>
-<span id="cb3-152"><a href="#cb3-152" aria-hidden="true" tabindex="-1"></a>                dp[i][j] <span class="op">=</span> dp[i<span class="op">-</span><span class="dv">1</span>][j<span class="op">-</span><span class="dv">1</span>]</span>
-<span id="cb3-153"><a href="#cb3-153" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
-<span id="cb3-154"><a href="#cb3-154" aria-hidden="true" tabindex="-1"></a>                dp[i][j] <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> <span class="bu">min</span>(dp[i<span class="op">-</span><span class="dv">1</span>][j], dp[i][j<span class="op">-</span><span class="dv">1</span>], dp[i<span class="op">-</span><span class="dv">1</span>][j<span class="op">-</span><span class="dv">1</span>])</span>
-<span id="cb3-155"><a href="#cb3-155" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> dp[m][n]</span>
-<span id="cb3-156"><a href="#cb3-156" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-157"><a href="#cb3-157" aria-hidden="true" tabindex="-1"></a>wordlist <span class="op">=</span> {</span>
-<span id="cb3-158"><a href="#cb3-158" aria-hidden="true" tabindex="-1"></a>    <span class="st">"father"</span>:  {<span class="st">"Latin"</span>: <span class="st">"pater"</span>,  <span class="st">"Greek"</span>: <span class="st">"pater"</span>,  <span class="st">"Sanskrit"</span>: <span class="st">"pitar"</span>,  <span class="st">"German"</span>: <span class="st">"vater"</span>},</span>
-<span id="cb3-159"><a href="#cb3-159" aria-hidden="true" tabindex="-1"></a>    <span class="st">"water"</span>:   {<span class="st">"Latin"</span>: <span class="st">"aqua"</span>,   <span class="st">"Greek"</span>: <span class="st">"hydor"</span>,  <span class="st">"Sanskrit"</span>: <span class="st">"udaka"</span>,  <span class="st">"German"</span>: <span class="st">"wasser"</span>},</span>
-<span id="cb3-160"><a href="#cb3-160" aria-hidden="true" tabindex="-1"></a>    <span class="st">"night"</span>:   {<span class="st">"Latin"</span>: <span class="st">"noctem"</span>, <span class="st">"Greek"</span>: <span class="st">"nykta"</span>,  <span class="st">"Sanskrit"</span>: <span class="st">"nakta"</span>,  <span class="st">"German"</span>: <span class="st">"nacht"</span>},</span>
-<span id="cb3-161"><a href="#cb3-161" aria-hidden="true" tabindex="-1"></a>    <span class="st">"new"</span>:     {<span class="st">"Latin"</span>: <span class="st">"novum"</span>,  <span class="st">"Greek"</span>: <span class="st">"neon"</span>,   <span class="st">"Sanskrit"</span>: <span class="st">"navam"</span>,  <span class="st">"German"</span>: <span class="st">"neu"</span>},</span>
-<span id="cb3-162"><a href="#cb3-162" aria-hidden="true" tabindex="-1"></a>    <span class="st">"star"</span>:    {<span class="st">"Latin"</span>: <span class="st">"stella"</span>, <span class="st">"Greek"</span>: <span class="st">"aster"</span>,  <span class="st">"Sanskrit"</span>: <span class="st">"tara"</span>,   <span class="st">"German"</span>: <span class="st">"stern"</span>},</span>
-<span id="cb3-163"><a href="#cb3-163" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb3-164"><a href="#cb3-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-165"><a href="#cb3-165" aria-hidden="true" tabindex="-1"></a>langs <span class="op">=</span> [<span class="st">"Latin"</span>, <span class="st">"Greek"</span>, <span class="st">"Sanskrit"</span>, <span class="st">"German"</span>]</span>
-<span id="cb3-166"><a href="#cb3-166" aria-hidden="true" tabindex="-1"></a>concepts <span class="op">=</span> <span class="bu">list</span>(wordlist.keys())</span>
-<span id="cb3-167"><a href="#cb3-167" aria-hidden="true" tabindex="-1"></a>english <span class="op">=</span> {<span class="st">"father"</span>: <span class="st">"father"</span>, <span class="st">"water"</span>: <span class="st">"water"</span>, <span class="st">"night"</span>: <span class="st">"night"</span>,</span>
-<span id="cb3-168"><a href="#cb3-168" aria-hidden="true" tabindex="-1"></a>           <span class="st">"new"</span>: <span class="st">"new"</span>, <span class="st">"star"</span>: <span class="st">"star"</span>}</span>
-<span id="cb3-169"><a href="#cb3-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-170"><a href="#cb3-170" aria-hidden="true" tabindex="-1"></a>dist_matrix <span class="op">=</span> np.zeros((<span class="bu">len</span>(concepts), <span class="bu">len</span>(langs)))</span>
-<span id="cb3-171"><a href="#cb3-171" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, concept <span class="kw">in</span> <span class="bu">enumerate</span>(concepts):</span>
-<span id="cb3-172"><a href="#cb3-172" aria-hidden="true" tabindex="-1"></a>    eng <span class="op">=</span> english[concept]</span>
-<span id="cb3-173"><a href="#cb3-173" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j, lang <span class="kw">in</span> <span class="bu">enumerate</span>(langs):</span>
-<span id="cb3-174"><a href="#cb3-174" aria-hidden="true" tabindex="-1"></a>        foreign <span class="op">=</span> wordlist[concept][lang]</span>
-<span id="cb3-175"><a href="#cb3-175" aria-hidden="true" tabindex="-1"></a>        dist_matrix[i, j] <span class="op">=</span> simple_edit_distance(eng.lower(), foreign.lower())</span>
-<span id="cb3-176"><a href="#cb3-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-177"><a href="#cb3-177" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
-<span id="cb3-178"><a href="#cb3-178" aria-hidden="true" tabindex="-1"></a>im <span class="op">=</span> ax.imshow(dist_matrix, cmap<span class="op">=</span><span class="st">"YlOrRd_r"</span>, aspect<span class="op">=</span><span class="st">"auto"</span>)</span>
-<span id="cb3-179"><a href="#cb3-179" aria-hidden="true" tabindex="-1"></a>ax.set_xticks(<span class="bu">range</span>(<span class="bu">len</span>(langs)))</span>
-<span id="cb3-180"><a href="#cb3-180" aria-hidden="true" tabindex="-1"></a>ax.set_yticks(<span class="bu">range</span>(<span class="bu">len</span>(concepts)))</span>
-<span id="cb3-181"><a href="#cb3-181" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels(langs)</span>
-<span id="cb3-182"><a href="#cb3-182" aria-hidden="true" tabindex="-1"></a>ax.set_yticklabels(concepts)</span>
-<span id="cb3-183"><a href="#cb3-183" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(concepts)):</span>
-<span id="cb3-184"><a href="#cb3-184" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(langs)):</span>
-<span id="cb3-185"><a href="#cb3-185" aria-hidden="true" tabindex="-1"></a>        ax.text(j, i, <span class="ss">f"</span><span class="sc">{</span>dist_matrix[i,j]<span class="sc">:.0f}</span><span class="ss">"</span>, ha<span class="op">=</span><span class="st">"center"</span>, va<span class="op">=</span><span class="st">"center"</span>,</span>
-<span id="cb3-186"><a href="#cb3-186" aria-hidden="true" tabindex="-1"></a>                color<span class="op">=</span><span class="st">"black"</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb3-187"><a href="#cb3-187" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Edit Distance from English (lower = more similar)"</span>)</span>
-<span id="cb3-188"><a href="#cb3-188" aria-hidden="true" tabindex="-1"></a>plt.colorbar(im, ax<span class="op">=</span>ax, label<span class="op">=</span><span class="st">"Edit distance"</span>)</span>
-<span id="cb3-189"><a href="#cb3-189" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb3-190"><a href="#cb3-190" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb3-191"><a href="#cb3-191" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb3-192"><a href="#cb3-192" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-193"><a href="#cb3-193" aria-hidden="true" tabindex="-1"></a>The heatmap already tells a story. FATHER and NEW show consistently low edit distances—the words are recognizably similar across all four comparison languages. NIGHT is a medium case. WATER is the outlier: *aqua* and *hydor* look nothing like the English word because the Germanic languages preserved one Indo-European root (*\*wed-*) while Latin and Greek preserve different ones.</span>
-<span id="cb3-194"><a href="#cb3-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-195"><a href="#cb3-195" aria-hidden="true" tabindex="-1"></a>This is, in miniature, exactly the pattern-detection that the comparative method does at scale. And this is, in miniature, the kind of exploratory analysis you will do throughout this book—start with the data, visualize it, let the pattern lead you to the hypothesis.</span>
-<span id="cb3-196"><a href="#cb3-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-197"><a href="#cb3-197" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
-<span id="cb3-198"><a href="#cb3-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-199"><a href="#cb3-199" aria-hidden="true" tabindex="-1"></a>Etymology studies the origin and historical development of words. The comparative method—identifying cognates, mapping sound correspondences, and reconstructing proto-forms—has been the core tool of historical linguistics for two centuries. Computational approaches do not replace this method; they automate and scale it. The five core problems (cognate detection, sequence alignment, phylogenetic inference, proto-form reconstruction, and semantic drift tracking) each map onto established data science techniques. The data structure underlying all of this is the multilingual wordlist: a table of concepts by languages, with each cell containing a phonetically transcribed word.</span>
-<span id="cb3-200"><a href="#cb3-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-201"><a href="#cb3-201" aria-hidden="true" tabindex="-1"></a>The remaining chapters build these tools, one layer at a time.</span>
-<span id="cb3-202"><a href="#cb3-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-203"><a href="#cb3-203" aria-hidden="true" tabindex="-1"></a><span class="fu">## Further Reading</span></span>
-<span id="cb3-204"><a href="#cb3-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-205"><a href="#cb3-205" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Jones, W. (1786). *The third anniversary discourse to the Asiatic Society*. The speech that started it all.</span>
-<span id="cb3-206"><a href="#cb3-206" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Campbell, L. (2013). *Historical Linguistics: An Introduction* (3rd ed.). MIT Press. The standard textbook reference for the comparative method.</span>
-<span id="cb3-207"><a href="#cb3-207" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>List, J.-M., Greenhill, S., &amp; Gray, R. (2017). The potential of automatic word comparison for historical linguistics. *PLOS ONE*. A good overview of the computational turn in the field.</span>
-<span id="cb3-208"><a href="#cb3-208" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Etymonline.com — for exploratory etymological browsing, nothing beats it.</span>
-</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
-</div></div></div></div></div>
+</nav>
 </div> <!-- /content -->
 
 

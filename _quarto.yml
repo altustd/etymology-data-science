@@ -43,8 +43,6 @@ format:
     toc-depth: 3
     number-sections: true
     fig-align: center
-    code-fold: true
-    code-tools: true
     mermaid:
       theme: neutral
   pdf:
@@ -66,5 +64,6 @@ format:
 bibliography: references.bib
 
 execute:
+  echo: false
   warning: false
   message: false

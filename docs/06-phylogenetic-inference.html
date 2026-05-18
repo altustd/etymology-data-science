@@ -23,41 +23,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -361,7 +326,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04-sequence-alignment.html">Part II: Core Algorithms</a></li><li class="breadcrumb-item"><a href="./06-phylogenetic-inference.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Phylogenetic Inference: Language Family Trees</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span id="sec-phylogenetics" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Phylogenetic Inference: Language Family Trees</span></span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+<h1 class="title"><span id="sec-phylogenetics" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Phylogenetic Inference: Language Family Trees</span></span></h1>
 </div>
 
 
@@ -418,40 +383,10 @@ window.Quarto = {
 <p>The most common distance measure is the <em>proportion of non-shared cognates</em>: if languages <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> share 60% of their basic vocabulary as cognates, their distance is <span class="math inline">\(1 - 0.60 = 0.40\)</span>.</p>
 <div id="lst-distance-matrix" class="cell listing quarto-float quarto-figure quarto-figure-left anchored" data-execution_count="2">
 <figure class="quarto-float quarto-float-lst figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-distance-matrix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Listing&nbsp;7.1: Computing a language distance matrix from shared cognate proportions.
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst quarto-uncaptioned" id="lst-distance-matrix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Listing&nbsp;7.1
 </figcaption>
 <div aria-describedby="lst-distance-matrix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" data-lst-cap="Computing a language distance matrix from shared cognate proportions."><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>cognate_data <span class="op">=</span> {</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Spanish"</span>:    {<span class="st">"father"</span>: <span class="dv">1</span>, <span class="st">"water"</span>: <span class="dv">1</span>, <span class="st">"night"</span>: <span class="dv">1</span>, <span class="st">"new"</span>: <span class="dv">1</span>, <span class="st">"hand"</span>: <span class="dv">1</span>, <span class="st">"fire"</span>: <span class="dv">2</span>, <span class="st">"star"</span>: <span class="dv">1</span>, <span class="st">"eye"</span>: <span class="dv">1</span>, <span class="st">"name"</span>: <span class="dv">1</span>, <span class="st">"one"</span>: <span class="dv">1</span>},</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Portuguese"</span>: {<span class="st">"father"</span>: <span class="dv">1</span>, <span class="st">"water"</span>: <span class="dv">1</span>, <span class="st">"night"</span>: <span class="dv">1</span>, <span class="st">"new"</span>: <span class="dv">1</span>, <span class="st">"hand"</span>: <span class="dv">1</span>, <span class="st">"fire"</span>: <span class="dv">2</span>, <span class="st">"star"</span>: <span class="dv">1</span>, <span class="st">"eye"</span>: <span class="dv">1</span>, <span class="st">"name"</span>: <span class="dv">1</span>, <span class="st">"one"</span>: <span class="dv">1</span>},</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Italian"</span>:    {<span class="st">"father"</span>: <span class="dv">1</span>, <span class="st">"water"</span>: <span class="dv">3</span>, <span class="st">"night"</span>: <span class="dv">1</span>, <span class="st">"new"</span>: <span class="dv">1</span>, <span class="st">"hand"</span>: <span class="dv">1</span>, <span class="st">"fire"</span>: <span class="dv">2</span>, <span class="st">"star"</span>: <span class="dv">1</span>, <span class="st">"eye"</span>: <span class="dv">1</span>, <span class="st">"name"</span>: <span class="dv">1</span>, <span class="st">"one"</span>: <span class="dv">1</span>},</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"French"</span>:     {<span class="st">"father"</span>: <span class="dv">1</span>, <span class="st">"water"</span>: <span class="dv">3</span>, <span class="st">"night"</span>: <span class="dv">1</span>, <span class="st">"new"</span>: <span class="dv">1</span>, <span class="st">"hand"</span>: <span class="dv">1</span>, <span class="st">"fire"</span>: <span class="dv">2</span>, <span class="st">"star"</span>: <span class="dv">1</span>, <span class="st">"eye"</span>: <span class="dv">1</span>, <span class="st">"name"</span>: <span class="dv">1</span>, <span class="st">"one"</span>: <span class="dv">1</span>},</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Romanian"</span>:   {<span class="st">"father"</span>: <span class="dv">1</span>, <span class="st">"water"</span>: <span class="dv">3</span>, <span class="st">"night"</span>: <span class="dv">4</span>, <span class="st">"new"</span>: <span class="dv">1</span>, <span class="st">"hand"</span>: <span class="dv">5</span>, <span class="st">"fire"</span>: <span class="dv">2</span>, <span class="st">"star"</span>: <span class="dv">1</span>, <span class="st">"eye"</span>: <span class="dv">1</span>, <span class="st">"name"</span>: <span class="dv">1</span>, <span class="st">"one"</span>: <span class="dv">1</span>},</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Latin"</span>:      {<span class="st">"father"</span>: <span class="dv">1</span>, <span class="st">"water"</span>: <span class="dv">3</span>, <span class="st">"night"</span>: <span class="dv">1</span>, <span class="st">"new"</span>: <span class="dv">1</span>, <span class="st">"hand"</span>: <span class="dv">1</span>, <span class="st">"fire"</span>: <span class="dv">2</span>, <span class="st">"star"</span>: <span class="dv">1</span>, <span class="st">"eye"</span>: <span class="dv">1</span>, <span class="st">"name"</span>: <span class="dv">1</span>, <span class="st">"one"</span>: <span class="dv">1</span>},</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>languages <span class="op">=</span> <span class="bu">list</span>(cognate_data.keys())</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>concepts  <span class="op">=</span> <span class="bu">list</span>(<span class="bu">next</span>(<span class="bu">iter</span>(cognate_data.values())).keys())</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>n_lang <span class="op">=</span> <span class="bu">len</span>(languages)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> shared_cognate_proportion(lang1, lang2, data, concepts):</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    shared <span class="op">=</span> <span class="bu">sum</span>(<span class="dv">1</span> <span class="cf">for</span> c <span class="kw">in</span> concepts <span class="cf">if</span> data[lang1][c] <span class="op">==</span> data[lang2][c])</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> shared <span class="op">/</span> <span class="bu">len</span>(concepts)</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>dist_mat <span class="op">=</span> np.zeros((n_lang, n_lang))</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, li <span class="kw">in</span> <span class="bu">enumerate</span>(languages):</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j, lj <span class="kw">in</span> <span class="bu">enumerate</span>(languages):</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> i <span class="op">!=</span> j:</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>            prop <span class="op">=</span> shared_cognate_proportion(li, lj, cognate_data, concepts)</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>            dist_mat[i, j] <span class="op">=</span> <span class="fl">1.0</span> <span class="op">-</span> prop</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>dist_df <span class="op">=</span> pd.DataFrame(dist_mat, index<span class="op">=</span>languages, columns<span class="op">=</span>languages)</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Language distance matrix:"</span>)</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dist_df.<span class="bu">round</span>(<span class="dv">2</span>).to_string())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Language distance matrix:
             Spanish  Portuguese  Italian  French  Romanian  Latin
@@ -471,21 +406,6 @@ Latin           0.1         0.1      0.0     0.0       0.2    0.0</code></pre>
 <p>The simplest tree-building method is <em>UPGMA</em> (Unweighted Pair Group Method with Arithmetic Mean). It is a hierarchical clustering algorithm: at each step, merge the two closest languages (or groups), then update distances by averaging.</p>
 <p>UPGMA produces an <em>ultrametric</em> tree—one where all leaves are equidistant from the root. This assumes a constant rate of change across all lineages, which is often violated in practice. It is nevertheless a useful starting point.</p>
 <div id="cell-fig-upgma-tree" class="cell" data-execution_count="3">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>condensed <span class="op">=</span> squareform(dist_mat)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>linkage <span class="op">=</span> sch.linkage(condensed, method<span class="op">=</span><span class="st">"average"</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="dv">5</span>))</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>sch.dendrogram(linkage, labels<span class="op">=</span>languages, ax<span class="op">=</span>ax,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>               color_threshold<span class="op">=</span><span class="fl">0.3</span>,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>               above_threshold_color<span class="op">=</span><span class="st">"gray"</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Distance (1 – shared cognate proportion)"</span>)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"UPGMA Tree: Romance Languages (based on 10 Swadesh concepts)"</span>)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Language"</span>)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-display">
 <div id="fig-upgma-tree" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -507,68 +427,10 @@ Figure&nbsp;7.1: UPGMA dendrogram for six Romance languages plus Latin. Spanish 
 <p>The NJ criterion selects, at each step, the pair of taxa whose joining most reduces the total branch length of the resulting tree—a minimum-evolution criterion.</p>
 <div id="lst-nj" class="cell listing quarto-float quarto-figure quarto-figure-left anchored" data-execution_count="4">
 <figure class="quarto-float quarto-float-lst figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-nj-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Listing&nbsp;7.2: Neighbor-Joining implementation. For large datasets, use scipy or Bio.Phylo.
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst quarto-uncaptioned" id="lst-nj-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Listing&nbsp;7.2
 </figcaption>
 <div aria-describedby="lst-nj-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" data-lst-cap="Neighbor-Joining implementation. For large datasets, use scipy or Bio.Phylo."><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> neighbor_joining(D, labels):</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Simple Neighbor-Joining implementation.</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">    D: symmetric distance matrix (numpy array)</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">    labels: list of taxon names</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns list of (taxon_a, taxon_b, branch_len_a, branch_len_b) merges.</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    D <span class="op">=</span> D.copy().astype(<span class="bu">float</span>)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    labels <span class="op">=</span> <span class="bu">list</span>(labels)</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(labels)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    merges <span class="op">=</span> []</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> n <span class="op">&gt;</span> <span class="dv">2</span>:</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Q matrix</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        row_sums <span class="op">=</span> D.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        Q <span class="op">=</span> np.zeros_like(D)</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n):</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(n):</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> i <span class="op">!=</span> j:</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>                    Q[i, j] <span class="op">=</span> (n <span class="op">-</span> <span class="dv">2</span>) <span class="op">*</span> D[i, j] <span class="op">-</span> row_sums[i] <span class="op">-</span> row_sums[j]</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>        np.fill_diagonal(Q, np.inf)</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Find minimum Q</span></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>        min_idx <span class="op">=</span> np.unravel_index(np.argmin(Q), Q.shape)</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        i, j <span class="op">=</span> min_idx</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Branch lengths to new node</span></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>        delta <span class="op">=</span> (row_sums[i] <span class="op">-</span> row_sums[j]) <span class="op">/</span> (n <span class="op">-</span> <span class="dv">2</span>)</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>        li <span class="op">=</span> (D[i, j] <span class="op">+</span> delta) <span class="op">/</span> <span class="dv">2</span></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>        lj <span class="op">=</span> (D[i, j] <span class="op">-</span> delta) <span class="op">/</span> <span class="dv">2</span></span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>        merges.append((labels[i], labels[j], <span class="bu">round</span>(li, <span class="dv">4</span>), <span class="bu">round</span>(lj, <span class="dv">4</span>)))</span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>        <span class="co"># New distances</span></span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>        keep <span class="op">=</span> [k <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(n) <span class="cf">if</span> k <span class="op">!=</span> i <span class="kw">and</span> k <span class="op">!=</span> j]</span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>        n_new <span class="op">=</span> <span class="bu">len</span>(keep) <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>        D_new <span class="op">=</span> np.zeros((n_new, n_new))</span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> ki, k <span class="kw">in</span> <span class="bu">enumerate</span>(keep):</span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> ki2, k2 <span class="kw">in</span> <span class="bu">enumerate</span>(keep):</span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>                D_new[ki, ki2] <span class="op">=</span> D[k, k2]</span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> ki, k <span class="kw">in</span> <span class="bu">enumerate</span>(keep):</span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>            d_nk <span class="op">=</span> (D[i, k] <span class="op">+</span> D[j, k] <span class="op">-</span> D[i, j]) <span class="op">/</span> <span class="dv">2</span></span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>            D_new[ki, n_new <span class="op">-</span> <span class="dv">1</span>] <span class="op">=</span> d_nk</span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>            D_new[n_new <span class="op">-</span> <span class="dv">1</span>, ki] <span class="op">=</span> d_nk</span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Reset</span></span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>        D <span class="op">=</span> D_new</span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>        labels <span class="op">=</span> [labels[k] <span class="cf">for</span> k <span class="kw">in</span> keep] <span class="op">+</span> [<span class="ss">f"(</span><span class="sc">{</span>labels[i]<span class="sc">}</span><span class="ss">,</span><span class="sc">{</span>labels[j]<span class="sc">}</span><span class="ss">)"</span>]</span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>        n <span class="op">=</span> n_new</span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>    merges.append((labels[<span class="dv">0</span>], labels[<span class="dv">1</span>], <span class="bu">round</span>(D[<span class="dv">0</span>,<span class="dv">1</span>]<span class="op">/</span><span class="dv">2</span>, <span class="dv">4</span>), <span class="bu">round</span>(D[<span class="dv">0</span>,<span class="dv">1</span>]<span class="op">/</span><span class="dv">2</span>, <span class="dv">4</span>)))</span>
-<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> merges</span>
-<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>nj_merges <span class="op">=</span> neighbor_joining(dist_mat, languages)</span>
-<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Neighbor-Joining merge sequence:"</span>)</span>
-<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> merge <span class="kw">in</span> nj_merges:</span>
-<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>merge[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> + </span><span class="sc">{</span>merge[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">: branch lengths </span><span class="sc">{</span>merge[<span class="dv">2</span>]<span class="sc">}</span><span class="ss">, </span><span class="sc">{</span>merge[<span class="dv">3</span>]<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Neighbor-Joining merge sequence:
   Spanish + Portuguese: branch lengths 0.0, 0.0
@@ -592,45 +454,6 @@ Listing&nbsp;7.2: Neighbor-Joining implementation. For large datasets, use scipy
 <p>The tree model has a fundamental assumption: after two lineages diverge, they do not exchange material. In practice, languages in contact do exchange material constantly. English borrowed enormous amounts of vocabulary from French after the Norman Conquest in 1066; modern languages along language contact zones share features that a tree cannot represent.</p>
 <p>The term <em>reticulation</em> refers to these non-tree-like patterns of relationship—networks rather than trees. <em>NeighborNet</em>, implemented in the SplitsTree software package, produces split graphs rather than trees, explicitly representing conflicting signals in the data. We will not implement it here, but it is the standard visualization tool when you suspect significant contact effects.</p>
 <div id="cell-fig-network-concept" class="cell" data-execution_count="5">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">4</span>))</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, title <span class="kw">in</span> <span class="bu">zip</span>(axes, [<span class="st">"Tree (no contact)"</span>, <span class="st">"Network (with contact)"</span>]):</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    ax.set_xlim(<span class="dv">0</span>, <span class="dv">10</span>)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    ax.set_ylim(<span class="dv">0</span>, <span class="dv">8</span>)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    ax.axis(<span class="st">"off"</span>)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    ax.set_title(title, fontsize<span class="op">=</span><span class="dv">11</span>)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Tree</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> axes[<span class="dv">0</span>]</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>ax.plot([<span class="dv">5</span>,<span class="dv">5</span>], [<span class="dv">7</span>,<span class="dv">5</span>], <span class="st">"k-"</span>, lw<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>ax.plot([<span class="dv">5</span>,<span class="dv">3</span>], [<span class="dv">5</span>,<span class="dv">3</span>], <span class="st">"k-"</span>, lw<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>ax.plot([<span class="dv">5</span>,<span class="dv">7</span>], [<span class="dv">5</span>,<span class="dv">3</span>], <span class="st">"k-"</span>, lw<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>ax.plot([<span class="dv">3</span>,<span class="dv">2</span>], [<span class="dv">3</span>,<span class="dv">1</span>], <span class="st">"k-"</span>, lw<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>ax.plot([<span class="dv">3</span>,<span class="dv">4</span>], [<span class="dv">3</span>,<span class="dv">1</span>], <span class="st">"k-"</span>, lw<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x, y, lab <span class="kw">in</span> [(<span class="dv">2</span>,<span class="fl">0.5</span>,<span class="st">"Spanish"</span>),(<span class="dv">4</span>,<span class="fl">0.5</span>,<span class="st">"Portuguese"</span>),(<span class="dv">7</span>,<span class="fl">2.5</span>,<span class="st">"French"</span>),(<span class="dv">5</span>,<span class="fl">7.5</span>,<span class="st">"Root"</span>)]:</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    ax.text(x, y, lab, ha<span class="op">=</span><span class="st">"center"</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Network</span></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> axes[<span class="dv">1</span>]</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>ax.plot([<span class="dv">5</span>,<span class="dv">5</span>],[<span class="dv">7</span>,<span class="fl">5.5</span>],<span class="st">"k-"</span>,lw<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>ax.plot([<span class="dv">5</span>,<span class="fl">3.5</span>],[<span class="fl">5.5</span>,<span class="dv">4</span>],<span class="st">"k-"</span>,lw<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>ax.plot([<span class="dv">5</span>,<span class="fl">6.5</span>],[<span class="fl">5.5</span>,<span class="dv">4</span>],<span class="st">"k-"</span>,lw<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>ax.plot([<span class="fl">3.5</span>,<span class="fl">3.5</span>],[<span class="dv">4</span>,<span class="fl">2.5</span>],<span class="st">"k-"</span>,lw<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>ax.plot([<span class="fl">6.5</span>,<span class="fl">6.5</span>],[<span class="dv">4</span>,<span class="fl">2.5</span>],<span class="st">"k-"</span>,lw<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>ax.plot([<span class="fl">3.5</span>,<span class="fl">6.5</span>],[<span class="dv">4</span>,<span class="dv">4</span>],<span class="st">"k--"</span>,lw<span class="op">=</span><span class="fl">1.5</span>,color<span class="op">=</span><span class="st">"gray"</span>,label<span class="op">=</span><span class="st">"Contact signal"</span>)</span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>ax.plot([<span class="fl">3.5</span>,<span class="fl">6.5</span>],[<span class="fl">2.5</span>,<span class="fl">2.5</span>],<span class="st">"k--"</span>,lw<span class="op">=</span><span class="fl">1.5</span>,color<span class="op">=</span><span class="st">"gray"</span>)</span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>ax.plot([<span class="fl">3.5</span>,<span class="dv">2</span>],[<span class="fl">2.5</span>,<span class="dv">1</span>],<span class="st">"k-"</span>,lw<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>ax.plot([<span class="fl">6.5</span>,<span class="dv">8</span>],[<span class="fl">2.5</span>,<span class="dv">1</span>],<span class="st">"k-"</span>,lw<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x, y, lab <span class="kw">in</span> [(<span class="dv">2</span>,<span class="fl">0.5</span>,<span class="st">"Spanish"</span>),(<span class="dv">8</span>,<span class="fl">0.5</span>,<span class="st">"French"</span>),(<span class="dv">5</span>,<span class="fl">7.5</span>,<span class="st">"Root"</span>)]:</span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    ax.text(x, y, lab, ha<span class="op">=</span><span class="st">"center"</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>ax.legend(fontsize<span class="op">=</span><span class="dv">8</span>, loc<span class="op">=</span><span class="st">"lower center"</span>)</span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">"Trees vs. Networks in Phylogenetic Inference"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-display">
 <div id="fig-network-concept" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -658,8 +481,6 @@ Figure&nbsp;7.2: Schematic: a phylogenetic network (right) vs.&nbsp;a tree (left
 <li>Bryant, D., &amp; Moulton, V. (2004). Neighbor-Net: An agglomerative method for the construction of phylogenetic networks. <em>Molecular Biology and Evolution</em>.</li>
 </ul>
 
-
-<!-- -->
 
 </section>
 
@@ -734,57 +555,6 @@ Figure&nbsp;7.2: Schematic: a phylogenetic network (right) vs.&nbsp;a tree (left
         container: window.document.getElementById('quarto-embedded-source-code-modal')
       });
       clipboardModal.on('success', onCopySuccess);
-    }
-    const viewSource = window.document.getElementById('quarto-view-source') ||
-                       window.document.getElementById('quarto-code-tools-source');
-    if (viewSource) {
-      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
-      viewSource.addEventListener("click", function(e) {
-        if (sourceUrl) {
-          // rstudio viewer pane
-          if (/\bcapabilities=\b/.test(window.location)) {
-            window.open(sourceUrl);
-          } else {
-            window.location.href = sourceUrl;
-          }
-        } else {
-          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
-          modal.show();
-        }
-        return false;
-      });
-    }
-    function toggleCodeHandler(show) {
-      return function(e) {
-        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-        for (let i=0; i<detailsSrc.length; i++) {
-          const details = detailsSrc[i].parentElement;
-          if (show) {
-            details.open = true;
-          } else {
-            details.removeAttribute("open");
-          }
-        }
-        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
-        const fromCls = show ? "hidden" : "unhidden";
-        const toCls = show ? "unhidden" : "hidden";
-        for (let i=0; i<cellCodeDivs.length; i++) {
-          const codeDiv = cellCodeDivs[i];
-          if (codeDiv.classList.contains(fromCls)) {
-            codeDiv.classList.remove(fromCls);
-            codeDiv.classList.add(toCls);
-          } 
-        }
-        return false;
-      }
-    }
-    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
-    if (hideAllCode) {
-      hideAllCode.addEventListener("click", toggleCodeHandler(false));
-    }
-    const showAllCode = window.document.getElementById("quarto-show-all-code");
-    if (showAllCode) {
-      showAllCode.addEventListener("click", toggleCodeHandler(true));
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
@@ -1126,253 +896,7 @@ Figure&nbsp;7.2: Schematic: a phylogenetic network (right) vs.&nbsp;a tree (left
         <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Proto-Language Reconstruction</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
-</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Phylogenetic Inference: Language Family Trees {#sec-phylogenetics}</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.cluster.hierarchy <span class="im">as</span> sch</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.spatial.distance <span class="im">import</span> squareform</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="fu">## Learning Objectives</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>By the end of this chapter, you will be able to:</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Compute a pairwise language distance matrix from cognate data</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Apply UPGMA and Neighbor-Joining to build language family trees</span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Visualize dendrogram trees and interpret their branching structure</span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Evaluate a computed tree against an expert reference tree</span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Understand the assumptions and failure modes of tree-based models</span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Describe what bootstrap support means in the phylogenetic context</span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="fu">## Darwin's Table</span></span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>Charles Darwin included a table in *On the Origin of Species*—not of species, but of languages. He had noticed the analogy before most professional linguists took it seriously: languages diversify from a common ancestor the way species do, through gradual change and geographic separation, with the survivors preserving traces of their shared origin in their vocabulary and structure.</span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>The analogy is imperfect in illuminating ways. Species do not generally merge back together; languages do, through contact and borrowing. Species evolve through random mutation; language change is partly random but partly driven by social prestige, migration, and conquest. But the mathematical machinery of phylogenetics—developed to reconstruct evolutionary trees of life—applies to languages with appropriate modifications.</span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>The result, applied to the world's documented languages, produces trees that match the expert consensus with remarkable fidelity, and that sometimes reveal relationships experts had debated for decades.</span>
-<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="fu">## Why Trees? The Case for Bifurcating Models</span></span>
-<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>Before going further, it is worth asking why we model language relationships as trees at all. Real language history involves mergers (creoles, mixed languages), horizontal transfer (borrowing), geographic gradients (dialect continua), and periods of intense contact that a tree cannot represent.</span>
-<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>The answer is pragmatic. Trees are the simplest structure that can represent the core of the historical signal: that some languages are more closely related than others. For a first approximation—and especially for basic vocabulary, which is the most resistant to borrowing—the tree assumption holds remarkably well. English and German really do share a more recent common ancestor than either shares with French. Latin really is more closely related to Spanish than to Mandarin. The tree captures these facts.</span>
-<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>More importantly, trees are tractable. The number of possible trees for $n$ taxa is $(2n-3)!! = 1 \times 3 \times 5 \times \ldots \times (2n-3)$, which is enormous but finite and searchable. The number of possible networks is far larger and much harder to search. We start with trees because they are computationally feasible and because they explain most of the variance in the data; we add network structure where the residuals demand it.</span>
-<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>The analogy to linear regression is apt: you fit a line first, not because you believe the relationship is exactly linear, but because the linear approximation is useful and the residuals reveal where more complexity is warranted. The phylogenetic tree is the linear model of language history.</span>
-<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a><span class="fu">## From Cognates to Distances</span></span>
-<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>The raw material for tree inference is a *distance matrix*: a square matrix where entry $d_{ij}$ is the linguistic distance between language $i$ and language $j$.</span>
-<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>The most common distance measure is the *proportion of non-shared cognates*: if languages $i$ and $j$ share 60% of their basic vocabulary as cognates, their distance is $1 - 0.60 = 0.40$.</span>
-<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: lst-distance-matrix</span></span>
-<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a><span class="co">#| lst-cap: "Computing a language distance matrix from shared cognate proportions."</span></span>
-<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a>cognate_data <span class="op">=</span> {</span>
-<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Spanish"</span>:    {<span class="st">"father"</span>: <span class="dv">1</span>, <span class="st">"water"</span>: <span class="dv">1</span>, <span class="st">"night"</span>: <span class="dv">1</span>, <span class="st">"new"</span>: <span class="dv">1</span>, <span class="st">"hand"</span>: <span class="dv">1</span>, <span class="st">"fire"</span>: <span class="dv">2</span>, <span class="st">"star"</span>: <span class="dv">1</span>, <span class="st">"eye"</span>: <span class="dv">1</span>, <span class="st">"name"</span>: <span class="dv">1</span>, <span class="st">"one"</span>: <span class="dv">1</span>},</span>
-<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Portuguese"</span>: {<span class="st">"father"</span>: <span class="dv">1</span>, <span class="st">"water"</span>: <span class="dv">1</span>, <span class="st">"night"</span>: <span class="dv">1</span>, <span class="st">"new"</span>: <span class="dv">1</span>, <span class="st">"hand"</span>: <span class="dv">1</span>, <span class="st">"fire"</span>: <span class="dv">2</span>, <span class="st">"star"</span>: <span class="dv">1</span>, <span class="st">"eye"</span>: <span class="dv">1</span>, <span class="st">"name"</span>: <span class="dv">1</span>, <span class="st">"one"</span>: <span class="dv">1</span>},</span>
-<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Italian"</span>:    {<span class="st">"father"</span>: <span class="dv">1</span>, <span class="st">"water"</span>: <span class="dv">3</span>, <span class="st">"night"</span>: <span class="dv">1</span>, <span class="st">"new"</span>: <span class="dv">1</span>, <span class="st">"hand"</span>: <span class="dv">1</span>, <span class="st">"fire"</span>: <span class="dv">2</span>, <span class="st">"star"</span>: <span class="dv">1</span>, <span class="st">"eye"</span>: <span class="dv">1</span>, <span class="st">"name"</span>: <span class="dv">1</span>, <span class="st">"one"</span>: <span class="dv">1</span>},</span>
-<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a>    <span class="st">"French"</span>:     {<span class="st">"father"</span>: <span class="dv">1</span>, <span class="st">"water"</span>: <span class="dv">3</span>, <span class="st">"night"</span>: <span class="dv">1</span>, <span class="st">"new"</span>: <span class="dv">1</span>, <span class="st">"hand"</span>: <span class="dv">1</span>, <span class="st">"fire"</span>: <span class="dv">2</span>, <span class="st">"star"</span>: <span class="dv">1</span>, <span class="st">"eye"</span>: <span class="dv">1</span>, <span class="st">"name"</span>: <span class="dv">1</span>, <span class="st">"one"</span>: <span class="dv">1</span>},</span>
-<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Romanian"</span>:   {<span class="st">"father"</span>: <span class="dv">1</span>, <span class="st">"water"</span>: <span class="dv">3</span>, <span class="st">"night"</span>: <span class="dv">4</span>, <span class="st">"new"</span>: <span class="dv">1</span>, <span class="st">"hand"</span>: <span class="dv">5</span>, <span class="st">"fire"</span>: <span class="dv">2</span>, <span class="st">"star"</span>: <span class="dv">1</span>, <span class="st">"eye"</span>: <span class="dv">1</span>, <span class="st">"name"</span>: <span class="dv">1</span>, <span class="st">"one"</span>: <span class="dv">1</span>},</span>
-<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Latin"</span>:      {<span class="st">"father"</span>: <span class="dv">1</span>, <span class="st">"water"</span>: <span class="dv">3</span>, <span class="st">"night"</span>: <span class="dv">1</span>, <span class="st">"new"</span>: <span class="dv">1</span>, <span class="st">"hand"</span>: <span class="dv">1</span>, <span class="st">"fire"</span>: <span class="dv">2</span>, <span class="st">"star"</span>: <span class="dv">1</span>, <span class="st">"eye"</span>: <span class="dv">1</span>, <span class="st">"name"</span>: <span class="dv">1</span>, <span class="st">"one"</span>: <span class="dv">1</span>},</span>
-<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a>languages <span class="op">=</span> <span class="bu">list</span>(cognate_data.keys())</span>
-<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a>concepts  <span class="op">=</span> <span class="bu">list</span>(<span class="bu">next</span>(<span class="bu">iter</span>(cognate_data.values())).keys())</span>
-<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a>n_lang <span class="op">=</span> <span class="bu">len</span>(languages)</span>
-<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> shared_cognate_proportion(lang1, lang2, data, concepts):</span>
-<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a>    shared <span class="op">=</span> <span class="bu">sum</span>(<span class="dv">1</span> <span class="cf">for</span> c <span class="kw">in</span> concepts <span class="cf">if</span> data[lang1][c] <span class="op">==</span> data[lang2][c])</span>
-<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> shared <span class="op">/</span> <span class="bu">len</span>(concepts)</span>
-<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a>dist_mat <span class="op">=</span> np.zeros((n_lang, n_lang))</span>
-<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, li <span class="kw">in</span> <span class="bu">enumerate</span>(languages):</span>
-<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j, lj <span class="kw">in</span> <span class="bu">enumerate</span>(languages):</span>
-<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> i <span class="op">!=</span> j:</span>
-<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a>            prop <span class="op">=</span> shared_cognate_proportion(li, lj, cognate_data, concepts)</span>
-<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a>            dist_mat[i, j] <span class="op">=</span> <span class="fl">1.0</span> <span class="op">-</span> prop</span>
-<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a>dist_df <span class="op">=</span> pd.DataFrame(dist_mat, index<span class="op">=</span>languages, columns<span class="op">=</span>languages)</span>
-<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Language distance matrix:"</span>)</span>
-<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dist_df.<span class="bu">round</span>(<span class="dv">2</span>).to_string())</span>
-<span id="cb7-84"><a href="#cb7-84" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb7-85"><a href="#cb7-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-86"><a href="#cb7-86" aria-hidden="true" tabindex="-1"></a><span class="fu">## Tree Building: UPGMA</span></span>
-<span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-88"><a href="#cb7-88" aria-hidden="true" tabindex="-1"></a>The simplest tree-building method is *UPGMA* (Unweighted Pair Group Method with Arithmetic Mean). It is a hierarchical clustering algorithm: at each step, merge the two closest languages (or groups), then update distances by averaging.</span>
-<span id="cb7-89"><a href="#cb7-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-90"><a href="#cb7-90" aria-hidden="true" tabindex="-1"></a>UPGMA produces an *ultrametric* tree—one where all leaves are equidistant from the root. This assumes a constant rate of change across all lineages, which is often violated in practice. It is nevertheless a useful starting point.</span>
-<span id="cb7-91"><a href="#cb7-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-94"><a href="#cb7-94" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb7-95"><a href="#cb7-95" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-upgma-tree</span></span>
-<span id="cb7-96"><a href="#cb7-96" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "UPGMA dendrogram for six Romance languages plus Latin. Spanish and Portuguese cluster first (Iberian subgroup), then Italian and French (Gallo-Italic), then Romanian."</span></span>
-<span id="cb7-97"><a href="#cb7-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-98"><a href="#cb7-98" aria-hidden="true" tabindex="-1"></a>condensed <span class="op">=</span> squareform(dist_mat)</span>
-<span id="cb7-99"><a href="#cb7-99" aria-hidden="true" tabindex="-1"></a>linkage <span class="op">=</span> sch.linkage(condensed, method<span class="op">=</span><span class="st">"average"</span>)</span>
-<span id="cb7-100"><a href="#cb7-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-101"><a href="#cb7-101" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="dv">5</span>))</span>
-<span id="cb7-102"><a href="#cb7-102" aria-hidden="true" tabindex="-1"></a>sch.dendrogram(linkage, labels<span class="op">=</span>languages, ax<span class="op">=</span>ax,</span>
-<span id="cb7-103"><a href="#cb7-103" aria-hidden="true" tabindex="-1"></a>               color_threshold<span class="op">=</span><span class="fl">0.3</span>,</span>
-<span id="cb7-104"><a href="#cb7-104" aria-hidden="true" tabindex="-1"></a>               above_threshold_color<span class="op">=</span><span class="st">"gray"</span>)</span>
-<span id="cb7-105"><a href="#cb7-105" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Distance (1 – shared cognate proportion)"</span>)</span>
-<span id="cb7-106"><a href="#cb7-106" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"UPGMA Tree: Romance Languages (based on 10 Swadesh concepts)"</span>)</span>
-<span id="cb7-107"><a href="#cb7-107" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Language"</span>)</span>
-<span id="cb7-108"><a href="#cb7-108" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb7-109"><a href="#cb7-109" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb7-110"><a href="#cb7-110" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb7-111"><a href="#cb7-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-112"><a href="#cb7-112" aria-hidden="true" tabindex="-1"></a>The clustering mirrors the known historical reality: Spanish and Portuguese, which diverged relatively recently within the Iberian Peninsula, are closest. French and Italian form a second cluster. Romanian, which separated early and evolved under heavy Slavic contact, is the most isolated.</span>
-<span id="cb7-113"><a href="#cb7-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-114"><a href="#cb7-114" aria-hidden="true" tabindex="-1"></a><span class="fu">## Neighbor-Joining</span></span>
-<span id="cb7-115"><a href="#cb7-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-116"><a href="#cb7-116" aria-hidden="true" tabindex="-1"></a>UPGMA is fast and intuitive but biased when mutation rates vary across lineages. *Neighbor-Joining* (NJ), developed by Saitou and Nei in 1987, corrects for this by using rate-corrected distances. It is the standard baseline method in computational phylogenetics.</span>
-<span id="cb7-117"><a href="#cb7-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-118"><a href="#cb7-118" aria-hidden="true" tabindex="-1"></a>The NJ criterion selects, at each step, the pair of taxa whose joining most reduces the total branch length of the resulting tree—a minimum-evolution criterion.</span>
-<span id="cb7-119"><a href="#cb7-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-122"><a href="#cb7-122" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb7-123"><a href="#cb7-123" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: lst-nj</span></span>
-<span id="cb7-124"><a href="#cb7-124" aria-hidden="true" tabindex="-1"></a><span class="co">#| lst-cap: "Neighbor-Joining implementation. For large datasets, use scipy or Bio.Phylo."</span></span>
-<span id="cb7-125"><a href="#cb7-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-126"><a href="#cb7-126" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> neighbor_joining(D, labels):</span>
-<span id="cb7-127"><a href="#cb7-127" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb7-128"><a href="#cb7-128" aria-hidden="true" tabindex="-1"></a><span class="co">    Simple Neighbor-Joining implementation.</span></span>
-<span id="cb7-129"><a href="#cb7-129" aria-hidden="true" tabindex="-1"></a><span class="co">    D: symmetric distance matrix (numpy array)</span></span>
-<span id="cb7-130"><a href="#cb7-130" aria-hidden="true" tabindex="-1"></a><span class="co">    labels: list of taxon names</span></span>
-<span id="cb7-131"><a href="#cb7-131" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns list of (taxon_a, taxon_b, branch_len_a, branch_len_b) merges.</span></span>
-<span id="cb7-132"><a href="#cb7-132" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb7-133"><a href="#cb7-133" aria-hidden="true" tabindex="-1"></a>    D <span class="op">=</span> D.copy().astype(<span class="bu">float</span>)</span>
-<span id="cb7-134"><a href="#cb7-134" aria-hidden="true" tabindex="-1"></a>    labels <span class="op">=</span> <span class="bu">list</span>(labels)</span>
-<span id="cb7-135"><a href="#cb7-135" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(labels)</span>
-<span id="cb7-136"><a href="#cb7-136" aria-hidden="true" tabindex="-1"></a>    merges <span class="op">=</span> []</span>
-<span id="cb7-137"><a href="#cb7-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-138"><a href="#cb7-138" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> n <span class="op">&gt;</span> <span class="dv">2</span>:</span>
-<span id="cb7-139"><a href="#cb7-139" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Q matrix</span></span>
-<span id="cb7-140"><a href="#cb7-140" aria-hidden="true" tabindex="-1"></a>        row_sums <span class="op">=</span> D.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb7-141"><a href="#cb7-141" aria-hidden="true" tabindex="-1"></a>        Q <span class="op">=</span> np.zeros_like(D)</span>
-<span id="cb7-142"><a href="#cb7-142" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n):</span>
-<span id="cb7-143"><a href="#cb7-143" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(n):</span>
-<span id="cb7-144"><a href="#cb7-144" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> i <span class="op">!=</span> j:</span>
-<span id="cb7-145"><a href="#cb7-145" aria-hidden="true" tabindex="-1"></a>                    Q[i, j] <span class="op">=</span> (n <span class="op">-</span> <span class="dv">2</span>) <span class="op">*</span> D[i, j] <span class="op">-</span> row_sums[i] <span class="op">-</span> row_sums[j]</span>
-<span id="cb7-146"><a href="#cb7-146" aria-hidden="true" tabindex="-1"></a>        np.fill_diagonal(Q, np.inf)</span>
-<span id="cb7-147"><a href="#cb7-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-148"><a href="#cb7-148" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Find minimum Q</span></span>
-<span id="cb7-149"><a href="#cb7-149" aria-hidden="true" tabindex="-1"></a>        min_idx <span class="op">=</span> np.unravel_index(np.argmin(Q), Q.shape)</span>
-<span id="cb7-150"><a href="#cb7-150" aria-hidden="true" tabindex="-1"></a>        i, j <span class="op">=</span> min_idx</span>
-<span id="cb7-151"><a href="#cb7-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-152"><a href="#cb7-152" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Branch lengths to new node</span></span>
-<span id="cb7-153"><a href="#cb7-153" aria-hidden="true" tabindex="-1"></a>        delta <span class="op">=</span> (row_sums[i] <span class="op">-</span> row_sums[j]) <span class="op">/</span> (n <span class="op">-</span> <span class="dv">2</span>)</span>
-<span id="cb7-154"><a href="#cb7-154" aria-hidden="true" tabindex="-1"></a>        li <span class="op">=</span> (D[i, j] <span class="op">+</span> delta) <span class="op">/</span> <span class="dv">2</span></span>
-<span id="cb7-155"><a href="#cb7-155" aria-hidden="true" tabindex="-1"></a>        lj <span class="op">=</span> (D[i, j] <span class="op">-</span> delta) <span class="op">/</span> <span class="dv">2</span></span>
-<span id="cb7-156"><a href="#cb7-156" aria-hidden="true" tabindex="-1"></a>        merges.append((labels[i], labels[j], <span class="bu">round</span>(li, <span class="dv">4</span>), <span class="bu">round</span>(lj, <span class="dv">4</span>)))</span>
-<span id="cb7-157"><a href="#cb7-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-158"><a href="#cb7-158" aria-hidden="true" tabindex="-1"></a>        <span class="co"># New distances</span></span>
-<span id="cb7-159"><a href="#cb7-159" aria-hidden="true" tabindex="-1"></a>        keep <span class="op">=</span> [k <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(n) <span class="cf">if</span> k <span class="op">!=</span> i <span class="kw">and</span> k <span class="op">!=</span> j]</span>
-<span id="cb7-160"><a href="#cb7-160" aria-hidden="true" tabindex="-1"></a>        n_new <span class="op">=</span> <span class="bu">len</span>(keep) <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb7-161"><a href="#cb7-161" aria-hidden="true" tabindex="-1"></a>        D_new <span class="op">=</span> np.zeros((n_new, n_new))</span>
-<span id="cb7-162"><a href="#cb7-162" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> ki, k <span class="kw">in</span> <span class="bu">enumerate</span>(keep):</span>
-<span id="cb7-163"><a href="#cb7-163" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> ki2, k2 <span class="kw">in</span> <span class="bu">enumerate</span>(keep):</span>
-<span id="cb7-164"><a href="#cb7-164" aria-hidden="true" tabindex="-1"></a>                D_new[ki, ki2] <span class="op">=</span> D[k, k2]</span>
-<span id="cb7-165"><a href="#cb7-165" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> ki, k <span class="kw">in</span> <span class="bu">enumerate</span>(keep):</span>
-<span id="cb7-166"><a href="#cb7-166" aria-hidden="true" tabindex="-1"></a>            d_nk <span class="op">=</span> (D[i, k] <span class="op">+</span> D[j, k] <span class="op">-</span> D[i, j]) <span class="op">/</span> <span class="dv">2</span></span>
-<span id="cb7-167"><a href="#cb7-167" aria-hidden="true" tabindex="-1"></a>            D_new[ki, n_new <span class="op">-</span> <span class="dv">1</span>] <span class="op">=</span> d_nk</span>
-<span id="cb7-168"><a href="#cb7-168" aria-hidden="true" tabindex="-1"></a>            D_new[n_new <span class="op">-</span> <span class="dv">1</span>, ki] <span class="op">=</span> d_nk</span>
-<span id="cb7-169"><a href="#cb7-169" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Reset</span></span>
-<span id="cb7-170"><a href="#cb7-170" aria-hidden="true" tabindex="-1"></a>        D <span class="op">=</span> D_new</span>
-<span id="cb7-171"><a href="#cb7-171" aria-hidden="true" tabindex="-1"></a>        labels <span class="op">=</span> [labels[k] <span class="cf">for</span> k <span class="kw">in</span> keep] <span class="op">+</span> [<span class="ss">f"(</span><span class="sc">{</span>labels[i]<span class="sc">}</span><span class="ss">,</span><span class="sc">{</span>labels[j]<span class="sc">}</span><span class="ss">)"</span>]</span>
-<span id="cb7-172"><a href="#cb7-172" aria-hidden="true" tabindex="-1"></a>        n <span class="op">=</span> n_new</span>
-<span id="cb7-173"><a href="#cb7-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-174"><a href="#cb7-174" aria-hidden="true" tabindex="-1"></a>    merges.append((labels[<span class="dv">0</span>], labels[<span class="dv">1</span>], <span class="bu">round</span>(D[<span class="dv">0</span>,<span class="dv">1</span>]<span class="op">/</span><span class="dv">2</span>, <span class="dv">4</span>), <span class="bu">round</span>(D[<span class="dv">0</span>,<span class="dv">1</span>]<span class="op">/</span><span class="dv">2</span>, <span class="dv">4</span>)))</span>
-<span id="cb7-175"><a href="#cb7-175" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> merges</span>
-<span id="cb7-176"><a href="#cb7-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-177"><a href="#cb7-177" aria-hidden="true" tabindex="-1"></a>nj_merges <span class="op">=</span> neighbor_joining(dist_mat, languages)</span>
-<span id="cb7-178"><a href="#cb7-178" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Neighbor-Joining merge sequence:"</span>)</span>
-<span id="cb7-179"><a href="#cb7-179" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> merge <span class="kw">in</span> nj_merges:</span>
-<span id="cb7-180"><a href="#cb7-180" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>merge[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> + </span><span class="sc">{</span>merge[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">: branch lengths </span><span class="sc">{</span>merge[<span class="dv">2</span>]<span class="sc">}</span><span class="ss">, </span><span class="sc">{</span>merge[<span class="dv">3</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb7-181"><a href="#cb7-181" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb7-182"><a href="#cb7-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-183"><a href="#cb7-183" aria-hidden="true" tabindex="-1"></a><span class="fu">## Evaluating Trees</span></span>
-<span id="cb7-184"><a href="#cb7-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-185"><a href="#cb7-185" aria-hidden="true" tabindex="-1"></a>How close is a computed tree to the expert tree? The standard metric is the *Robinson-Foulds (RF) distance*: the number of bipartitions (splits of the leaf set) that appear in one tree but not the other. An RF distance of 0 means the trees are identical.</span>
-<span id="cb7-186"><a href="#cb7-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-187"><a href="#cb7-187" aria-hidden="true" tabindex="-1"></a>For the Romance language example, the consensus expert tree places:</span>
-<span id="cb7-188"><a href="#cb7-188" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>{Spanish, Portuguese} together (Iberian)</span>
-<span id="cb7-189"><a href="#cb7-189" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>{French, Italian} together (Gallo-Italic, approximately)</span>
-<span id="cb7-190"><a href="#cb7-190" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Romanian as the earliest branching Romance language</span>
-<span id="cb7-191"><a href="#cb7-191" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Latin as the root or outgroup</span>
-<span id="cb7-192"><a href="#cb7-192" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-193"><a href="#cb7-193" aria-hidden="true" tabindex="-1"></a>Our UPGMA tree recovers the Iberian and the Latin/Romanian positioning correctly. Small datasets (10 concepts) naturally produce less reliable trees than large ones (200+ concepts), so some deviation is expected.</span>
-<span id="cb7-194"><a href="#cb7-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-195"><a href="#cb7-195" aria-hidden="true" tabindex="-1"></a><span class="fu">## What Trees Cannot Capture: Reticulation</span></span>
-<span id="cb7-196"><a href="#cb7-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-197"><a href="#cb7-197" aria-hidden="true" tabindex="-1"></a>The tree model has a fundamental assumption: after two lineages diverge, they do not exchange material. In practice, languages in contact do exchange material constantly. English borrowed enormous amounts of vocabulary from French after the Norman Conquest in 1066; modern languages along language contact zones share features that a tree cannot represent.</span>
-<span id="cb7-198"><a href="#cb7-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-199"><a href="#cb7-199" aria-hidden="true" tabindex="-1"></a>The term *reticulation* refers to these non-tree-like patterns of relationship—networks rather than trees. *NeighborNet*, implemented in the SplitsTree software package, produces split graphs rather than trees, explicitly representing conflicting signals in the data. We will not implement it here, but it is the standard visualization tool when you suspect significant contact effects.</span>
-<span id="cb7-200"><a href="#cb7-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-203"><a href="#cb7-203" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb7-204"><a href="#cb7-204" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-network-concept</span></span>
-<span id="cb7-205"><a href="#cb7-205" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Schematic: a phylogenetic network (right) vs. a tree (left). The horizontal box-like structure in the network indicates conflicting signals—often evidence of contact or borrowing."</span></span>
-<span id="cb7-206"><a href="#cb7-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-207"><a href="#cb7-207" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">4</span>))</span>
-<span id="cb7-208"><a href="#cb7-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-209"><a href="#cb7-209" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, title <span class="kw">in</span> <span class="bu">zip</span>(axes, [<span class="st">"Tree (no contact)"</span>, <span class="st">"Network (with contact)"</span>]):</span>
-<span id="cb7-210"><a href="#cb7-210" aria-hidden="true" tabindex="-1"></a>    ax.set_xlim(<span class="dv">0</span>, <span class="dv">10</span>)</span>
-<span id="cb7-211"><a href="#cb7-211" aria-hidden="true" tabindex="-1"></a>    ax.set_ylim(<span class="dv">0</span>, <span class="dv">8</span>)</span>
-<span id="cb7-212"><a href="#cb7-212" aria-hidden="true" tabindex="-1"></a>    ax.axis(<span class="st">"off"</span>)</span>
-<span id="cb7-213"><a href="#cb7-213" aria-hidden="true" tabindex="-1"></a>    ax.set_title(title, fontsize<span class="op">=</span><span class="dv">11</span>)</span>
-<span id="cb7-214"><a href="#cb7-214" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-215"><a href="#cb7-215" aria-hidden="true" tabindex="-1"></a><span class="co"># Tree</span></span>
-<span id="cb7-216"><a href="#cb7-216" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> axes[<span class="dv">0</span>]</span>
-<span id="cb7-217"><a href="#cb7-217" aria-hidden="true" tabindex="-1"></a>ax.plot([<span class="dv">5</span>,<span class="dv">5</span>], [<span class="dv">7</span>,<span class="dv">5</span>], <span class="st">"k-"</span>, lw<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb7-218"><a href="#cb7-218" aria-hidden="true" tabindex="-1"></a>ax.plot([<span class="dv">5</span>,<span class="dv">3</span>], [<span class="dv">5</span>,<span class="dv">3</span>], <span class="st">"k-"</span>, lw<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb7-219"><a href="#cb7-219" aria-hidden="true" tabindex="-1"></a>ax.plot([<span class="dv">5</span>,<span class="dv">7</span>], [<span class="dv">5</span>,<span class="dv">3</span>], <span class="st">"k-"</span>, lw<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb7-220"><a href="#cb7-220" aria-hidden="true" tabindex="-1"></a>ax.plot([<span class="dv">3</span>,<span class="dv">2</span>], [<span class="dv">3</span>,<span class="dv">1</span>], <span class="st">"k-"</span>, lw<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb7-221"><a href="#cb7-221" aria-hidden="true" tabindex="-1"></a>ax.plot([<span class="dv">3</span>,<span class="dv">4</span>], [<span class="dv">3</span>,<span class="dv">1</span>], <span class="st">"k-"</span>, lw<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb7-222"><a href="#cb7-222" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x, y, lab <span class="kw">in</span> [(<span class="dv">2</span>,<span class="fl">0.5</span>,<span class="st">"Spanish"</span>),(<span class="dv">4</span>,<span class="fl">0.5</span>,<span class="st">"Portuguese"</span>),(<span class="dv">7</span>,<span class="fl">2.5</span>,<span class="st">"French"</span>),(<span class="dv">5</span>,<span class="fl">7.5</span>,<span class="st">"Root"</span>)]:</span>
-<span id="cb7-223"><a href="#cb7-223" aria-hidden="true" tabindex="-1"></a>    ax.text(x, y, lab, ha<span class="op">=</span><span class="st">"center"</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
-<span id="cb7-224"><a href="#cb7-224" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-225"><a href="#cb7-225" aria-hidden="true" tabindex="-1"></a><span class="co"># Network</span></span>
-<span id="cb7-226"><a href="#cb7-226" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> axes[<span class="dv">1</span>]</span>
-<span id="cb7-227"><a href="#cb7-227" aria-hidden="true" tabindex="-1"></a>ax.plot([<span class="dv">5</span>,<span class="dv">5</span>],[<span class="dv">7</span>,<span class="fl">5.5</span>],<span class="st">"k-"</span>,lw<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb7-228"><a href="#cb7-228" aria-hidden="true" tabindex="-1"></a>ax.plot([<span class="dv">5</span>,<span class="fl">3.5</span>],[<span class="fl">5.5</span>,<span class="dv">4</span>],<span class="st">"k-"</span>,lw<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb7-229"><a href="#cb7-229" aria-hidden="true" tabindex="-1"></a>ax.plot([<span class="dv">5</span>,<span class="fl">6.5</span>],[<span class="fl">5.5</span>,<span class="dv">4</span>],<span class="st">"k-"</span>,lw<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb7-230"><a href="#cb7-230" aria-hidden="true" tabindex="-1"></a>ax.plot([<span class="fl">3.5</span>,<span class="fl">3.5</span>],[<span class="dv">4</span>,<span class="fl">2.5</span>],<span class="st">"k-"</span>,lw<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb7-231"><a href="#cb7-231" aria-hidden="true" tabindex="-1"></a>ax.plot([<span class="fl">6.5</span>,<span class="fl">6.5</span>],[<span class="dv">4</span>,<span class="fl">2.5</span>],<span class="st">"k-"</span>,lw<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb7-232"><a href="#cb7-232" aria-hidden="true" tabindex="-1"></a>ax.plot([<span class="fl">3.5</span>,<span class="fl">6.5</span>],[<span class="dv">4</span>,<span class="dv">4</span>],<span class="st">"k--"</span>,lw<span class="op">=</span><span class="fl">1.5</span>,color<span class="op">=</span><span class="st">"gray"</span>,label<span class="op">=</span><span class="st">"Contact signal"</span>)</span>
-<span id="cb7-233"><a href="#cb7-233" aria-hidden="true" tabindex="-1"></a>ax.plot([<span class="fl">3.5</span>,<span class="fl">6.5</span>],[<span class="fl">2.5</span>,<span class="fl">2.5</span>],<span class="st">"k--"</span>,lw<span class="op">=</span><span class="fl">1.5</span>,color<span class="op">=</span><span class="st">"gray"</span>)</span>
-<span id="cb7-234"><a href="#cb7-234" aria-hidden="true" tabindex="-1"></a>ax.plot([<span class="fl">3.5</span>,<span class="dv">2</span>],[<span class="fl">2.5</span>,<span class="dv">1</span>],<span class="st">"k-"</span>,lw<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb7-235"><a href="#cb7-235" aria-hidden="true" tabindex="-1"></a>ax.plot([<span class="fl">6.5</span>,<span class="dv">8</span>],[<span class="fl">2.5</span>,<span class="dv">1</span>],<span class="st">"k-"</span>,lw<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb7-236"><a href="#cb7-236" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x, y, lab <span class="kw">in</span> [(<span class="dv">2</span>,<span class="fl">0.5</span>,<span class="st">"Spanish"</span>),(<span class="dv">8</span>,<span class="fl">0.5</span>,<span class="st">"French"</span>),(<span class="dv">5</span>,<span class="fl">7.5</span>,<span class="st">"Root"</span>)]:</span>
-<span id="cb7-237"><a href="#cb7-237" aria-hidden="true" tabindex="-1"></a>    ax.text(x, y, lab, ha<span class="op">=</span><span class="st">"center"</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
-<span id="cb7-238"><a href="#cb7-238" aria-hidden="true" tabindex="-1"></a>ax.legend(fontsize<span class="op">=</span><span class="dv">8</span>, loc<span class="op">=</span><span class="st">"lower center"</span>)</span>
-<span id="cb7-239"><a href="#cb7-239" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-240"><a href="#cb7-240" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">"Trees vs. Networks in Phylogenetic Inference"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
-<span id="cb7-241"><a href="#cb7-241" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb7-242"><a href="#cb7-242" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb7-243"><a href="#cb7-243" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb7-244"><a href="#cb7-244" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-245"><a href="#cb7-245" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
-<span id="cb7-246"><a href="#cb7-246" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-247"><a href="#cb7-247" aria-hidden="true" tabindex="-1"></a>Phylogenetic inference translates the output of cognate detection into a visual and quantitative model of language family structure. The distance matrix—built from shared cognate proportions—feeds tree-building algorithms: UPGMA for simplicity, Neighbor-Joining for robustness to rate variation. Both methods recover the major groupings of the Romance family correctly from small datasets. Trees are evaluated against expert trees using the Robinson-Foulds distance. Contact and borrowing produce non-tree-like signals that phylogenetic networks capture more faithfully than trees. The tree structure produced here becomes the backbone for understanding proto-reconstruction in Chapter 7: the ancestral forms we seek to reconstruct sit at the internal nodes of this tree.</span>
-<span id="cb7-248"><a href="#cb7-248" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-249"><a href="#cb7-249" aria-hidden="true" tabindex="-1"></a><span class="fu">## Further Reading</span></span>
-<span id="cb7-250"><a href="#cb7-250" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-251"><a href="#cb7-251" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Saitou, N., &amp; Nei, M. (1987). The Neighbor-Joining method: A new method for reconstructing phylogenetic trees. *Molecular Biology and Evolution*.</span>
-<span id="cb7-252"><a href="#cb7-252" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Gray, R. D., &amp; Atkinson, Q. D. (2003). Language-tree divergence times support the Anatolian theory of Indo-European origin. *Nature*.</span>
-<span id="cb7-253"><a href="#cb7-253" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Bouckaert, R., et al. (2012). Mapping the origins and expansion of the Indo-European language family. *Science*. BEAST2 applied to Indo-European.</span>
-<span id="cb7-254"><a href="#cb7-254" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Bryant, D., &amp; Moulton, V. (2004). Neighbor-Net: An agglomerative method for the construction of phylogenetic networks. *Molecular Biology and Evolution*.</span>
-</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
-</div></div></div></div></div>
+</nav>
 </div> <!-- /content -->
 
 

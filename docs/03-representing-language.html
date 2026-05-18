@@ -23,41 +23,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -338,7 +303,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-comparative-method.html">Part I: Foundations</a></li><li class="breadcrumb-item"><a href="./03-representing-language.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Representing Language as Data</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span id="sec-representation" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Representing Language as Data</span></span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+<h1 class="title"><span id="sec-representation" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Representing Language as Data</span></span></h1>
 </div>
 
 
@@ -390,41 +355,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Manner of articulation</strong>: how the airstream is obstructed. Stops (complete closure): <em>p, b, t, d, k, g</em>. Fricatives (turbulent flow): <em>f, v, s, z, ʃ, ʒ</em>. Nasals (air through nose): <em>m, n, ŋ</em>. Approximants (minimal obstruction): <em>l, r, w, j</em>.</p>
 <p><strong>Voicing</strong>: whether the vocal folds are vibrating. Voiced: <em>b, d, g, v, z</em>. Voiceless: <em>p, t, k, f, s</em>.</p>
 <div id="cell-fig-ipa-chart" class="cell" data-execution_count="2">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>places <span class="op">=</span> [<span class="st">"Bilabial"</span>, <span class="st">"Labiodental"</span>, <span class="st">"Alveolar"</span>, <span class="st">"Palato-alv."</span>, <span class="st">"Velar"</span>]</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>manners <span class="op">=</span> [<span class="st">"Stop"</span>, <span class="st">"Fricative"</span>, <span class="st">"Nasal"</span>, <span class="st">"Approximant"</span>]</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>chart <span class="op">=</span> {</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Stop"</span>, <span class="st">"Bilabial"</span>):       <span class="st">"p / b"</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Stop"</span>, <span class="st">"Alveolar"</span>):       <span class="st">"t / d"</span>,</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Stop"</span>, <span class="st">"Velar"</span>):          <span class="st">"k / g"</span>,</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Fricative"</span>, <span class="st">"Labiodental"</span>): <span class="st">"f / v"</span>,</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Fricative"</span>, <span class="st">"Alveolar"</span>):  <span class="st">"s / z"</span>,</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Fricative"</span>, <span class="st">"Palato-alv."</span>): <span class="st">"ʃ / ʒ"</span>,</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Nasal"</span>, <span class="st">"Bilabial"</span>):      <span class="st">"m"</span>,</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Nasal"</span>, <span class="st">"Alveolar"</span>):      <span class="st">"n"</span>,</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Nasal"</span>, <span class="st">"Velar"</span>):         <span class="st">"ŋ"</span>,</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Approximant"</span>, <span class="st">"Alveolar"</span>): <span class="st">"l, r"</span>,</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Approximant"</span>, <span class="st">"Bilabial"</span>): <span class="st">"w"</span>,</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="dv">4</span>))</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>ax.axis(<span class="st">"off"</span>)</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> [[chart.get((m, p), <span class="st">"—"</span>) <span class="cf">for</span> p <span class="kw">in</span> places] <span class="cf">for</span> m <span class="kw">in</span> manners]</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>table <span class="op">=</span> ax.table(cellText<span class="op">=</span>data, rowLabels<span class="op">=</span>manners, colLabels<span class="op">=</span>places,</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>                 cellLoc<span class="op">=</span><span class="st">"center"</span>, loc<span class="op">=</span><span class="st">"center"</span>)</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>table.auto_set_font_size(<span class="va">False</span>)</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>table.set_fontsize(<span class="dv">10</span>)</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>table.scale(<span class="fl">1.3</span>, <span class="fl">1.8</span>)</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (r, c), cell <span class="kw">in</span> table.get_celld().items():</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> r <span class="op">==</span> <span class="dv">0</span> <span class="kw">or</span> c <span class="op">==</span> <span class="op">-</span><span class="dv">1</span>:</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>        cell.set_facecolor(<span class="st">"#dde"</span>)</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Partial IPA Consonant Chart (voiceless / voiced)"</span>, pad<span class="op">=</span><span class="dv">20</span>)</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-display">
 <div id="fig-ipa-chart" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -457,32 +387,6 @@ Figure&nbsp;4.1: Partial IPA consonant chart for common Indo-European sounds, or
 <h2 data-number="4.5" class="anchored" data-anchor-id="phonemes-as-feature-vectors"><span class="header-section-number">4.5</span> Phonemes as Feature Vectors</h2>
 <p>Here is the connection to data science: if every phoneme can be described by a set of binary features (voiced/voiceless, stop/fricative/nasal, bilabial/alveolar/velar…), then every phoneme can be represented as a vector of zeros and ones.</p>
 <div class="cell" data-execution_count="3">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>features <span class="op">=</span> [<span class="st">"voiced"</span>, <span class="st">"stop"</span>, <span class="st">"fricative"</span>, <span class="st">"nasal"</span>, <span class="st">"approx"</span>,</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>            <span class="st">"bilabial"</span>, <span class="st">"alveolar"</span>, <span class="st">"velar"</span>]</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>phoneme_features <span class="op">=</span> {</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"p"</span>:  [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"b"</span>:  [<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"t"</span>:  [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"d"</span>:  [<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"k"</span>:  [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>],</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"g"</span>:  [<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>],</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"f"</span>:  [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"v"</span>:  [<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"s"</span>:  [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"z"</span>:  [<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"m"</span>:  [<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"n"</span>:  [<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"l"</span>:  [<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>df_feat <span class="op">=</span> pd.DataFrame(phoneme_features, index<span class="op">=</span>features).T</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>df_feat.columns.name <span class="op">=</span> <span class="st">"Feature"</span></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>df_feat.index.name <span class="op">=</span> <span class="st">"Phoneme"</span></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>df_feat</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div id="tbl-feature-vectors" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="3">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-feature-vectors-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -673,31 +577,6 @@ Table&nbsp;4.1: Selected phonemes as binary feature vectors. These 8 features ar
 </div>
 <p>Why does this matter? Because now we can compute the <em>distance</em> between phonemes. The distance between /p/ and /b/ is 1 (they differ only in voicing). The distance between /p/ and /s/ is 3 (they differ in voicing, stop vs.&nbsp;fricative, and bilabial vs.&nbsp;alveolar). Sounds that are close in feature space are more likely to be confused or to shift into each other over time—which is exactly what we need when we build alignment algorithms in Chapter 4.</p>
 <div id="cell-fig-phoneme-distance" class="cell" data-execution_count="4">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>phonemes <span class="op">=</span> <span class="bu">list</span>(phoneme_features.keys())</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>vecs <span class="op">=</span> np.array([phoneme_features[p] <span class="cf">for</span> p <span class="kw">in</span> phonemes])</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>dist <span class="op">=</span> np.zeros((<span class="bu">len</span>(phonemes), <span class="bu">len</span>(phonemes)))</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(phonemes)):</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(phonemes)):</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        dist[i, j] <span class="op">=</span> np.<span class="bu">sum</span>(vecs[i] <span class="op">!=</span> vecs[j])</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">7</span>))</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>im <span class="op">=</span> ax.imshow(dist, cmap<span class="op">=</span><span class="st">"YlOrRd"</span>, aspect<span class="op">=</span><span class="st">"auto"</span>)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>ax.set_xticks(<span class="bu">range</span>(<span class="bu">len</span>(phonemes)))</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>ax.set_yticks(<span class="bu">range</span>(<span class="bu">len</span>(phonemes)))</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels(phonemes)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>ax.set_yticklabels(phonemes)</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(phonemes)):</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(phonemes)):</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        ax.text(j, i, <span class="ss">f"</span><span class="sc">{</span><span class="bu">int</span>(dist[i,j])<span class="sc">}</span><span class="ss">"</span>, ha<span class="op">=</span><span class="st">"center"</span>, va<span class="op">=</span><span class="st">"center"</span>,</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>                fontsize<span class="op">=</span><span class="dv">9</span>, color<span class="op">=</span><span class="st">"black"</span> <span class="cf">if</span> dist[i,j] <span class="op">&lt;</span> <span class="dv">5</span> <span class="cf">else</span> <span class="st">"white"</span>)</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>plt.colorbar(im, ax<span class="op">=</span>ax, label<span class="op">=</span><span class="st">"Hamming distance"</span>)</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Phoneme-to-phoneme Hamming distances (feature space)"</span>)</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-display">
 <div id="fig-phoneme-distance" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -732,32 +611,10 @@ Figure&nbsp;4.2: Pairwise Hamming distances between 12 consonants, based on 8 bi
 <p>You do not need to work with CLDF directly to use this book—we will often work with simplified CSV files—but you will encounter it in the wild and knowing its structure saves confusion.</p>
 <div id="lst-cldf-load" class="cell listing quarto-float quarto-figure quarto-figure-left anchored" data-execution_count="5">
 <figure class="quarto-float quarto-float-lst figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-cldf-load-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Listing&nbsp;4.1: Loading a simplified CLDF-style wordlist into pandas.
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst quarto-uncaptioned" id="lst-cldf-load-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Listing&nbsp;4.1
 </figcaption>
 <div aria-describedby="lst-cldf-load-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" data-lst-cap="Loading a simplified CLDF-style wordlist into pandas."><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> io</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>forms_csv <span class="op">=</span> <span class="st">"""ID,Language_ID,Parameter_ID,Form,Segments</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="st">1,spa,father,padre,p a d r e</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="st">2,fra,father,père,p ɛ r</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="st">3,ita,father,padre,p a d r e</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="st">4,por,father,pai,p a j</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="st">5,spa,night,noche,n o tʃ e</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="st">6,fra,night,nuit,n ɥ i</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="st">7,ita,night,notte,n o t t e</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="st">8,por,night,noite,n o j t e</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>forms <span class="op">=</span> pd.read_csv(io.StringIO(forms_csv))</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>forms[<span class="st">"Segment_list"</span>] <span class="op">=</span> forms[<span class="st">"Segments"</span>].<span class="bu">str</span>.split()</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>forms[<span class="st">"N_segments"</span>] <span class="op">=</span> forms[<span class="st">"Segment_list"</span>].<span class="bu">apply</span>(<span class="bu">len</span>)</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(forms[[<span class="st">"Language_ID"</span>, <span class="st">"Parameter_ID"</span>, <span class="st">"Form"</span>, <span class="st">"N_segments"</span>]].to_string())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Language_ID Parameter_ID   Form  N_segments
 0         spa       father  padre           5
@@ -778,14 +635,6 @@ Listing&nbsp;4.1: Loading a simplified CLDF-style wordlist into pandas.
 <h2 data-number="4.8" class="anchored" data-anchor-id="segmentation"><span class="header-section-number">4.8</span> Segmentation</h2>
 <p>Segmenting a transcribed word into phonemes sounds trivial—just split on spaces—but the issue of <em>multigraphs</em> complicates things. In IPA, some sounds are represented by two characters: <em>tʃ</em> (the sound in <em>church</em>), <em>dʒ</em> (the sound in <em>judge</em>), <em>ts</em> (the sound in <em>cats</em>). If you split character-by-character rather than phoneme-by-phoneme, you get the wrong segmentation.</p>
 <p>LingPy, the Python library we will use extensively in Chapter 4, includes a segmentation function that handles these cases:</p>
-<div id="5de22c96" class="cell" data-execution_count="6">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> lingpy <span class="im">import</span> ipa2tokens</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>tokens <span class="op">=</span> ipa2tokens(<span class="st">"natʃ"</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tokens)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
 <pre><code>['n', 'a', 'tʃ']</code></pre>
 <p>The function knows that <em>tʃ</em> is a single phoneme and should not be split. This is not trivial knowledge—it is embedded in the library’s symbol table, derived from the IPA standard.</p>
 </section>
@@ -797,20 +646,6 @@ Listing&nbsp;4.1: Loading a simplified CLDF-style wordlist into pandas.
 <p><strong>Loans mixed with inherited vocabulary.</strong> A wordlist for English will contain borrowed words from French, Latin, Old Norse, and Greek alongside the inherited Germanic vocabulary. If you run a cognate detector without filtering loanwords, you will find false cognates everywhere.</p>
 <p><strong>Dialectal variation.</strong> The “Spanish” word for a concept may vary substantially between Madrid, Mexico City, and Buenos Aires. Which dialect is recorded matters—and is often not documented.</p>
 <div id="cell-fig-data-quality" class="cell" data-execution_count="7">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">42</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>n_lang, n_concept <span class="op">=</span> <span class="dv">10</span>, <span class="dv">20</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>mask <span class="op">=</span> rng.random((n_lang, n_concept)) <span class="op">&lt;</span> <span class="fl">0.12</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="dv">4</span>))</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>ax.imshow(mask, cmap<span class="op">=</span><span class="st">"Greys"</span>, aspect<span class="op">=</span><span class="st">"auto"</span>, vmin<span class="op">=</span><span class="dv">0</span>, vmax<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Concept index"</span>)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Language index"</span>)</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="ss">f"Missing data pattern (</span><span class="sc">{</span>mask<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">}</span><span class="ss"> missing of </span><span class="sc">{</span>n_lang <span class="op">*</span> n_concept<span class="sc">}</span><span class="ss"> cells = </span><span class="sc">{</span>mask<span class="sc">.</span>mean()<span class="sc">:.1%}</span><span class="ss">)"</span>)</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-display">
 <div id="fig-data-quality" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -828,21 +663,6 @@ Figure&nbsp;4.3: Simulated missing-data pattern in a 10-language, 20-concept wor
 <section id="building-your-own-feature-matrix" class="level2" data-number="4.10">
 <h2 data-number="4.10" class="anchored" data-anchor-id="building-your-own-feature-matrix"><span class="header-section-number">4.10</span> Building Your Own Feature Matrix</h2>
 <p>To close this chapter with a concrete object you can use in later chapters, let us build a complete feature matrix for a small phoneme inventory:</p>
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> phoneme_distance(p1, p2, feature_dict):</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    v1 <span class="op">=</span> np.array(feature_dict[p1])</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    v2 <span class="op">=</span> np.array(feature_dict[p2])</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">int</span>(np.<span class="bu">sum</span>(v1 <span class="op">!=</span> v2))</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>ph <span class="op">=</span> <span class="bu">list</span>(phoneme_features.keys())</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>dist_df <span class="op">=</span> pd.DataFrame(</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    [[phoneme_distance(a, b, phoneme_features) <span class="cf">for</span> b <span class="kw">in</span> ph] <span class="cf">for</span> a <span class="kw">in</span> ph],</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>ph, columns<span class="op">=</span>ph</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Feature-based phoneme distance matrix:"</span>)</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dist_df.to_string())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div id="tbl-feature-matrix" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="8">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-feature-matrix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -884,8 +704,6 @@ l  5  4  3  2  5  4  5  4  3  2  4  2  0</code></pre>
 <li>IPA chart: <a href="https://www.internationalphoneticassociation.org/IPAcharts">https://www.internationalphoneticassociation.org/IPAcharts</a></li>
 </ul>
 
-
-<!-- -->
 
 </section>
 
@@ -960,57 +778,6 @@ l  5  4  3  2  5  4  5  4  3  2  4  2  0</code></pre>
         container: window.document.getElementById('quarto-embedded-source-code-modal')
       });
       clipboardModal.on('success', onCopySuccess);
-    }
-    const viewSource = window.document.getElementById('quarto-view-source') ||
-                       window.document.getElementById('quarto-code-tools-source');
-    if (viewSource) {
-      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
-      viewSource.addEventListener("click", function(e) {
-        if (sourceUrl) {
-          // rstudio viewer pane
-          if (/\bcapabilities=\b/.test(window.location)) {
-            window.open(sourceUrl);
-          } else {
-            window.location.href = sourceUrl;
-          }
-        } else {
-          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
-          modal.show();
-        }
-        return false;
-      });
-    }
-    function toggleCodeHandler(show) {
-      return function(e) {
-        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-        for (let i=0; i<detailsSrc.length; i++) {
-          const details = detailsSrc[i].parentElement;
-          if (show) {
-            details.open = true;
-          } else {
-            details.removeAttribute("open");
-          }
-        }
-        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
-        const fromCls = show ? "hidden" : "unhidden";
-        const toCls = show ? "unhidden" : "hidden";
-        for (let i=0; i<cellCodeDivs.length; i++) {
-          const codeDiv = cellCodeDivs[i];
-          if (codeDiv.classList.contains(fromCls)) {
-            codeDiv.classList.remove(fromCls);
-            codeDiv.classList.add(toCls);
-          } 
-        }
-        return false;
-      }
-    }
-    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
-    if (hideAllCode) {
-      hideAllCode.addEventListener("click", toggleCodeHandler(false));
-    }
-    const showAllCode = window.document.getElementById("quarto-show-all-code");
-    if (showAllCode) {
-      showAllCode.addEventListener("click", toggleCodeHandler(true));
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
@@ -1352,304 +1119,7 @@ l  5  4  3  2  5  4  5  4  3  2  4  2  0</code></pre>
         <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Sequence Alignment &amp; Phonetic Distance</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
-</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Representing Language as Data {#sec-representation}</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="fu">## Learning Objectives</span></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>By the end of this chapter, you will be able to:</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Read and write basic IPA transcriptions for common sounds</span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Describe phonemes in terms of articulatory features (voicing, place, manner)</span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Load and manipulate a CLDF-format wordlist in Python</span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Represent a phoneme as a binary feature vector</span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Identify common data quality issues in linguistic datasets</span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Segment a transcribed word into its component phonemes</span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Alphabet Problem</span></span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>When the phone company needed to determine whether two spoken words were the same, it did not read the spelling. It analyzed the acoustic waveform—the pressure signature of air molecules vibrating against a microphone. Spelling, it turns out, is an extremely poor proxy for sound. English alone has twenty-six letters representing roughly forty-four phonemes, with vowels that change meaning without warning (*bat*, *bate*, *bait*, *beat*, *bit*) and consonants that double without doubling their sound (*kitten* has one *t* sound, not two).</span>
-<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>For a human who has been reading English since childhood, this ambiguity is invisible—we have learned to decode it automatically. For a computer, it is a disaster. If we want to analyze language as *sound*, we cannot use orthography. We need a different alphabet.</span>
-<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>That alphabet exists. It is the International Phonetic Alphabet (IPA), designed in 1888 and now maintained by the International Phonetic Association. Its governing principle is one-to-one correspondence: every symbol represents exactly one sound, every sound is represented by exactly one symbol. Whether you are transcribing Mandarin tones, Arabic gutturals, or the click consonants of isiZulu, the IPA has a symbol for it.</span>
-<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a><span class="fu">## The IPA Essentials</span></span>
-<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>You do not need to memorize the full IPA chart to work through this book. You do need to recognize its structure and be comfortable with the sounds that appear in Indo-European languages.</span>
-<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>The IPA organizes consonants by three properties:</span>
-<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>**Place of articulation**: where in the mouth the obstruction occurs. Bilabial (both lips): *p, b, m*. Labiodental (lip + teeth): *f, v*. Alveolar (tongue + tooth ridge): *t, d, n, s, z, l, r*. Velar (tongue + soft palate): *k, g, ŋ*.</span>
-<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>**Manner of articulation**: how the airstream is obstructed. Stops (complete closure): *p, b, t, d, k, g*. Fricatives (turbulent flow): *f, v, s, z, ʃ, ʒ*. Nasals (air through nose): *m, n, ŋ*. Approximants (minimal obstruction): *l, r, w, j*.</span>
-<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>**Voicing**: whether the vocal folds are vibrating. Voiced: *b, d, g, v, z*. Voiceless: *p, t, k, f, s*.</span>
-<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-ipa-chart</span></span>
-<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Partial IPA consonant chart for common Indo-European sounds, organized by place and manner of articulation."</span></span>
-<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a>places <span class="op">=</span> [<span class="st">"Bilabial"</span>, <span class="st">"Labiodental"</span>, <span class="st">"Alveolar"</span>, <span class="st">"Palato-alv."</span>, <span class="st">"Velar"</span>]</span>
-<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a>manners <span class="op">=</span> [<span class="st">"Stop"</span>, <span class="st">"Fricative"</span>, <span class="st">"Nasal"</span>, <span class="st">"Approximant"</span>]</span>
-<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a>chart <span class="op">=</span> {</span>
-<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Stop"</span>, <span class="st">"Bilabial"</span>):       <span class="st">"p / b"</span>,</span>
-<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Stop"</span>, <span class="st">"Alveolar"</span>):       <span class="st">"t / d"</span>,</span>
-<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Stop"</span>, <span class="st">"Velar"</span>):          <span class="st">"k / g"</span>,</span>
-<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Fricative"</span>, <span class="st">"Labiodental"</span>): <span class="st">"f / v"</span>,</span>
-<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Fricative"</span>, <span class="st">"Alveolar"</span>):  <span class="st">"s / z"</span>,</span>
-<span id="cb11-60"><a href="#cb11-60" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Fricative"</span>, <span class="st">"Palato-alv."</span>): <span class="st">"ʃ / ʒ"</span>,</span>
-<span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Nasal"</span>, <span class="st">"Bilabial"</span>):      <span class="st">"m"</span>,</span>
-<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Nasal"</span>, <span class="st">"Alveolar"</span>):      <span class="st">"n"</span>,</span>
-<span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Nasal"</span>, <span class="st">"Velar"</span>):         <span class="st">"ŋ"</span>,</span>
-<span id="cb11-64"><a href="#cb11-64" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Approximant"</span>, <span class="st">"Alveolar"</span>): <span class="st">"l, r"</span>,</span>
-<span id="cb11-65"><a href="#cb11-65" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Approximant"</span>, <span class="st">"Bilabial"</span>): <span class="st">"w"</span>,</span>
-<span id="cb11-66"><a href="#cb11-66" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb11-67"><a href="#cb11-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-68"><a href="#cb11-68" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="dv">4</span>))</span>
-<span id="cb11-69"><a href="#cb11-69" aria-hidden="true" tabindex="-1"></a>ax.axis(<span class="st">"off"</span>)</span>
-<span id="cb11-70"><a href="#cb11-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-71"><a href="#cb11-71" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> [[chart.get((m, p), <span class="st">"—"</span>) <span class="cf">for</span> p <span class="kw">in</span> places] <span class="cf">for</span> m <span class="kw">in</span> manners]</span>
-<span id="cb11-72"><a href="#cb11-72" aria-hidden="true" tabindex="-1"></a>table <span class="op">=</span> ax.table(cellText<span class="op">=</span>data, rowLabels<span class="op">=</span>manners, colLabels<span class="op">=</span>places,</span>
-<span id="cb11-73"><a href="#cb11-73" aria-hidden="true" tabindex="-1"></a>                 cellLoc<span class="op">=</span><span class="st">"center"</span>, loc<span class="op">=</span><span class="st">"center"</span>)</span>
-<span id="cb11-74"><a href="#cb11-74" aria-hidden="true" tabindex="-1"></a>table.auto_set_font_size(<span class="va">False</span>)</span>
-<span id="cb11-75"><a href="#cb11-75" aria-hidden="true" tabindex="-1"></a>table.set_fontsize(<span class="dv">10</span>)</span>
-<span id="cb11-76"><a href="#cb11-76" aria-hidden="true" tabindex="-1"></a>table.scale(<span class="fl">1.3</span>, <span class="fl">1.8</span>)</span>
-<span id="cb11-77"><a href="#cb11-77" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (r, c), cell <span class="kw">in</span> table.get_celld().items():</span>
-<span id="cb11-78"><a href="#cb11-78" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> r <span class="op">==</span> <span class="dv">0</span> <span class="kw">or</span> c <span class="op">==</span> <span class="op">-</span><span class="dv">1</span>:</span>
-<span id="cb11-79"><a href="#cb11-79" aria-hidden="true" tabindex="-1"></a>        cell.set_facecolor(<span class="st">"#dde"</span>)</span>
-<span id="cb11-80"><a href="#cb11-80" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Partial IPA Consonant Chart (voiceless / voiced)"</span>, pad<span class="op">=</span><span class="dv">20</span>)</span>
-<span id="cb11-81"><a href="#cb11-81" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb11-82"><a href="#cb11-82" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb11-83"><a href="#cb11-83" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-84"><a href="#cb11-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-85"><a href="#cb11-85" aria-hidden="true" tabindex="-1"></a>Vowels are organized differently: by the position of the tongue (front, central, back) and the height of the jaw (high, mid, low), plus lip rounding. The vowel *i* (as in *machine*) is high front unrounded. The vowel *u* (as in *food*) is high back rounded. The vowel *a* (as in *father*) is low central unrounded.</span>
-<span id="cb11-86"><a href="#cb11-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-87"><a href="#cb11-87" aria-hidden="true" tabindex="-1"></a><span class="fu">## The IPA's Origin Story</span></span>
-<span id="cb11-88"><a href="#cb11-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-89"><a href="#cb11-89" aria-hidden="true" tabindex="-1"></a>The IPA was not invented by a committee of professional linguists, which may explain why it works. It was created by Paul Passy, a French phonetician, in 1886, with the explicit goal of producing a practical tool for language teachers who needed to write down the sounds of foreign languages without ambiguity. The first version covered French, English, and German; subsequent revisions expanded it to cover the phonemic inventories of languages around the world, including the click consonants of Southern African languages (represented by symbols like ǀ and ǁ), the tonal systems of Southeast Asian languages, and the complex vowel systems of Caucasian languages.</span>
-<span id="cb11-90"><a href="#cb11-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-91"><a href="#cb11-91" aria-hidden="true" tabindex="-1"></a>The discipline this imposed was genuinely liberating. Before the IPA, a German writing down the sounds of Zulu would use German spelling conventions; an Englishman would use English ones; a Frenchman, French ones. The same sound would appear in a dozen incompatible orthographies across different researchers' fieldnotes, making comparison impossible. The IPA gave everyone the same notation and the same categories.</span>
-<span id="cb11-92"><a href="#cb11-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-93"><a href="#cb11-93" aria-hidden="true" tabindex="-1"></a>For computational work, the IPA has a crucial additional virtue: it maps cleanly to Unicode. Every IPA symbol has a unique Unicode code point, which means that IPA-transcribed data can be stored, compared, and processed by standard text-handling software without loss. The practical consequence is that a wordlist stored as IPA text is directly machine-readable, while a wordlist stored in language-specific orthographies requires a separate transliteration step for each language.</span>
-<span id="cb11-94"><a href="#cb11-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-95"><a href="#cb11-95" aria-hidden="true" tabindex="-1"></a><span class="fu">## Phonemic Transcription vs. Phonetic Transcription</span></span>
-<span id="cb11-96"><a href="#cb11-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-97"><a href="#cb11-97" aria-hidden="true" tabindex="-1"></a>There is an important distinction you will encounter throughout this book.</span>
-<span id="cb11-98"><a href="#cb11-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-99"><a href="#cb11-99" aria-hidden="true" tabindex="-1"></a>*Phonemic transcription* (between slashes: /word/) represents the abstract sound units of a language—the sounds that distinguish meaning. English has the phoneme /p/: it distinguishes *pat* from *bat*, *pin* from *bin*.</span>
-<span id="cb11-100"><a href="#cb11-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-101"><a href="#cb11-101" aria-hidden="true" tabindex="-1"></a>*Phonetic transcription* (between brackets: [word]) represents the actual physical sounds as produced in a specific context. The English /p/ in *pin* is actually [pʰ] (aspirated—followed by a puff of air); the /p/ in *spin* is <span class="co">[</span><span class="ot">p</span><span class="co">]</span> (unaspirated). Both are the "same" phoneme to an English speaker, but they are physically different sounds.</span>
-<span id="cb11-102"><a href="#cb11-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-103"><a href="#cb11-103" aria-hidden="true" tabindex="-1"></a>For etymology, phonemic transcription is usually sufficient. We care about which sounds distinguish words, not the fine-grained acoustic detail.</span>
-<span id="cb11-104"><a href="#cb11-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-105"><a href="#cb11-105" aria-hidden="true" tabindex="-1"></a><span class="fu">## Phonemes as Feature Vectors</span></span>
-<span id="cb11-106"><a href="#cb11-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-107"><a href="#cb11-107" aria-hidden="true" tabindex="-1"></a>Here is the connection to data science: if every phoneme can be described by a set of binary features (voiced/voiceless, stop/fricative/nasal, bilabial/alveolar/velar...), then every phoneme can be represented as a vector of zeros and ones.</span>
-<span id="cb11-108"><a href="#cb11-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-111"><a href="#cb11-111" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb11-112"><a href="#cb11-112" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-feature-vectors</span></span>
-<span id="cb11-113"><a href="#cb11-113" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Selected phonemes as binary feature vectors. These 8 features are a simplified subset of a full feature system."</span></span>
-<span id="cb11-114"><a href="#cb11-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-115"><a href="#cb11-115" aria-hidden="true" tabindex="-1"></a>features <span class="op">=</span> [<span class="st">"voiced"</span>, <span class="st">"stop"</span>, <span class="st">"fricative"</span>, <span class="st">"nasal"</span>, <span class="st">"approx"</span>,</span>
-<span id="cb11-116"><a href="#cb11-116" aria-hidden="true" tabindex="-1"></a>            <span class="st">"bilabial"</span>, <span class="st">"alveolar"</span>, <span class="st">"velar"</span>]</span>
-<span id="cb11-117"><a href="#cb11-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-118"><a href="#cb11-118" aria-hidden="true" tabindex="-1"></a>phoneme_features <span class="op">=</span> {</span>
-<span id="cb11-119"><a href="#cb11-119" aria-hidden="true" tabindex="-1"></a>    <span class="st">"p"</span>:  [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
-<span id="cb11-120"><a href="#cb11-120" aria-hidden="true" tabindex="-1"></a>    <span class="st">"b"</span>:  [<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
-<span id="cb11-121"><a href="#cb11-121" aria-hidden="true" tabindex="-1"></a>    <span class="st">"t"</span>:  [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
-<span id="cb11-122"><a href="#cb11-122" aria-hidden="true" tabindex="-1"></a>    <span class="st">"d"</span>:  [<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
-<span id="cb11-123"><a href="#cb11-123" aria-hidden="true" tabindex="-1"></a>    <span class="st">"k"</span>:  [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>],</span>
-<span id="cb11-124"><a href="#cb11-124" aria-hidden="true" tabindex="-1"></a>    <span class="st">"g"</span>:  [<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>],</span>
-<span id="cb11-125"><a href="#cb11-125" aria-hidden="true" tabindex="-1"></a>    <span class="st">"f"</span>:  [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
-<span id="cb11-126"><a href="#cb11-126" aria-hidden="true" tabindex="-1"></a>    <span class="st">"v"</span>:  [<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
-<span id="cb11-127"><a href="#cb11-127" aria-hidden="true" tabindex="-1"></a>    <span class="st">"s"</span>:  [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
-<span id="cb11-128"><a href="#cb11-128" aria-hidden="true" tabindex="-1"></a>    <span class="st">"z"</span>:  [<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
-<span id="cb11-129"><a href="#cb11-129" aria-hidden="true" tabindex="-1"></a>    <span class="st">"m"</span>:  [<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
-<span id="cb11-130"><a href="#cb11-130" aria-hidden="true" tabindex="-1"></a>    <span class="st">"n"</span>:  [<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
-<span id="cb11-131"><a href="#cb11-131" aria-hidden="true" tabindex="-1"></a>    <span class="st">"l"</span>:  [<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
-<span id="cb11-132"><a href="#cb11-132" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb11-133"><a href="#cb11-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-134"><a href="#cb11-134" aria-hidden="true" tabindex="-1"></a>df_feat <span class="op">=</span> pd.DataFrame(phoneme_features, index<span class="op">=</span>features).T</span>
-<span id="cb11-135"><a href="#cb11-135" aria-hidden="true" tabindex="-1"></a>df_feat.columns.name <span class="op">=</span> <span class="st">"Feature"</span></span>
-<span id="cb11-136"><a href="#cb11-136" aria-hidden="true" tabindex="-1"></a>df_feat.index.name <span class="op">=</span> <span class="st">"Phoneme"</span></span>
-<span id="cb11-137"><a href="#cb11-137" aria-hidden="true" tabindex="-1"></a>df_feat</span>
-<span id="cb11-138"><a href="#cb11-138" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-139"><a href="#cb11-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-140"><a href="#cb11-140" aria-hidden="true" tabindex="-1"></a>Why does this matter? Because now we can compute the *distance* between phonemes. The distance between /p/ and /b/ is 1 (they differ only in voicing). The distance between /p/ and /s/ is 3 (they differ in voicing, stop vs. fricative, and bilabial vs. alveolar). Sounds that are close in feature space are more likely to be confused or to shift into each other over time—which is exactly what we need when we build alignment algorithms in Chapter 4.</span>
-<span id="cb11-141"><a href="#cb11-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-144"><a href="#cb11-144" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb11-145"><a href="#cb11-145" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-phoneme-distance</span></span>
-<span id="cb11-146"><a href="#cb11-146" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Pairwise Hamming distances between 12 consonants, based on 8 binary features. Similar sounds (p/b, t/d, k/g) cluster near zero."</span></span>
-<span id="cb11-147"><a href="#cb11-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-148"><a href="#cb11-148" aria-hidden="true" tabindex="-1"></a>phonemes <span class="op">=</span> <span class="bu">list</span>(phoneme_features.keys())</span>
-<span id="cb11-149"><a href="#cb11-149" aria-hidden="true" tabindex="-1"></a>vecs <span class="op">=</span> np.array([phoneme_features[p] <span class="cf">for</span> p <span class="kw">in</span> phonemes])</span>
-<span id="cb11-150"><a href="#cb11-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-151"><a href="#cb11-151" aria-hidden="true" tabindex="-1"></a>dist <span class="op">=</span> np.zeros((<span class="bu">len</span>(phonemes), <span class="bu">len</span>(phonemes)))</span>
-<span id="cb11-152"><a href="#cb11-152" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(phonemes)):</span>
-<span id="cb11-153"><a href="#cb11-153" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(phonemes)):</span>
-<span id="cb11-154"><a href="#cb11-154" aria-hidden="true" tabindex="-1"></a>        dist[i, j] <span class="op">=</span> np.<span class="bu">sum</span>(vecs[i] <span class="op">!=</span> vecs[j])</span>
-<span id="cb11-155"><a href="#cb11-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-156"><a href="#cb11-156" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">7</span>))</span>
-<span id="cb11-157"><a href="#cb11-157" aria-hidden="true" tabindex="-1"></a>im <span class="op">=</span> ax.imshow(dist, cmap<span class="op">=</span><span class="st">"YlOrRd"</span>, aspect<span class="op">=</span><span class="st">"auto"</span>)</span>
-<span id="cb11-158"><a href="#cb11-158" aria-hidden="true" tabindex="-1"></a>ax.set_xticks(<span class="bu">range</span>(<span class="bu">len</span>(phonemes)))</span>
-<span id="cb11-159"><a href="#cb11-159" aria-hidden="true" tabindex="-1"></a>ax.set_yticks(<span class="bu">range</span>(<span class="bu">len</span>(phonemes)))</span>
-<span id="cb11-160"><a href="#cb11-160" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels(phonemes)</span>
-<span id="cb11-161"><a href="#cb11-161" aria-hidden="true" tabindex="-1"></a>ax.set_yticklabels(phonemes)</span>
-<span id="cb11-162"><a href="#cb11-162" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(phonemes)):</span>
-<span id="cb11-163"><a href="#cb11-163" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(phonemes)):</span>
-<span id="cb11-164"><a href="#cb11-164" aria-hidden="true" tabindex="-1"></a>        ax.text(j, i, <span class="ss">f"</span><span class="sc">{</span><span class="bu">int</span>(dist[i,j])<span class="sc">}</span><span class="ss">"</span>, ha<span class="op">=</span><span class="st">"center"</span>, va<span class="op">=</span><span class="st">"center"</span>,</span>
-<span id="cb11-165"><a href="#cb11-165" aria-hidden="true" tabindex="-1"></a>                fontsize<span class="op">=</span><span class="dv">9</span>, color<span class="op">=</span><span class="st">"black"</span> <span class="cf">if</span> dist[i,j] <span class="op">&lt;</span> <span class="dv">5</span> <span class="cf">else</span> <span class="st">"white"</span>)</span>
-<span id="cb11-166"><a href="#cb11-166" aria-hidden="true" tabindex="-1"></a>plt.colorbar(im, ax<span class="op">=</span>ax, label<span class="op">=</span><span class="st">"Hamming distance"</span>)</span>
-<span id="cb11-167"><a href="#cb11-167" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Phoneme-to-phoneme Hamming distances (feature space)"</span>)</span>
-<span id="cb11-168"><a href="#cb11-168" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb11-169"><a href="#cb11-169" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb11-170"><a href="#cb11-170" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-171"><a href="#cb11-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-172"><a href="#cb11-172" aria-hidden="true" tabindex="-1"></a><span class="fu">## What a Phoneme Actually Is</span></span>
-<span id="cb11-173"><a href="#cb11-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-174"><a href="#cb11-174" aria-hidden="true" tabindex="-1"></a>The concept of a phoneme is subtler than it first appears, and worth thinking through carefully because it shapes every subsequent analysis in this book.</span>
-<span id="cb11-175"><a href="#cb11-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-176"><a href="#cb11-176" aria-hidden="true" tabindex="-1"></a>A phoneme is not a physical sound. It is a mental category—the abstract unit that speakers of a language use to distinguish words from each other. The English phoneme /p/ covers a range of physically different sounds: the aspirated <span class="co">[</span><span class="ot">pʰ</span><span class="co">]</span> in *pin*, the unaspirated [p] in *spin*, and the unreleased [p̚] at the end of *tip*. A native English speaker perceives all three as "the same sound" because in English they never distinguish different words. In Thai, by contrast, aspirated <span class="co">[</span><span class="ot">pʰ</span><span class="co">]</span> and unaspirated <span class="co">[</span><span class="ot">p</span><span class="co">]</span> do distinguish different words—they are different phonemes. The same physical distinction that English speakers treat as irrelevant, Thai speakers must track.</span>
-<span id="cb11-177"><a href="#cb11-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-178"><a href="#cb11-178" aria-hidden="true" tabindex="-1"></a>This matters for our computational work in two ways. First, when we segment a word into phonemes for alignment, we need to use the phonemic distinctions of the language being analyzed—not an external standard. Second, when we compute distances between phonemes for alignment algorithms, we should use a feature system that reflects what distinctions are linguistically meaningful, not just what is physically measureable. A pitch difference of 50 Hz might or might not be phonemically significant depending on the language. Our feature vectors should encode meaningful distinctions, not raw acoustic measurements.</span>
-<span id="cb11-179"><a href="#cb11-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-180"><a href="#cb11-180" aria-hidden="true" tabindex="-1"></a>The feature-based approach—representing each phoneme as a vector of binary articulatory features—is the right engineering decision here, and the reason will become clearer in Chapter 4: phonetically similar sounds are geometrically close in feature space, which means that substituting one similar sound for another in an alignment costs less than substituting a dissimilar one. This is linguistically correct behavior.</span>
-<span id="cb11-181"><a href="#cb11-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-182"><a href="#cb11-182" aria-hidden="true" tabindex="-1"></a><span class="fu">## The CLDF Standard</span></span>
-<span id="cb11-183"><a href="#cb11-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-184"><a href="#cb11-184" aria-hidden="true" tabindex="-1"></a>Linguistics has a proliferation-of-formats problem. Every research group has historically encoded their wordlists in a slightly different way: different column names, different transcription conventions, different handling of missing data. This makes reuse difficult.</span>
-<span id="cb11-185"><a href="#cb11-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-186"><a href="#cb11-186" aria-hidden="true" tabindex="-1"></a>The *Cross-Linguistic Data Formats* (CLDF) standard, developed in the 2010s by Johann-Mattis List and collaborators, is an attempt to fix this. A CLDF wordlist is a set of CSV files with standardized column names, machine-readable metadata, and links between tables. The key tables are:</span>
-<span id="cb11-187"><a href="#cb11-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-188"><a href="#cb11-188" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`languages.csv`</span>: one row per language (ID, name, Glottocode, coordinates)</span>
-<span id="cb11-189"><a href="#cb11-189" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`parameters.csv`</span>: one row per concept (ID, Concepticon concept reference)</span>
-<span id="cb11-190"><a href="#cb11-190" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`forms.csv`</span>: one row per form (language ID, parameter ID, transcription, segments)</span>
-<span id="cb11-191"><a href="#cb11-191" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`cognates.csv`</span>: one row per cognate judgment (form ID, cognate set ID)</span>
-<span id="cb11-192"><a href="#cb11-192" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-193"><a href="#cb11-193" aria-hidden="true" tabindex="-1"></a>You do not need to work with CLDF directly to use this book—we will often work with simplified CSV files—but you will encounter it in the wild and knowing its structure saves confusion.</span>
-<span id="cb11-194"><a href="#cb11-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-197"><a href="#cb11-197" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb11-198"><a href="#cb11-198" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: lst-cldf-load</span></span>
-<span id="cb11-199"><a href="#cb11-199" aria-hidden="true" tabindex="-1"></a><span class="co">#| lst-cap: "Loading a simplified CLDF-style wordlist into pandas."</span></span>
-<span id="cb11-200"><a href="#cb11-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-201"><a href="#cb11-201" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> io</span>
-<span id="cb11-202"><a href="#cb11-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-203"><a href="#cb11-203" aria-hidden="true" tabindex="-1"></a>forms_csv <span class="op">=</span> <span class="st">"""ID,Language_ID,Parameter_ID,Form,Segments</span></span>
-<span id="cb11-204"><a href="#cb11-204" aria-hidden="true" tabindex="-1"></a><span class="st">1,spa,father,padre,p a d r e</span></span>
-<span id="cb11-205"><a href="#cb11-205" aria-hidden="true" tabindex="-1"></a><span class="st">2,fra,father,père,p ɛ r</span></span>
-<span id="cb11-206"><a href="#cb11-206" aria-hidden="true" tabindex="-1"></a><span class="st">3,ita,father,padre,p a d r e</span></span>
-<span id="cb11-207"><a href="#cb11-207" aria-hidden="true" tabindex="-1"></a><span class="st">4,por,father,pai,p a j</span></span>
-<span id="cb11-208"><a href="#cb11-208" aria-hidden="true" tabindex="-1"></a><span class="st">5,spa,night,noche,n o tʃ e</span></span>
-<span id="cb11-209"><a href="#cb11-209" aria-hidden="true" tabindex="-1"></a><span class="st">6,fra,night,nuit,n ɥ i</span></span>
-<span id="cb11-210"><a href="#cb11-210" aria-hidden="true" tabindex="-1"></a><span class="st">7,ita,night,notte,n o t t e</span></span>
-<span id="cb11-211"><a href="#cb11-211" aria-hidden="true" tabindex="-1"></a><span class="st">8,por,night,noite,n o j t e</span></span>
-<span id="cb11-212"><a href="#cb11-212" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb11-213"><a href="#cb11-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-214"><a href="#cb11-214" aria-hidden="true" tabindex="-1"></a>forms <span class="op">=</span> pd.read_csv(io.StringIO(forms_csv))</span>
-<span id="cb11-215"><a href="#cb11-215" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-216"><a href="#cb11-216" aria-hidden="true" tabindex="-1"></a>forms[<span class="st">"Segment_list"</span>] <span class="op">=</span> forms[<span class="st">"Segments"</span>].<span class="bu">str</span>.split()</span>
-<span id="cb11-217"><a href="#cb11-217" aria-hidden="true" tabindex="-1"></a>forms[<span class="st">"N_segments"</span>] <span class="op">=</span> forms[<span class="st">"Segment_list"</span>].<span class="bu">apply</span>(<span class="bu">len</span>)</span>
-<span id="cb11-218"><a href="#cb11-218" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-219"><a href="#cb11-219" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(forms[[<span class="st">"Language_ID"</span>, <span class="st">"Parameter_ID"</span>, <span class="st">"Form"</span>, <span class="st">"N_segments"</span>]].to_string())</span>
-<span id="cb11-220"><a href="#cb11-220" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-221"><a href="#cb11-221" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-222"><a href="#cb11-222" aria-hidden="true" tabindex="-1"></a>The <span class="in">`Segments`</span> column is the key: it contains the IPA transcription with spaces between phonemes, so that splitting on whitespace gives you a list of phonemes directly. This is the standard segmentation format in CLDF. Notice that French *père* has three segments (p-ɛ-r) while Italian *notte* has four (n-o-t-t-e, where the geminate *tt* counts as two segments). These length differences are exactly what a sequence alignment algorithm must handle.</span>
-<span id="cb11-223"><a href="#cb11-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-224"><a href="#cb11-224" aria-hidden="true" tabindex="-1"></a><span class="fu">## Segmentation</span></span>
-<span id="cb11-225"><a href="#cb11-225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-226"><a href="#cb11-226" aria-hidden="true" tabindex="-1"></a>Segmenting a transcribed word into phonemes sounds trivial—just split on spaces—but the issue of *multigraphs* complicates things. In IPA, some sounds are represented by two characters: *tʃ* (the sound in *church*), *dʒ* (the sound in *judge*), *ts* (the sound in *cats*). If you split character-by-character rather than phoneme-by-phoneme, you get the wrong segmentation.</span>
-<span id="cb11-227"><a href="#cb11-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-228"><a href="#cb11-228" aria-hidden="true" tabindex="-1"></a>LingPy, the Python library we will use extensively in Chapter 4, includes a segmentation function that handles these cases:</span>
-<span id="cb11-229"><a href="#cb11-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-232"><a href="#cb11-232" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb11-233"><a href="#cb11-233" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb11-234"><a href="#cb11-234" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> lingpy <span class="im">import</span> ipa2tokens</span>
-<span id="cb11-235"><a href="#cb11-235" aria-hidden="true" tabindex="-1"></a>tokens <span class="op">=</span> ipa2tokens(<span class="st">"natʃ"</span>)</span>
-<span id="cb11-236"><a href="#cb11-236" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tokens)</span>
-<span id="cb11-237"><a href="#cb11-237" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-238"><a href="#cb11-238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-239"><a href="#cb11-239" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-240"><a href="#cb11-240" aria-hidden="true" tabindex="-1"></a><span class="in">['n', 'a', 'tʃ']</span></span>
-<span id="cb11-241"><a href="#cb11-241" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-242"><a href="#cb11-242" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-243"><a href="#cb11-243" aria-hidden="true" tabindex="-1"></a>The function knows that *tʃ* is a single phoneme and should not be split. This is not trivial knowledge—it is embedded in the library's symbol table, derived from the IPA standard.</span>
-<span id="cb11-244"><a href="#cb11-244" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-245"><a href="#cb11-245" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Quality Issues</span></span>
-<span id="cb11-246"><a href="#cb11-246" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-247"><a href="#cb11-247" aria-hidden="true" tabindex="-1"></a>Real linguistic datasets are messy. Here are the issues you will most commonly encounter:</span>
-<span id="cb11-248"><a href="#cb11-248" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-249"><a href="#cb11-249" aria-hidden="true" tabindex="-1"></a>**Inconsistent transcription.** Different scholars use slightly different conventions. Some use *j* for the palatal approximant (English *yes*); others use *y*. Some mark stress; others do not. This must be normalized before any automated analysis.</span>
-<span id="cb11-250"><a href="#cb11-250" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-251"><a href="#cb11-251" aria-hidden="true" tabindex="-1"></a>**Missing data.** Not all languages have words for all concepts. If the concept does not exist in the culture, there is no word. CLDF uses explicit null markers; ad hoc datasets often leave cells blank, use "N/A," or use "—", all of which must be handled separately.</span>
-<span id="cb11-252"><a href="#cb11-252" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-253"><a href="#cb11-253" aria-hidden="true" tabindex="-1"></a>**Loans mixed with inherited vocabulary.** A wordlist for English will contain borrowed words from French, Latin, Old Norse, and Greek alongside the inherited Germanic vocabulary. If you run a cognate detector without filtering loanwords, you will find false cognates everywhere.</span>
-<span id="cb11-254"><a href="#cb11-254" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-255"><a href="#cb11-255" aria-hidden="true" tabindex="-1"></a>**Dialectal variation.** The "Spanish" word for a concept may vary substantially between Madrid, Mexico City, and Buenos Aires. Which dialect is recorded matters—and is often not documented.</span>
-<span id="cb11-256"><a href="#cb11-256" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-259"><a href="#cb11-259" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb11-260"><a href="#cb11-260" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-data-quality</span></span>
-<span id="cb11-261"><a href="#cb11-261" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Simulated missing-data pattern in a 10-language, 20-concept wordlist. White = missing. Real datasets often have 5–20% missing cells."</span></span>
-<span id="cb11-262"><a href="#cb11-262" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-263"><a href="#cb11-263" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">42</span>)</span>
-<span id="cb11-264"><a href="#cb11-264" aria-hidden="true" tabindex="-1"></a>n_lang, n_concept <span class="op">=</span> <span class="dv">10</span>, <span class="dv">20</span></span>
-<span id="cb11-265"><a href="#cb11-265" aria-hidden="true" tabindex="-1"></a>mask <span class="op">=</span> rng.random((n_lang, n_concept)) <span class="op">&lt;</span> <span class="fl">0.12</span></span>
-<span id="cb11-266"><a href="#cb11-266" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-267"><a href="#cb11-267" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="dv">4</span>))</span>
-<span id="cb11-268"><a href="#cb11-268" aria-hidden="true" tabindex="-1"></a>ax.imshow(mask, cmap<span class="op">=</span><span class="st">"Greys"</span>, aspect<span class="op">=</span><span class="st">"auto"</span>, vmin<span class="op">=</span><span class="dv">0</span>, vmax<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb11-269"><a href="#cb11-269" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Concept index"</span>)</span>
-<span id="cb11-270"><a href="#cb11-270" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Language index"</span>)</span>
-<span id="cb11-271"><a href="#cb11-271" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="ss">f"Missing data pattern (</span><span class="sc">{</span>mask<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">}</span><span class="ss"> missing of </span><span class="sc">{</span>n_lang <span class="op">*</span> n_concept<span class="sc">}</span><span class="ss"> cells = </span><span class="sc">{</span>mask<span class="sc">.</span>mean()<span class="sc">:.1%}</span><span class="ss">)"</span>)</span>
-<span id="cb11-272"><a href="#cb11-272" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb11-273"><a href="#cb11-273" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb11-274"><a href="#cb11-274" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-275"><a href="#cb11-275" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-276"><a href="#cb11-276" aria-hidden="true" tabindex="-1"></a><span class="fu">## Building Your Own Feature Matrix</span></span>
-<span id="cb11-277"><a href="#cb11-277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-278"><a href="#cb11-278" aria-hidden="true" tabindex="-1"></a>To close this chapter with a concrete object you can use in later chapters, let us build a complete feature matrix for a small phoneme inventory:</span>
-<span id="cb11-279"><a href="#cb11-279" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-282"><a href="#cb11-282" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb11-283"><a href="#cb11-283" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-feature-matrix</span></span>
-<span id="cb11-284"><a href="#cb11-284" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Feature matrix for 13 common phonemes. This will become our substitution cost table in Chapter 4."</span></span>
-<span id="cb11-285"><a href="#cb11-285" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-286"><a href="#cb11-286" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> phoneme_distance(p1, p2, feature_dict):</span>
-<span id="cb11-287"><a href="#cb11-287" aria-hidden="true" tabindex="-1"></a>    v1 <span class="op">=</span> np.array(feature_dict[p1])</span>
-<span id="cb11-288"><a href="#cb11-288" aria-hidden="true" tabindex="-1"></a>    v2 <span class="op">=</span> np.array(feature_dict[p2])</span>
-<span id="cb11-289"><a href="#cb11-289" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">int</span>(np.<span class="bu">sum</span>(v1 <span class="op">!=</span> v2))</span>
-<span id="cb11-290"><a href="#cb11-290" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-291"><a href="#cb11-291" aria-hidden="true" tabindex="-1"></a>ph <span class="op">=</span> <span class="bu">list</span>(phoneme_features.keys())</span>
-<span id="cb11-292"><a href="#cb11-292" aria-hidden="true" tabindex="-1"></a>dist_df <span class="op">=</span> pd.DataFrame(</span>
-<span id="cb11-293"><a href="#cb11-293" aria-hidden="true" tabindex="-1"></a>    [[phoneme_distance(a, b, phoneme_features) <span class="cf">for</span> b <span class="kw">in</span> ph] <span class="cf">for</span> a <span class="kw">in</span> ph],</span>
-<span id="cb11-294"><a href="#cb11-294" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>ph, columns<span class="op">=</span>ph</span>
-<span id="cb11-295"><a href="#cb11-295" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb11-296"><a href="#cb11-296" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Feature-based phoneme distance matrix:"</span>)</span>
-<span id="cb11-297"><a href="#cb11-297" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dist_df.to_string())</span>
-<span id="cb11-298"><a href="#cb11-298" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-299"><a href="#cb11-299" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-300"><a href="#cb11-300" aria-hidden="true" tabindex="-1"></a>This matrix will serve directly as the cost matrix in our alignment algorithm in Chapter 4: substituting one similar phoneme for another (e.g., *p* for *b*, distance 1) costs less than substituting a dissimilar one (e.g., *p* for *n*, distance 3). The cost matrix is what allows alignment to prefer linguistically plausible correspondences over linguistically arbitrary ones.</span>
-<span id="cb11-301"><a href="#cb11-301" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-302"><a href="#cb11-302" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
-<span id="cb11-303"><a href="#cb11-303" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-304"><a href="#cb11-304" aria-hidden="true" tabindex="-1"></a>Orthography is a poor representation of sound; IPA provides a one-to-one mapping that computational methods require. Phonemes are usefully described by articulatory features—voicing, place, manner—which can be encoded as binary feature vectors. Those vectors allow the computation of phoneme-to-phoneme distances, which will power the alignment algorithms of Chapter 4. The CLDF standard provides a consistent format for multilingual wordlists. Real datasets have messy realities: inconsistent transcription, missing data, unlabeled loanwords, and dialectal variation. Cleaning and normalizing data is always the first step.</span>
-<span id="cb11-305"><a href="#cb11-305" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-306"><a href="#cb11-306" aria-hidden="true" tabindex="-1"></a><span class="fu">## Further Reading</span></span>
-<span id="cb11-307"><a href="#cb11-307" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-308"><a href="#cb11-308" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Ladefoged, P., &amp; Johnson, K. (2014). *A Course in Phonetics* (7th ed.). Cengage. The standard textbook.</span>
-<span id="cb11-309"><a href="#cb11-309" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>List, J.-M., Greenhill, S. J., Anderson, C., Mayer, T., Tresoldi, T., &amp; Forkel, R. (2018). CLDF: Encoding Cross-Linguistic Data in a Machine-Readable Way. *Language Documentation &amp; Conservation*.</span>
-<span id="cb11-310"><a href="#cb11-310" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Moran, S., &amp; Cysouw, M. (2018). *The Unicode Cookbook for Linguists*. Language Science Press. Free PDF; excellent on the practical problems of linguistic data encoding.</span>
-<span id="cb11-311"><a href="#cb11-311" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>IPA chart: <span class="co">[</span><span class="ot">https://www.internationalphoneticassociation.org/IPAcharts</span><span class="co">](https://www.internationalphoneticassociation.org/IPAcharts)</span></span>
-</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
-</div></div></div></div></div>
+</nav>
 </div> <!-- /content -->
 
 

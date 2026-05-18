@@ -23,41 +23,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -341,7 +306,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-comparative-method.html">Part I: Foundations</a></li><li class="breadcrumb-item"><a href="./02-comparative-method.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The Comparative Method</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span id="sec-comparative" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The Comparative Method</span></span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+<h1 class="title"><span id="sec-comparative" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The Comparative Method</span></span></h1>
 </div>
 
 
@@ -474,20 +439,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The first step is deliberate conservatism. Basic vocabulary—words for body parts, numerals, kinship terms, common natural phenomena—changes more slowly than specialized vocabulary. You do not start with words for “television” or “algorithm.” You start with words for MOTHER, HAND, THREE, WATER, FIRE.</p>
 <p>The classic standard is the Swadesh list: 100 or 207 concepts selected by Morris Swadesh in the 1950s for their cross-linguistic stability. We will use a reduced version for illustration.</p>
 <div class="cell" data-execution_count="2">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>swadesh_romance <span class="op">=</span> {</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Concept"</span>:   [<span class="st">"one"</span>, <span class="st">"two"</span>, <span class="st">"water"</span>, <span class="st">"fire"</span>, <span class="st">"hand"</span>, <span class="st">"eye"</span>, <span class="st">"name"</span>, <span class="st">"mouth"</span>, <span class="st">"night"</span>, <span class="st">"new"</span>],</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Latin"</span>:     [<span class="st">"unus"</span>, <span class="st">"duo"</span>, <span class="st">"aqua"</span>, <span class="st">"ignis"</span>, <span class="st">"manus"</span>, <span class="st">"oculus"</span>, <span class="st">"nomen"</span>, <span class="st">"os/oris"</span>, <span class="st">"nox"</span>, <span class="st">"novus"</span>],</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Spanish"</span>:   [<span class="st">"uno"</span>, <span class="st">"dos"</span>, <span class="st">"agua"</span>, <span class="st">"fuego"</span>, <span class="st">"mano"</span>, <span class="st">"ojo"</span>, <span class="st">"nombre"</span>, <span class="st">"boca"</span>, <span class="st">"noche"</span>, <span class="st">"nuevo"</span>],</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"French"</span>:    [<span class="st">"un"</span>, <span class="st">"deux"</span>, <span class="st">"eau"</span>, <span class="st">"feu"</span>, <span class="st">"main"</span>, <span class="st">"oeil"</span>, <span class="st">"nom"</span>, <span class="st">"bouche"</span>, <span class="st">"nuit"</span>, <span class="st">"nouveau"</span>],</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Italian"</span>:   [<span class="st">"uno"</span>, <span class="st">"due"</span>, <span class="st">"acqua"</span>, <span class="st">"fuoco"</span>, <span class="st">"mano"</span>, <span class="st">"occhio"</span>, <span class="st">"nome"</span>, <span class="st">"bocca"</span>, <span class="st">"notte"</span>, <span class="st">"nuovo"</span>],</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Portuguese"</span>:[<span class="st">"um"</span>, <span class="st">"dois"</span>, <span class="st">"água"</span>, <span class="st">"fogo"</span>, <span class="st">"mão"</span>, <span class="st">"olho"</span>, <span class="st">"nome"</span>, <span class="st">"boca"</span>, <span class="st">"noite"</span>, <span class="st">"novo"</span>],</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(swadesh_romance)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div id="tbl-swadesh" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="2">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-swadesh-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -620,36 +571,6 @@ Table&nbsp;3.1: A mini-Swadesh list: ten basic concepts across five Romance lang
 <h3 data-number="3.4.3" class="anchored" data-anchor-id="establish-sound-correspondences"><span class="header-section-number">3.4.3</span> 3. Establish Sound Correspondences</h3>
 <p>This is the analytical core of the method. Take all your cognate pairs and line up which sound in language A corresponds to which sound in language B.</p>
 <div id="cell-fig-correspondences" class="cell" data-execution_count="3">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>correspondences <span class="op">=</span> {</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Latin"</span>: [<span class="st">"p"</span>, <span class="st">"t"</span>, <span class="st">"k"</span>, <span class="st">"f"</span>, <span class="st">"n"</span>, <span class="st">"m"</span>, <span class="st">"s"</span>, <span class="st">"l"</span>, <span class="st">"r"</span>, <span class="st">"v"</span>],</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Spanish"</span>: [<span class="st">"p"</span>, <span class="st">"t"</span>, <span class="st">"k/g"</span>, <span class="st">"h/f"</span>, <span class="st">"n"</span>, <span class="st">"m"</span>, <span class="st">"s"</span>, <span class="st">"l"</span>, <span class="st">"r"</span>, <span class="st">"b"</span>],</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Example"</span>: [</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"pater→padre"</span>, <span class="st">"terra→tierra"</span>, <span class="st">"caput→cabo"</span>,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"filiu→hijo"</span>, <span class="st">"nomen→nombre"</span>, <span class="st">"manus→mano"</span>,</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"sole→sol"</span>, <span class="st">"luna→luna"</span>, <span class="st">"rivus→río"</span>, <span class="st">"vitam→vida"</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    ]</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="dv">5</span>))</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>ax.axis(<span class="st">"off"</span>)</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>table <span class="op">=</span> ax.table(</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    cellText<span class="op">=</span><span class="bu">list</span>(<span class="bu">zip</span>(correspondences[<span class="st">"Latin"</span>], correspondences[<span class="st">"Spanish"</span>], correspondences[<span class="st">"Example"</span>])),</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    colLabels<span class="op">=</span>[<span class="st">"Latin consonant"</span>, <span class="st">"Spanish reflex"</span>, <span class="st">"Example"</span>],</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    cellLoc<span class="op">=</span><span class="st">"center"</span>,</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    loc<span class="op">=</span><span class="st">"center"</span>,</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>table.auto_set_font_size(<span class="va">False</span>)</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>table.set_fontsize(<span class="dv">10</span>)</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>table.scale(<span class="fl">1.2</span>, <span class="fl">1.6</span>)</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (row, col), cell <span class="kw">in</span> table.get_celld().items():</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> row <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>        cell.set_facecolor(<span class="st">"#dde"</span>)</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Latin → Spanish Consonant Correspondences (selected)"</span>, pad<span class="op">=</span><span class="dv">20</span>)</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-display">
 <div id="fig-correspondences" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -671,37 +592,6 @@ Figure&nbsp;3.1: Sound correspondence table for Latin vs.&nbsp;Spanish in word-i
 <p>Given the correspondences, you can work backward to what the ancestral sound must have been. If Spanish has <em>p</em>, French has <em>p</em>, Italian has <em>p</em>, and Latin has <em>p</em>, the proto-Romance form almost certainly had <em>p</em>. If one language has <em>h</em> where the others have <em>f</em>, the <em>h</em> is the locally innovated form; <em>f</em> is older.</p>
 <p>The reconstruction is not a guess. It is the most parsimonious hypothesis that explains all the observed reflexes. Linguists write reconstructed forms with an asterisk: <em>*pater</em> for the Proto-Indo-European form of FATHER.</p>
 <div id="cell-fig-reconstruction" class="cell" data-execution_count="4">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="dv">0</span>, <span class="dv">10</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>ax.set_ylim(<span class="dv">0</span>, <span class="dv">8</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>ax.axis(<span class="st">"off"</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Proto-form at top</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="dv">5</span>, <span class="dv">7</span>, <span class="st">"*NOCTEM (Latin)"</span>, ha<span class="op">=</span><span class="st">"center"</span>, va<span class="op">=</span><span class="st">"center"</span>,</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>,</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">"round,pad=0.4"</span>, facecolor<span class="op">=</span><span class="st">"#cde"</span>, edgecolor<span class="op">=</span><span class="st">"#888"</span>))</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Modern descendants</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>descendants <span class="op">=</span> [</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    (<span class="fl">1.5</span>, <span class="dv">2</span>, <span class="st">"Spanish</span><span class="ch">\n</span><span class="st">noche"</span>),</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    (<span class="fl">3.5</span>, <span class="dv">2</span>, <span class="st">"French</span><span class="ch">\n</span><span class="st">nuit"</span>),</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    (<span class="fl">5.5</span>, <span class="dv">2</span>, <span class="st">"Italian</span><span class="ch">\n</span><span class="st">notte"</span>),</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    (<span class="fl">7.5</span>, <span class="dv">2</span>, <span class="st">"Portuguese</span><span class="ch">\n</span><span class="st">noite"</span>),</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    (<span class="fl">9.5</span>, <span class="dv">2</span>, <span class="st">"Romanian</span><span class="ch">\n</span><span class="st">noapte"</span>),</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x, y, label <span class="kw">in</span> descendants:</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    ax.text(x, y, label, ha<span class="op">=</span><span class="st">"center"</span>, va<span class="op">=</span><span class="st">"center"</span>, fontsize<span class="op">=</span><span class="dv">10</span>,</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>            bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">"round,pad=0.3"</span>, facecolor<span class="op">=</span><span class="st">"#eef"</span>, edgecolor<span class="op">=</span><span class="st">"#888"</span>))</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    ax.annotate(<span class="st">""</span>, xy<span class="op">=</span>(x, y <span class="op">+</span> <span class="fl">0.5</span>), xytext<span class="op">=</span>(<span class="dv">5</span>, <span class="fl">6.5</span>),</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>                arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">"-&gt;"</span>, color<span class="op">=</span><span class="st">"#666"</span>, lw<span class="op">=</span><span class="fl">1.5</span>))</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Descent of NIGHT from Latin to Romance languages"</span>, fontsize<span class="op">=</span><span class="dv">12</span>, pad<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-display">
 <div id="fig-reconstruction" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -792,58 +682,6 @@ Figure&nbsp;3.2: Reconstructing the Proto-Romance word for NIGHT from its modern
 <h2 data-number="3.7" class="anchored" data-anchor-id="automating-correspondences"><span class="header-section-number">3.7</span> Automating Correspondences</h2>
 <p>Here is the connection to data science that will become central in later chapters. The correspondence table we drew manually can be derived algorithmically: line up cognate pairs, count which sound in language A co-occurs with which sound in language B, build a matrix.</p>
 <div id="cell-fig-auto-correspondence" class="cell" data-execution_count="5">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>cognate_pairs <span class="op">=</span> [</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"pater"</span>, <span class="st">"padre"</span>),</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"porta"</span>, <span class="st">"puerta"</span>),</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"planus"</span>, <span class="st">"llano"</span>),</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"noctem"</span>, <span class="st">"noche"</span>),</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"factum"</span>, <span class="st">"hecho"</span>),</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"filium"</span>, <span class="st">"hijo"</span>),</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"aquam"</span>, <span class="st">"agua"</span>),</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"caput"</span>, <span class="st">"cabo"</span>),</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"terra"</span>, <span class="st">"tierra"</span>),</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"luna"</span>, <span class="st">"luna"</span>),</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>lat_sounds <span class="op">=</span> <span class="bu">list</span>(<span class="st">"ptkbdgfsnlrmaoeiuv"</span>)</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>spa_sounds <span class="op">=</span> <span class="bu">list</span>(<span class="st">"ptkbdgfjsnlrmaoeiubv"</span>)</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>freq <span class="op">=</span> {}</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> lat, spa <span class="kw">in</span> cognate_pairs:</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> l, s <span class="kw">in</span> <span class="bu">zip</span>(lat[:<span class="dv">5</span>], spa[:<span class="dv">5</span>]):</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        key <span class="op">=</span> (l, s)</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>        freq[key] <span class="op">=</span> freq.get(key, <span class="dv">0</span>) <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>common_lat <span class="op">=</span> <span class="st">"ptknmlraoei"</span></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>common_spa <span class="op">=</span> <span class="st">"ptknmlraoei"</span></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>mat <span class="op">=</span> np.zeros((<span class="bu">len</span>(common_lat), <span class="bu">len</span>(common_spa)))</span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (l, s), count <span class="kw">in</span> freq.items():</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> l <span class="kw">in</span> common_lat <span class="kw">and</span> s <span class="kw">in</span> common_spa:</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>        i <span class="op">=</span> common_lat.index(l)</span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>        j <span class="op">=</span> common_spa.index(s)</span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>        mat[i, j] <span class="op">+=</span> count</span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">7</span>))</span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>im <span class="op">=</span> ax.imshow(mat, cmap<span class="op">=</span><span class="st">"Blues"</span>, aspect<span class="op">=</span><span class="st">"auto"</span>)</span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>ax.set_xticks(<span class="bu">range</span>(<span class="bu">len</span>(common_spa)))</span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>ax.set_yticks(<span class="bu">range</span>(<span class="bu">len</span>(common_lat)))</span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels(<span class="bu">list</span>(common_spa))</span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>ax.set_yticklabels(<span class="bu">list</span>(common_lat))</span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Spanish sound"</span>)</span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Latin sound"</span>)</span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Auto-derived Latin→Spanish correspondence counts"</span>)</span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>plt.colorbar(im, ax<span class="op">=</span>ax, label<span class="op">=</span><span class="st">"Co-occurrence count"</span>)</span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(common_lat)):</span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(common_spa)):</span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> mat[i, j] <span class="op">&gt;</span> <span class="dv">0</span>:</span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>            ax.text(j, i, <span class="ss">f"</span><span class="sc">{</span>mat[i,j]<span class="sc">:.0f}</span><span class="ss">"</span>, ha<span class="op">=</span><span class="st">"center"</span>, va<span class="op">=</span><span class="st">"center"</span>,</span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>                    color<span class="op">=</span><span class="st">"black"</span> <span class="cf">if</span> mat[i,j] <span class="op">&lt;</span> <span class="dv">3</span> <span class="cf">else</span> <span class="st">"white"</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-display">
 <div id="fig-auto-correspondence" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -872,8 +710,6 @@ Figure&nbsp;3.3: A minimal automatically-derived correspondence matrix between L
 <li>Verner, K. (1875). Eine Ausnahme der ersten Lautverschiebung. <em>Zeitschrift für vergleichende Sprachforschung</em>. Verner’s Law: the famous exception to Grimm’s Law that was itself regular.</li>
 </ul>
 
-
-<!-- -->
 
 </section>
 
@@ -948,57 +784,6 @@ Figure&nbsp;3.3: A minimal automatically-derived correspondence matrix between L
         container: window.document.getElementById('quarto-embedded-source-code-modal')
       });
       clipboardModal.on('success', onCopySuccess);
-    }
-    const viewSource = window.document.getElementById('quarto-view-source') ||
-                       window.document.getElementById('quarto-code-tools-source');
-    if (viewSource) {
-      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
-      viewSource.addEventListener("click", function(e) {
-        if (sourceUrl) {
-          // rstudio viewer pane
-          if (/\bcapabilities=\b/.test(window.location)) {
-            window.open(sourceUrl);
-          } else {
-            window.location.href = sourceUrl;
-          }
-        } else {
-          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
-          modal.show();
-        }
-        return false;
-      });
-    }
-    function toggleCodeHandler(show) {
-      return function(e) {
-        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-        for (let i=0; i<detailsSrc.length; i++) {
-          const details = detailsSrc[i].parentElement;
-          if (show) {
-            details.open = true;
-          } else {
-            details.removeAttribute("open");
-          }
-        }
-        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
-        const fromCls = show ? "hidden" : "unhidden";
-        const toCls = show ? "unhidden" : "hidden";
-        for (let i=0; i<cellCodeDivs.length; i++) {
-          const codeDiv = cellCodeDivs[i];
-          if (codeDiv.classList.contains(fromCls)) {
-            codeDiv.classList.remove(fromCls);
-            codeDiv.classList.add(toCls);
-          } 
-        }
-        return false;
-      }
-    }
-    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
-    if (hideAllCode) {
-      hideAllCode.addEventListener("click", toggleCodeHandler(false));
-    }
-    const showAllCode = window.document.getElementById("quarto-show-all-code");
-    if (showAllCode) {
-      showAllCode.addEventListener("click", toggleCodeHandler(true));
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
@@ -1340,321 +1125,7 @@ Figure&nbsp;3.3: A minimal automatically-derived correspondence matrix between L
         <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Representing Language as Data</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
-</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># The Comparative Method {#sec-comparative}</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.patches <span class="im">as</span> mpatches</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="fu">## Learning Objectives</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>By the end of this chapter, you will be able to:</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Apply the comparative method step-by-step to a set of cognates</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Identify sound correspondences from parallel data</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Explain what makes a sound change "regular" and why regularity matters</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Reconstruct a proto-phoneme from its modern reflexes</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Recognize the limitations and failure modes of the traditional approach</span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Visualize sound change correspondences as a mapping table</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Crime Scene</span></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>Imagine arriving at an archaeological dig where the only surviving artifacts are the words. No pottery, no bones, no inscriptions—just the vocabulary of a dozen languages that happened to be related, preserved in the mouths of their modern speakers. Your job is to determine: what language did they all descend from? What did that language sound like? When did the various descendants begin to diverge?</span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>This is not a metaphor. It is precisely the problem that faced the German philologist Jakob Grimm in the early nineteenth century, and the solution he devised—which now bears his name as Grimm's Law—was the moment historical linguistics became a science.</span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>Grimm noticed something that had been sitting in plain sight for anyone who cared to look. The Germanic languages—Gothic, Old English, Old High German, Old Norse—had systematically different consonants from Latin, Greek, and Sanskrit in corresponding words. Not randomly different. *Systematically* different, with a consistent mapping:</span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Latin *p* → Germanic *f* (Latin *pater*, Gothic *fadar*)</span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Latin *t* → Germanic *th* (Latin *tres*, English *three*)</span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Latin *k* → Germanic *h* (Latin *cornu*, English *horn*)</span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>This was not accident. This was sound change: a systematic shift in how an entire population pronounced a class of consonants, spreading through a speech community over generations like a slow-moving wave.</span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>The comparative method is the technique for reading these waves backward—tracing from the modern shoreline back to the stone that fell in the water.</span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a><span class="fu">## Grimm's Law in Detail</span></span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>It is worth pausing to appreciate what Grimm actually described, because it is more elegant than a simple list of correspondences suggests.</span>
-<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>The Indo-European stop consonants—the sounds you make by briefly closing the airstream completely—come in three varieties: voiceless stops (*p, t, k*), voiced stops (*b, d, g*), and voiced aspirates (*bʰ, dʰ, gʰ*, pronounced with a puff of air following the closure, like the *bh* in Sanskrit *bhrata*, "brother"). Grimm's Law describes a *rotation* among these three categories in the Germanic languages:</span>
-<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Voiceless stops became fricatives**: PIE *p* → *f*, PIE *t* → *þ* (as in *think*), PIE *k* → *h*</span>
-<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Voiced stops became voiceless stops**: PIE *b* → *p*, PIE *d* → *t*, PIE *g* → *k*</span>
-<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Voiced aspirates became voiced fricatives, then voiced stops**: PIE *bʰ* → *b*, PIE *dʰ* → *d*, PIE *gʰ* → *g*</span>
-<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>Each set of sounds shifted into the slot vacated by the preceding set—like a chain of musical chairs. Voiceless stops moved toward fricatives, making room for voiced stops to move into the vacated positions, making room for voiced aspirates to simplify into plain voiced stops. The elegance of this rotation is what convinced nineteenth-century linguists they were dealing with a real phenomenon and not a coincidence. Random changes do not rotate. Systematic physical changes of articulation might.</span>
-<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>A quick sampling of the correspondences in action:</span>
-<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> PIE root <span class="pp">|</span> Meaning <span class="pp">|</span> Latin <span class="pp">|</span> English (reflex) <span class="pp">|</span></span>
-<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|---|</span></span>
-<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> *\*pōds* | foot | *pēs/pedis* | *foot* <span class="pp">|</span></span>
-<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> *\*piscis* | fish | *piscis* | *fish* <span class="pp">|</span></span>
-<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> *\*ph₂tḗr* | father | *pater* | *father* <span class="pp">|</span></span>
-<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> *\*treies* | three | *trēs* | *three* <span class="pp">|</span></span>
-<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> *\*deḱm̥* | ten | *decem* | *ten* <span class="pp">|</span></span>
-<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> *\*gʷen-* | woman | *-* | *queen* <span class="pp">|</span></span>
-<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> *\*ḱerd-* | heart | *cor/cordis* | *heart* <span class="pp">|</span></span>
-<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>Every *p* in the Latin column corresponds to an *f* in the English column. Every *t* corresponds to a *th* or *t* sound depending on position. The pattern holds without exception across thousands of word pairs.</span>
-<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a><span class="fu">## Verner's Law: The Exception That Confirmed the Rule</span></span>
-<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>If Grimm's Law was the triumph of regularity, Verner's Law was its vindication.</span>
-<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a>Within years of Grimm's formulation, scholars noticed a problem: some words that should have followed Grimm's Law did not. Latin *pater* becomes English *father* as expected—but Latin *frater* becomes English *brother*, not *frother*. The *t* in *frater* became a *th* in some Germanic words but a *d* or *ð* in others. Was the principle of regularity already failing?</span>
-<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a>In 1875, a young Danish linguist named Karl Verner proposed an answer. The exceptions were not random. They clustered in words where the Indo-European accent (stress) fell in a particular position. Germanic languages inherited the Indo-European pitch accent before the accent was later regularized to the first syllable. Words where the accent fell immediately before the consonant in question followed Grimm's Law; words where the accent fell elsewhere underwent a different change.</span>
-<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a>The point was not just that Verner had explained the exceptions. The point was that the exceptions were themselves regular—governed by a rule that had simply not been discovered yet. This confirmed the Neogrammarian position more strongly than Grimm's Law itself had done: apparent exceptions are almost always the result of an undiscovered conditioning factor, not evidence that sound change is irregular. This methodological principle—*hunt for the rule before declaring an exception*—remains the working assumption of historical linguistics to this day, and it is embedded in the way we build automated cognate detection systems.</span>
-<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step-by-Step: The Four Operations</span></span>
-<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a>The comparative method proceeds in four operations, applied iteratively.</span>
-<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1. Collect a Wordlist of Basic Vocabulary</span></span>
-<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a>The first step is deliberate conservatism. Basic vocabulary—words for body parts, numerals, kinship terms, common natural phenomena—changes more slowly than specialized vocabulary. You do not start with words for "television" or "algorithm." You start with words for MOTHER, HAND, THREE, WATER, FIRE.</span>
-<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a>The classic standard is the Swadesh list: 100 or 207 concepts selected by Morris Swadesh in the 1950s for their cross-linguistic stability. We will use a reduced version for illustration.</span>
-<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-90"><a href="#cb5-90" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-swadesh</span></span>
-<span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "A mini-Swadesh list: ten basic concepts across five Romance languages plus their Latin ancestor."</span></span>
-<span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-94"><a href="#cb5-94" aria-hidden="true" tabindex="-1"></a>swadesh_romance <span class="op">=</span> {</span>
-<span id="cb5-95"><a href="#cb5-95" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Concept"</span>:   [<span class="st">"one"</span>, <span class="st">"two"</span>, <span class="st">"water"</span>, <span class="st">"fire"</span>, <span class="st">"hand"</span>, <span class="st">"eye"</span>, <span class="st">"name"</span>, <span class="st">"mouth"</span>, <span class="st">"night"</span>, <span class="st">"new"</span>],</span>
-<span id="cb5-96"><a href="#cb5-96" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Latin"</span>:     [<span class="st">"unus"</span>, <span class="st">"duo"</span>, <span class="st">"aqua"</span>, <span class="st">"ignis"</span>, <span class="st">"manus"</span>, <span class="st">"oculus"</span>, <span class="st">"nomen"</span>, <span class="st">"os/oris"</span>, <span class="st">"nox"</span>, <span class="st">"novus"</span>],</span>
-<span id="cb5-97"><a href="#cb5-97" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Spanish"</span>:   [<span class="st">"uno"</span>, <span class="st">"dos"</span>, <span class="st">"agua"</span>, <span class="st">"fuego"</span>, <span class="st">"mano"</span>, <span class="st">"ojo"</span>, <span class="st">"nombre"</span>, <span class="st">"boca"</span>, <span class="st">"noche"</span>, <span class="st">"nuevo"</span>],</span>
-<span id="cb5-98"><a href="#cb5-98" aria-hidden="true" tabindex="-1"></a>    <span class="st">"French"</span>:    [<span class="st">"un"</span>, <span class="st">"deux"</span>, <span class="st">"eau"</span>, <span class="st">"feu"</span>, <span class="st">"main"</span>, <span class="st">"oeil"</span>, <span class="st">"nom"</span>, <span class="st">"bouche"</span>, <span class="st">"nuit"</span>, <span class="st">"nouveau"</span>],</span>
-<span id="cb5-99"><a href="#cb5-99" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Italian"</span>:   [<span class="st">"uno"</span>, <span class="st">"due"</span>, <span class="st">"acqua"</span>, <span class="st">"fuoco"</span>, <span class="st">"mano"</span>, <span class="st">"occhio"</span>, <span class="st">"nome"</span>, <span class="st">"bocca"</span>, <span class="st">"notte"</span>, <span class="st">"nuovo"</span>],</span>
-<span id="cb5-100"><a href="#cb5-100" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Portuguese"</span>:[<span class="st">"um"</span>, <span class="st">"dois"</span>, <span class="st">"água"</span>, <span class="st">"fogo"</span>, <span class="st">"mão"</span>, <span class="st">"olho"</span>, <span class="st">"nome"</span>, <span class="st">"boca"</span>, <span class="st">"noite"</span>, <span class="st">"novo"</span>],</span>
-<span id="cb5-101"><a href="#cb5-101" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb5-102"><a href="#cb5-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-103"><a href="#cb5-103" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(swadesh_romance)</span>
-<span id="cb5-104"><a href="#cb5-104" aria-hidden="true" tabindex="-1"></a>df</span>
-<span id="cb5-105"><a href="#cb5-105" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb5-106"><a href="#cb5-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-107"><a href="#cb5-107" aria-hidden="true" tabindex="-1"></a><span class="fu">### 2. Identify Cognate Sets</span></span>
-<span id="cb5-108"><a href="#cb5-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-109"><a href="#cb5-109" aria-hidden="true" tabindex="-1"></a>A *cognate set* is a group of words—one per language—that all descend from the same proto-word. In the table above, the words for WATER are not all cognates: Spanish *agua* and Italian *acqua* trace to Latin *aqua*, but French *eau* traces to the same Latin word via a drastically eroded path (Latin *aqua* → Old French *ewe* → French *eau*). They are still cognates—just with more weathering on one of them.</span>
-<span id="cb5-110"><a href="#cb5-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-111"><a href="#cb5-111" aria-hidden="true" tabindex="-1"></a>The test for cognacy is not similarity. It is *systematic* similarity, explained by known or discoverable sound changes. English *night* and Greek *nýks* look very different, but they are cognates; English *day* and Latin *dies* look superficially similar, but the etymology is more complicated. Surface similarity is a clue, not a verdict.</span>
-<span id="cb5-112"><a href="#cb5-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-113"><a href="#cb5-113" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3. Establish Sound Correspondences</span></span>
-<span id="cb5-114"><a href="#cb5-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-115"><a href="#cb5-115" aria-hidden="true" tabindex="-1"></a>This is the analytical core of the method. Take all your cognate pairs and line up which sound in language A corresponds to which sound in language B.</span>
-<span id="cb5-116"><a href="#cb5-116" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-119"><a href="#cb5-119" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb5-120"><a href="#cb5-120" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-correspondences</span></span>
-<span id="cb5-121"><a href="#cb5-121" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Sound correspondence table for Latin vs. Spanish in word-initial position. Arrows indicate regular correspondences."</span></span>
-<span id="cb5-122"><a href="#cb5-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-123"><a href="#cb5-123" aria-hidden="true" tabindex="-1"></a>correspondences <span class="op">=</span> {</span>
-<span id="cb5-124"><a href="#cb5-124" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Latin"</span>: [<span class="st">"p"</span>, <span class="st">"t"</span>, <span class="st">"k"</span>, <span class="st">"f"</span>, <span class="st">"n"</span>, <span class="st">"m"</span>, <span class="st">"s"</span>, <span class="st">"l"</span>, <span class="st">"r"</span>, <span class="st">"v"</span>],</span>
-<span id="cb5-125"><a href="#cb5-125" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Spanish"</span>: [<span class="st">"p"</span>, <span class="st">"t"</span>, <span class="st">"k/g"</span>, <span class="st">"h/f"</span>, <span class="st">"n"</span>, <span class="st">"m"</span>, <span class="st">"s"</span>, <span class="st">"l"</span>, <span class="st">"r"</span>, <span class="st">"b"</span>],</span>
-<span id="cb5-126"><a href="#cb5-126" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Example"</span>: [</span>
-<span id="cb5-127"><a href="#cb5-127" aria-hidden="true" tabindex="-1"></a>        <span class="st">"pater→padre"</span>, <span class="st">"terra→tierra"</span>, <span class="st">"caput→cabo"</span>,</span>
-<span id="cb5-128"><a href="#cb5-128" aria-hidden="true" tabindex="-1"></a>        <span class="st">"filiu→hijo"</span>, <span class="st">"nomen→nombre"</span>, <span class="st">"manus→mano"</span>,</span>
-<span id="cb5-129"><a href="#cb5-129" aria-hidden="true" tabindex="-1"></a>        <span class="st">"sole→sol"</span>, <span class="st">"luna→luna"</span>, <span class="st">"rivus→río"</span>, <span class="st">"vitam→vida"</span></span>
-<span id="cb5-130"><a href="#cb5-130" aria-hidden="true" tabindex="-1"></a>    ]</span>
-<span id="cb5-131"><a href="#cb5-131" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb5-132"><a href="#cb5-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-133"><a href="#cb5-133" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="dv">5</span>))</span>
-<span id="cb5-134"><a href="#cb5-134" aria-hidden="true" tabindex="-1"></a>ax.axis(<span class="st">"off"</span>)</span>
-<span id="cb5-135"><a href="#cb5-135" aria-hidden="true" tabindex="-1"></a>table <span class="op">=</span> ax.table(</span>
-<span id="cb5-136"><a href="#cb5-136" aria-hidden="true" tabindex="-1"></a>    cellText<span class="op">=</span><span class="bu">list</span>(<span class="bu">zip</span>(correspondences[<span class="st">"Latin"</span>], correspondences[<span class="st">"Spanish"</span>], correspondences[<span class="st">"Example"</span>])),</span>
-<span id="cb5-137"><a href="#cb5-137" aria-hidden="true" tabindex="-1"></a>    colLabels<span class="op">=</span>[<span class="st">"Latin consonant"</span>, <span class="st">"Spanish reflex"</span>, <span class="st">"Example"</span>],</span>
-<span id="cb5-138"><a href="#cb5-138" aria-hidden="true" tabindex="-1"></a>    cellLoc<span class="op">=</span><span class="st">"center"</span>,</span>
-<span id="cb5-139"><a href="#cb5-139" aria-hidden="true" tabindex="-1"></a>    loc<span class="op">=</span><span class="st">"center"</span>,</span>
-<span id="cb5-140"><a href="#cb5-140" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-141"><a href="#cb5-141" aria-hidden="true" tabindex="-1"></a>table.auto_set_font_size(<span class="va">False</span>)</span>
-<span id="cb5-142"><a href="#cb5-142" aria-hidden="true" tabindex="-1"></a>table.set_fontsize(<span class="dv">10</span>)</span>
-<span id="cb5-143"><a href="#cb5-143" aria-hidden="true" tabindex="-1"></a>table.scale(<span class="fl">1.2</span>, <span class="fl">1.6</span>)</span>
-<span id="cb5-144"><a href="#cb5-144" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (row, col), cell <span class="kw">in</span> table.get_celld().items():</span>
-<span id="cb5-145"><a href="#cb5-145" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> row <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb5-146"><a href="#cb5-146" aria-hidden="true" tabindex="-1"></a>        cell.set_facecolor(<span class="st">"#dde"</span>)</span>
-<span id="cb5-147"><a href="#cb5-147" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Latin → Spanish Consonant Correspondences (selected)"</span>, pad<span class="op">=</span><span class="dv">20</span>)</span>
-<span id="cb5-148"><a href="#cb5-148" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb5-149"><a href="#cb5-149" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb5-150"><a href="#cb5-150" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb5-151"><a href="#cb5-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-152"><a href="#cb5-152" aria-hidden="true" tabindex="-1"></a>The key insight is *regularity*. If Latin *f* becomes Spanish *h* in one word (Latin *filiu* → Spanish *hijo*, "son"), it must become *h* in every word where the same conditions hold—otherwise the change is not a law, it is an accident. Jakob Grimm's insight was that the Germanic consonant shifts were regular in exactly this sense: every instance of Latin *p* in the right position became Germanic *f*, without exception.</span>
-<span id="cb5-153"><a href="#cb5-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-154"><a href="#cb5-154" aria-hidden="true" tabindex="-1"></a>When you find exceptions, you do not dismiss them. They are data. Either they reflect borrowing from another language (which skips the sound change), or they reflect a conditioned environment where the change behaved differently, or they reveal an error in your cognate identification. Exceptions are gifts.</span>
-<span id="cb5-155"><a href="#cb5-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-156"><a href="#cb5-156" aria-hidden="true" tabindex="-1"></a><span class="fu">### 4. Reconstruct the Proto-Form</span></span>
-<span id="cb5-157"><a href="#cb5-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-158"><a href="#cb5-158" aria-hidden="true" tabindex="-1"></a>Given the correspondences, you can work backward to what the ancestral sound must have been. If Spanish has *p*, French has *p*, Italian has *p*, and Latin has *p*, the proto-Romance form almost certainly had *p*. If one language has *h* where the others have *f*, the *h* is the locally innovated form; *f* is older.</span>
-<span id="cb5-159"><a href="#cb5-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-160"><a href="#cb5-160" aria-hidden="true" tabindex="-1"></a>The reconstruction is not a guess. It is the most parsimonious hypothesis that explains all the observed reflexes. Linguists write reconstructed forms with an asterisk: *\*pater* for the Proto-Indo-European form of FATHER.</span>
-<span id="cb5-161"><a href="#cb5-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-164"><a href="#cb5-164" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb5-165"><a href="#cb5-165" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-reconstruction</span></span>
-<span id="cb5-166"><a href="#cb5-166" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Reconstructing the Proto-Romance word for NIGHT from its modern reflexes. The Latin *noctem* (accusative of *nox*) is the direct ancestor."</span></span>
-<span id="cb5-167"><a href="#cb5-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-168"><a href="#cb5-168" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
-<span id="cb5-169"><a href="#cb5-169" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="dv">0</span>, <span class="dv">10</span>)</span>
-<span id="cb5-170"><a href="#cb5-170" aria-hidden="true" tabindex="-1"></a>ax.set_ylim(<span class="dv">0</span>, <span class="dv">8</span>)</span>
-<span id="cb5-171"><a href="#cb5-171" aria-hidden="true" tabindex="-1"></a>ax.axis(<span class="st">"off"</span>)</span>
-<span id="cb5-172"><a href="#cb5-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-173"><a href="#cb5-173" aria-hidden="true" tabindex="-1"></a><span class="co"># Proto-form at top</span></span>
-<span id="cb5-174"><a href="#cb5-174" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="dv">5</span>, <span class="dv">7</span>, <span class="st">"*NOCTEM (Latin)"</span>, ha<span class="op">=</span><span class="st">"center"</span>, va<span class="op">=</span><span class="st">"center"</span>,</span>
-<span id="cb5-175"><a href="#cb5-175" aria-hidden="true" tabindex="-1"></a>        fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>,</span>
-<span id="cb5-176"><a href="#cb5-176" aria-hidden="true" tabindex="-1"></a>        bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">"round,pad=0.4"</span>, facecolor<span class="op">=</span><span class="st">"#cde"</span>, edgecolor<span class="op">=</span><span class="st">"#888"</span>))</span>
-<span id="cb5-177"><a href="#cb5-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-178"><a href="#cb5-178" aria-hidden="true" tabindex="-1"></a><span class="co"># Modern descendants</span></span>
-<span id="cb5-179"><a href="#cb5-179" aria-hidden="true" tabindex="-1"></a>descendants <span class="op">=</span> [</span>
-<span id="cb5-180"><a href="#cb5-180" aria-hidden="true" tabindex="-1"></a>    (<span class="fl">1.5</span>, <span class="dv">2</span>, <span class="st">"Spanish</span><span class="ch">\n</span><span class="st">noche"</span>),</span>
-<span id="cb5-181"><a href="#cb5-181" aria-hidden="true" tabindex="-1"></a>    (<span class="fl">3.5</span>, <span class="dv">2</span>, <span class="st">"French</span><span class="ch">\n</span><span class="st">nuit"</span>),</span>
-<span id="cb5-182"><a href="#cb5-182" aria-hidden="true" tabindex="-1"></a>    (<span class="fl">5.5</span>, <span class="dv">2</span>, <span class="st">"Italian</span><span class="ch">\n</span><span class="st">notte"</span>),</span>
-<span id="cb5-183"><a href="#cb5-183" aria-hidden="true" tabindex="-1"></a>    (<span class="fl">7.5</span>, <span class="dv">2</span>, <span class="st">"Portuguese</span><span class="ch">\n</span><span class="st">noite"</span>),</span>
-<span id="cb5-184"><a href="#cb5-184" aria-hidden="true" tabindex="-1"></a>    (<span class="fl">9.5</span>, <span class="dv">2</span>, <span class="st">"Romanian</span><span class="ch">\n</span><span class="st">noapte"</span>),</span>
-<span id="cb5-185"><a href="#cb5-185" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb5-186"><a href="#cb5-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-187"><a href="#cb5-187" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x, y, label <span class="kw">in</span> descendants:</span>
-<span id="cb5-188"><a href="#cb5-188" aria-hidden="true" tabindex="-1"></a>    ax.text(x, y, label, ha<span class="op">=</span><span class="st">"center"</span>, va<span class="op">=</span><span class="st">"center"</span>, fontsize<span class="op">=</span><span class="dv">10</span>,</span>
-<span id="cb5-189"><a href="#cb5-189" aria-hidden="true" tabindex="-1"></a>            bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">"round,pad=0.3"</span>, facecolor<span class="op">=</span><span class="st">"#eef"</span>, edgecolor<span class="op">=</span><span class="st">"#888"</span>))</span>
-<span id="cb5-190"><a href="#cb5-190" aria-hidden="true" tabindex="-1"></a>    ax.annotate(<span class="st">""</span>, xy<span class="op">=</span>(x, y <span class="op">+</span> <span class="fl">0.5</span>), xytext<span class="op">=</span>(<span class="dv">5</span>, <span class="fl">6.5</span>),</span>
-<span id="cb5-191"><a href="#cb5-191" aria-hidden="true" tabindex="-1"></a>                arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">"-&gt;"</span>, color<span class="op">=</span><span class="st">"#666"</span>, lw<span class="op">=</span><span class="fl">1.5</span>))</span>
-<span id="cb5-192"><a href="#cb5-192" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-193"><a href="#cb5-193" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Descent of NIGHT from Latin to Romance languages"</span>, fontsize<span class="op">=</span><span class="dv">12</span>, pad<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb5-194"><a href="#cb5-194" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb5-195"><a href="#cb5-195" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb5-196"><a href="#cb5-196" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb5-197"><a href="#cb5-197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-198"><a href="#cb5-198" aria-hidden="true" tabindex="-1"></a><span class="fu">## Why Regularity Is Not Obvious</span></span>
-<span id="cb5-199"><a href="#cb5-199" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-200"><a href="#cb5-200" aria-hidden="true" tabindex="-1"></a>It is worth pausing on the claim of regularity, because it is not something you would expect if you had not seen it demonstrated.</span>
-<span id="cb5-201"><a href="#cb5-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-202"><a href="#cb5-202" aria-hidden="true" tabindex="-1"></a>Languages are spoken by millions of people across a geographic area and a span of time. Sound changes spread like any other social behavior—not simultaneously, not uniformly, with geographic and social variation. Why would a change be *regular*, affecting every instance of a phoneme in the same environment?</span>
-<span id="cb5-203"><a href="#cb5-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-204"><a href="#cb5-204" aria-hidden="true" tabindex="-1"></a>The answer, proposed by the Neogrammarians in the 1870s and still essentially correct, is that sound change operates on the physical mechanism of speech production, not on the meaning of words. A shift from *p* to *f* is a change in how the mouth moves—from a full stop to a fricative—not a lexical decision. The mouth changes its habit. Every word that used that motion changes with it.</span>
-<span id="cb5-205"><a href="#cb5-205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-206"><a href="#cb5-206" aria-hidden="true" tabindex="-1"></a>This is why exceptions tend to cluster: words borrowed from another language arrive after the change, so they do not carry its effects. Words used in very formal or religious contexts may be pronounced conservatively. These patterns are not noise; they are diagnostic.</span>
-<span id="cb5-207"><a href="#cb5-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-208"><a href="#cb5-208" aria-hidden="true" tabindex="-1"></a><span class="fu">## A Worked Example: Reconstructing a Proto-Word</span></span>
-<span id="cb5-209"><a href="#cb5-209" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-210"><a href="#cb5-210" aria-hidden="true" tabindex="-1"></a>Let us trace a single reconstruction through the four operations, concretely.</span>
-<span id="cb5-211"><a href="#cb5-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-212"><a href="#cb5-212" aria-hidden="true" tabindex="-1"></a>**Target**: Reconstruct the Proto-Indo-European word for NIGHT from its descendants.</span>
-<span id="cb5-213"><a href="#cb5-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-214"><a href="#cb5-214" aria-hidden="true" tabindex="-1"></a>**Step 1 — Collect cognates**:</span>
-<span id="cb5-215"><a href="#cb5-215" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-216"><a href="#cb5-216" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Language <span class="pp">|</span> Form <span class="pp">|</span> Romanization <span class="pp">|</span></span>
-<span id="cb5-217"><a href="#cb5-217" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
-<span id="cb5-218"><a href="#cb5-218" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Sanskrit <span class="pp">|</span> नक्त <span class="pp">|</span> *nakta-* <span class="pp">|</span></span>
-<span id="cb5-219"><a href="#cb5-219" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Greek <span class="pp">|</span> νύξ (gen. νυκτός) <span class="pp">|</span> *nýks* (gen. *nyktos*) <span class="pp">|</span></span>
-<span id="cb5-220"><a href="#cb5-220" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Latin <span class="pp">|</span> nox (gen. noctis) <span class="pp">|</span> *nox* <span class="pp">|</span></span>
-<span id="cb5-221"><a href="#cb5-221" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Gothic <span class="pp">|</span> nahts <span class="pp">|</span> *nahts* <span class="pp">|</span></span>
-<span id="cb5-222"><a href="#cb5-222" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Old English <span class="pp">|</span> niht <span class="pp">|</span> *niht* <span class="pp">|</span></span>
-<span id="cb5-223"><a href="#cb5-223" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Lithuanian <span class="pp">|</span> naktis <span class="pp">|</span> *naktis* <span class="pp">|</span></span>
-<span id="cb5-224"><a href="#cb5-224" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Old Irish <span class="pp">|</span> nocht <span class="pp">|</span> *nocht* <span class="pp">|</span></span>
-<span id="cb5-225"><a href="#cb5-225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-226"><a href="#cb5-226" aria-hidden="true" tabindex="-1"></a>**Step 2 — Identify correspondences**:</span>
-<span id="cb5-227"><a href="#cb5-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-228"><a href="#cb5-228" aria-hidden="true" tabindex="-1"></a>In word-initial position, all forms have *n*. This is the easiest call: *\*n*.</span>
-<span id="cb5-229"><a href="#cb5-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-230"><a href="#cb5-230" aria-hidden="true" tabindex="-1"></a>The vowel in the first syllable varies: Sanskrit *a*, Greek *y* (which represents an older *u*-like sound), Latin *o*, Gothic/OE *a*. These are characteristic reflexes of a single PIE vowel, and comparison with other words exhibiting the same pattern points to *\*o*.</span>
-<span id="cb5-231"><a href="#cb5-231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-232"><a href="#cb5-232" aria-hidden="true" tabindex="-1"></a>The medial consonant cluster: Sanskrit *kt*, Greek *kt* (in the genitive *nyktos*), Latin *ct*, Gothic *ht*, Lithuanian *kt*, Old Irish *cht*. The variation *kt / ct / ht / cht* is exactly the pattern expected for a PIE sequence *\*kʷ* (labiovelar) followed by *\*t*.</span>
-<span id="cb5-233"><a href="#cb5-233" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-234"><a href="#cb5-234" aria-hidden="true" tabindex="-1"></a>The final consonant *s* appears in Greek, Latin, Gothic, Lithuanian—this is the nominative singular ending.</span>
-<span id="cb5-235"><a href="#cb5-235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-236"><a href="#cb5-236" aria-hidden="true" tabindex="-1"></a>**Step 3 — Reconstruct**: Assembling the evidence: *\*nókʷts*. The asterisk marks it as reconstructed; the diacritics mark accent and vowel quality.</span>
-<span id="cb5-237"><a href="#cb5-237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-238"><a href="#cb5-238" aria-hidden="true" tabindex="-1"></a>**Step 4 — Verify**: When the Hittite archives were deciphered in the early twentieth century, scholars discovered the Hittite word for night was *nekuz*—consistent with an ancestor *\*nókʷts* if you apply the sound changes of Anatolian languages. A prediction made from comparative work before Hittite was known turned out to be correct.</span>
-<span id="cb5-239"><a href="#cb5-239" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-240"><a href="#cb5-240" aria-hidden="true" tabindex="-1"></a>This is the comparative method at its best: not a guess, but a constrained inference that can be tested against newly discovered data.</span>
-<span id="cb5-241"><a href="#cb5-241" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-242"><a href="#cb5-242" aria-hidden="true" tabindex="-1"></a>**Time depth.** Sound changes accumulate. After roughly 8,000–10,000 years of separation, the resemblances between related languages may have eroded below the threshold of reliable detection. This is why reconstructing proto-forms deeper than Proto-Indo-European is controversial: there may be too little signal left in the noise.</span>
-<span id="cb5-243"><a href="#cb5-243" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-244"><a href="#cb5-244" aria-hidden="true" tabindex="-1"></a>**Contact and borrowing.** Languages that have been in prolonged contact contaminate each other's vocabulary. The English word for "beef" comes from French; the French word for "week-end" comes from English. Borrowed words violate the regularity of sound changes because they arrived after the change, or from a different system altogether. Detecting and excluding loanwords is a nontrivial problem—and the subject of Chapter 9.</span>
-<span id="cb5-245"><a href="#cb5-245" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-246"><a href="#cb5-246" aria-hidden="true" tabindex="-1"></a>**Parallelism.** Sometimes similar-looking words in different languages developed independently from different roots. English *day* and Latin *dies* superficially resemble each other but are not cognates in the straightforward sense. These *false cognates* (or *coincidental resemblances*) can mislead analysis.</span>
-<span id="cb5-247"><a href="#cb5-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-248"><a href="#cb5-248" aria-hidden="true" tabindex="-1"></a>**Documentation gaps.** For most of human linguistic history, we have no written records. The comparative method can only work with data that was recorded—which biases it heavily toward languages spoken by literate civilizations.</span>
-<span id="cb5-249"><a href="#cb5-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-250"><a href="#cb5-250" aria-hidden="true" tabindex="-1"></a><span class="fu">## Automating Correspondences</span></span>
-<span id="cb5-251"><a href="#cb5-251" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-252"><a href="#cb5-252" aria-hidden="true" tabindex="-1"></a>Here is the connection to data science that will become central in later chapters. The correspondence table we drew manually can be derived algorithmically: line up cognate pairs, count which sound in language A co-occurs with which sound in language B, build a matrix.</span>
-<span id="cb5-253"><a href="#cb5-253" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-256"><a href="#cb5-256" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb5-257"><a href="#cb5-257" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-auto-correspondence</span></span>
-<span id="cb5-258"><a href="#cb5-258" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "A minimal automatically-derived correspondence matrix between Latin and Spanish consonants, from a small set of cognate pairs."</span></span>
-<span id="cb5-259"><a href="#cb5-259" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-260"><a href="#cb5-260" aria-hidden="true" tabindex="-1"></a>cognate_pairs <span class="op">=</span> [</span>
-<span id="cb5-261"><a href="#cb5-261" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"pater"</span>, <span class="st">"padre"</span>),</span>
-<span id="cb5-262"><a href="#cb5-262" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"porta"</span>, <span class="st">"puerta"</span>),</span>
-<span id="cb5-263"><a href="#cb5-263" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"planus"</span>, <span class="st">"llano"</span>),</span>
-<span id="cb5-264"><a href="#cb5-264" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"noctem"</span>, <span class="st">"noche"</span>),</span>
-<span id="cb5-265"><a href="#cb5-265" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"factum"</span>, <span class="st">"hecho"</span>),</span>
-<span id="cb5-266"><a href="#cb5-266" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"filium"</span>, <span class="st">"hijo"</span>),</span>
-<span id="cb5-267"><a href="#cb5-267" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"aquam"</span>, <span class="st">"agua"</span>),</span>
-<span id="cb5-268"><a href="#cb5-268" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"caput"</span>, <span class="st">"cabo"</span>),</span>
-<span id="cb5-269"><a href="#cb5-269" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"terra"</span>, <span class="st">"tierra"</span>),</span>
-<span id="cb5-270"><a href="#cb5-270" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"luna"</span>, <span class="st">"luna"</span>),</span>
-<span id="cb5-271"><a href="#cb5-271" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb5-272"><a href="#cb5-272" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-273"><a href="#cb5-273" aria-hidden="true" tabindex="-1"></a>lat_sounds <span class="op">=</span> <span class="bu">list</span>(<span class="st">"ptkbdgfsnlrmaoeiuv"</span>)</span>
-<span id="cb5-274"><a href="#cb5-274" aria-hidden="true" tabindex="-1"></a>spa_sounds <span class="op">=</span> <span class="bu">list</span>(<span class="st">"ptkbdgfjsnlrmaoeiubv"</span>)</span>
-<span id="cb5-275"><a href="#cb5-275" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-276"><a href="#cb5-276" aria-hidden="true" tabindex="-1"></a>freq <span class="op">=</span> {}</span>
-<span id="cb5-277"><a href="#cb5-277" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> lat, spa <span class="kw">in</span> cognate_pairs:</span>
-<span id="cb5-278"><a href="#cb5-278" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> l, s <span class="kw">in</span> <span class="bu">zip</span>(lat[:<span class="dv">5</span>], spa[:<span class="dv">5</span>]):</span>
-<span id="cb5-279"><a href="#cb5-279" aria-hidden="true" tabindex="-1"></a>        key <span class="op">=</span> (l, s)</span>
-<span id="cb5-280"><a href="#cb5-280" aria-hidden="true" tabindex="-1"></a>        freq[key] <span class="op">=</span> freq.get(key, <span class="dv">0</span>) <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb5-281"><a href="#cb5-281" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-282"><a href="#cb5-282" aria-hidden="true" tabindex="-1"></a>common_lat <span class="op">=</span> <span class="st">"ptknmlraoei"</span></span>
-<span id="cb5-283"><a href="#cb5-283" aria-hidden="true" tabindex="-1"></a>common_spa <span class="op">=</span> <span class="st">"ptknmlraoei"</span></span>
-<span id="cb5-284"><a href="#cb5-284" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-285"><a href="#cb5-285" aria-hidden="true" tabindex="-1"></a>mat <span class="op">=</span> np.zeros((<span class="bu">len</span>(common_lat), <span class="bu">len</span>(common_spa)))</span>
-<span id="cb5-286"><a href="#cb5-286" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (l, s), count <span class="kw">in</span> freq.items():</span>
-<span id="cb5-287"><a href="#cb5-287" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> l <span class="kw">in</span> common_lat <span class="kw">and</span> s <span class="kw">in</span> common_spa:</span>
-<span id="cb5-288"><a href="#cb5-288" aria-hidden="true" tabindex="-1"></a>        i <span class="op">=</span> common_lat.index(l)</span>
-<span id="cb5-289"><a href="#cb5-289" aria-hidden="true" tabindex="-1"></a>        j <span class="op">=</span> common_spa.index(s)</span>
-<span id="cb5-290"><a href="#cb5-290" aria-hidden="true" tabindex="-1"></a>        mat[i, j] <span class="op">+=</span> count</span>
-<span id="cb5-291"><a href="#cb5-291" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-292"><a href="#cb5-292" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">7</span>))</span>
-<span id="cb5-293"><a href="#cb5-293" aria-hidden="true" tabindex="-1"></a>im <span class="op">=</span> ax.imshow(mat, cmap<span class="op">=</span><span class="st">"Blues"</span>, aspect<span class="op">=</span><span class="st">"auto"</span>)</span>
-<span id="cb5-294"><a href="#cb5-294" aria-hidden="true" tabindex="-1"></a>ax.set_xticks(<span class="bu">range</span>(<span class="bu">len</span>(common_spa)))</span>
-<span id="cb5-295"><a href="#cb5-295" aria-hidden="true" tabindex="-1"></a>ax.set_yticks(<span class="bu">range</span>(<span class="bu">len</span>(common_lat)))</span>
-<span id="cb5-296"><a href="#cb5-296" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels(<span class="bu">list</span>(common_spa))</span>
-<span id="cb5-297"><a href="#cb5-297" aria-hidden="true" tabindex="-1"></a>ax.set_yticklabels(<span class="bu">list</span>(common_lat))</span>
-<span id="cb5-298"><a href="#cb5-298" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Spanish sound"</span>)</span>
-<span id="cb5-299"><a href="#cb5-299" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Latin sound"</span>)</span>
-<span id="cb5-300"><a href="#cb5-300" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Auto-derived Latin→Spanish correspondence counts"</span>)</span>
-<span id="cb5-301"><a href="#cb5-301" aria-hidden="true" tabindex="-1"></a>plt.colorbar(im, ax<span class="op">=</span>ax, label<span class="op">=</span><span class="st">"Co-occurrence count"</span>)</span>
-<span id="cb5-302"><a href="#cb5-302" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(common_lat)):</span>
-<span id="cb5-303"><a href="#cb5-303" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(common_spa)):</span>
-<span id="cb5-304"><a href="#cb5-304" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> mat[i, j] <span class="op">&gt;</span> <span class="dv">0</span>:</span>
-<span id="cb5-305"><a href="#cb5-305" aria-hidden="true" tabindex="-1"></a>            ax.text(j, i, <span class="ss">f"</span><span class="sc">{</span>mat[i,j]<span class="sc">:.0f}</span><span class="ss">"</span>, ha<span class="op">=</span><span class="st">"center"</span>, va<span class="op">=</span><span class="st">"center"</span>,</span>
-<span id="cb5-306"><a href="#cb5-306" aria-hidden="true" tabindex="-1"></a>                    color<span class="op">=</span><span class="st">"black"</span> <span class="cf">if</span> mat[i,j] <span class="op">&lt;</span> <span class="dv">3</span> <span class="cf">else</span> <span class="st">"white"</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
-<span id="cb5-307"><a href="#cb5-307" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb5-308"><a href="#cb5-308" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb5-309"><a href="#cb5-309" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb5-310"><a href="#cb5-310" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-311"><a href="#cb5-311" aria-hidden="true" tabindex="-1"></a>The diagonal dominates—sounds tend to be preserved—but the off-diagonal entries tell the story of change. With a larger dataset, this matrix becomes the foundation of automated sound correspondence discovery, which we will build in Chapters 4 and 5.</span>
-<span id="cb5-312"><a href="#cb5-312" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-313"><a href="#cb5-313" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
-<span id="cb5-314"><a href="#cb5-314" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-315"><a href="#cb5-315" aria-hidden="true" tabindex="-1"></a>The comparative method works in four steps: collect a basic wordlist, identify cognate sets, establish systematic sound correspondences, and reconstruct the proto-form as the most parsimonious explanation of those correspondences. Regularity—the principle that sound changes are exceptionless—is the method's core commitment. Exceptions exist and are informative, clustering around borrowing, conservative usage, and conditioned environments. The method has real limits: it loses resolution at great time depths, is confounded by contact and borrowing, and requires sufficient documentation. All four limitations become targets for computational approaches in subsequent chapters.</span>
-<span id="cb5-316"><a href="#cb5-316" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-317"><a href="#cb5-317" aria-hidden="true" tabindex="-1"></a><span class="fu">## Further Reading</span></span>
-<span id="cb5-318"><a href="#cb5-318" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-319"><a href="#cb5-319" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Fortson, B. W. (2010). *Indo-European Language and Culture: An Introduction* (2nd ed.). Wiley-Blackwell. Chapter 2 covers the comparative method with care.</span>
-<span id="cb5-320"><a href="#cb5-320" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Hock, H. H., &amp; Joseph, B. D. (2009). *Language History, Language Change, and Language Relationship* (2nd ed.). Mouton de Gruyter.</span>
-<span id="cb5-321"><a href="#cb5-321" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Grimm, J. (1822). *Deutsche Grammatik* (2nd ed.). The original source for Grimm's Law, in German.</span>
-<span id="cb5-322"><a href="#cb5-322" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Verner, K. (1875). Eine Ausnahme der ersten Lautverschiebung. *Zeitschrift für vergleichende Sprachforschung*. Verner's Law: the famous exception to Grimm's Law that was itself regular.</span>
-</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
-</div></div></div></div></div>
+</nav>
 </div> <!-- /content -->
 
 
