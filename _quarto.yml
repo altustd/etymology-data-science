@@ -30,7 +30,7 @@ book:
         - 12-borrowing-networks.qmd
     - part: "Part IV: Synthesis"
       chapters:
-        - 12-capstone.qmd
+        - 13-capstone.qmd
     - references.qmd
   appendices:
     - appendix-a-glossary.qmd

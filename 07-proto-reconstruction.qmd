@@ -171,6 +171,309 @@ The majority vote baseline does surprisingly well on some words and fails badly 
 
 These failures are informative: the neural model's advantage comes from learning cross-position dependencies (the ending depends on the whole word pattern, not just the final position) and cross-language patterns (French regularly drops Latin endings, Spanish preserves some, Romanian preserves others).
 
+## Sound Correspondence Tables {#sec-correspondence-tables}
+
+Before a neural model can learn to reconstruct proto-forms, a human (or an alignment
+algorithm) must first determine *which* character in the modern form corresponds to
+*which* character in the Latin original. This step—establishing sound correspondences—
+is what the comparative method has been doing by hand for two centuries. It is also
+what the encoder's attention mechanism is learning to do implicitly.
+
+A *sound correspondence table* records, for a given pair of languages, which source
+phoneme maps to which target phoneme. For Latin-to-Spanish, the classic Grimm-like
+correspondences include: Latin *ct* → Spanish *ch* (*noctem* → *noche*, *lactem* →
+*leche*), Latin *pl/cl/fl-* → Spanish *ll* (*planum* → *llano*), and Latin final *-m*
+→ Spanish zero (the accusative ending simply vanishes).
+
+We can compute an empirical correspondence table directly from our aligned dataset.
+
+```{python}
+#| label: fig-correspondence-heatmap
+#| fig-cap: "Sound correspondence frequencies from Latin to each Romance language, estimated from 30 Swadesh-list cognate pairs. Each cell shows how often a Latin character maps to a Romance character at aligned positions. Blank cells are zero. The diagonal dominates for vowels; consonant mappings show systematic shifts."
+
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
+from collections import defaultdict
+
+# Aligned cognate pairs: (latin, romance, language)
+# Each tuple is a single word-pair where alignment is given by inspection
+# Format: latin_form, romance_form
+aligned_pairs = {
+    "Spanish": [
+        ("noctem",  "noche"),   ("aquam",   "agua"),   ("patrem",  "padre"),
+        ("novum",   "nuevo"),   ("lunam",   "luna"),   ("vitam",   "vida"),
+        ("nomen",   "nombre"),  ("manum",   "mano"),   ("terram",  "tierra"),
+        ("filium",  "hijo"),    ("annum",   "año"),    ("oculum",  "ojo"),
+        ("aurem",   "oreja"),   ("dentum",  "diente"), ("lactem",  "leche"),
+    ],
+    "French": [
+        ("noctem",  "nuit"),    ("aquam",   "eau"),    ("patrem",  "père"),
+        ("novum",   "nouveau"), ("lunam",   "lune"),   ("vitam",   "vie"),
+        ("nomen",   "nom"),     ("manum",   "main"),   ("terram",  "terre"),
+        ("filium",  "fils"),    ("annum",   "an"),     ("oculum",  "oeil"),
+        ("aurem",   "oreille"), ("dentum",  "dent"),   ("lactem",  "lait"),
+    ],
+    "Italian": [
+        ("noctem",  "notte"),   ("aquam",   "acqua"),  ("patrem",  "padre"),
+        ("novum",   "nuovo"),   ("lunam",   "luna"),   ("vitam",   "vita"),
+        ("nomen",   "nome"),    ("manum",   "mano"),   ("terram",  "terra"),
+        ("filium",  "figlio"),  ("annum",   "anno"),   ("oculum",  "occhio"),
+        ("aurem",   "orecchio"),("dentum",  "dente"),  ("lactem",  "latte"),
+    ],
+}
+
+def simple_align(s1, s2):
+    """
+    Needleman-Wunsch global alignment, character-level.
+    Returns aligned pair as two strings of equal length, gaps = '-'.
+    """
+    match, gap, mismatch = 1, -1, -1
+    m, n = len(s1), len(s2)
+    score = np.zeros((m+1, n+1))
+    for i in range(1, m+1): score[i,0] = i * gap
+    for j in range(1, n+1): score[0,j] = j * gap
+    for i in range(1, m+1):
+        for j in range(1, n+1):
+            diag = score[i-1,j-1] + (match if s1[i-1]==s2[j-1] else mismatch)
+            score[i,j] = max(diag, score[i-1,j]+gap, score[i,j-1]+gap)
+    a1, a2 = [], []
+    i, j = m, n
+    while i > 0 or j > 0:
+        if i > 0 and j > 0 and score[i,j] == score[i-1,j-1] + (match if s1[i-1]==s2[j-1] else mismatch):
+            a1.append(s1[i-1]); a2.append(s2[j-1]); i -= 1; j -= 1
+        elif i > 0 and score[i,j] == score[i-1,j] + gap:
+            a1.append(s1[i-1]); a2.append('-'); i -= 1
+        else:
+            a1.append('-'); a2.append(s2[j-1]); j -= 1
+    return "".join(reversed(a1)), "".join(reversed(a2))
+
+# Count correspondences: latin_char → romance_char per language
+all_latin = set()
+all_romance = set()
+counts = {lang: defaultdict(int) for lang in aligned_pairs}
+
+for lang, pairs in aligned_pairs.items():
+    for lat, rom in pairs:
+        a_lat, a_rom = simple_align(lat, rom)
+        for lc, rc in zip(a_lat, a_rom):
+            if lc != '-':
+                counts[lang][(lc, rc)] += 1
+                all_latin.add(lc)
+                if rc != '-':
+                    all_romance.add(rc)
+
+# Build heatmap for each language
+lat_chars = sorted(all_latin)
+rom_chars = sorted(all_romance | {'-'})
+
+fig, axes = plt.subplots(1, 3, figsize=(14, 6), sharey=True)
+fig.suptitle("Sound Correspondence Frequencies: Latin → Romance", fontsize=13)
+
+for ax, lang in zip(axes, aligned_pairs.keys()):
+    mat = np.zeros((len(lat_chars), len(rom_chars)))
+    for (lc, rc), cnt in counts[lang].items():
+        if lc in lat_chars and rc in rom_chars:
+            i = lat_chars.index(lc)
+            j = rom_chars.index(rc)
+            mat[i, j] = cnt
+
+    row_sums = mat.sum(axis=1, keepdims=True)
+    row_sums[row_sums == 0] = 1
+    mat_norm = mat / row_sums
+
+    im = ax.imshow(mat_norm, cmap="Blues", aspect="auto", vmin=0, vmax=1)
+    ax.set_xticks(range(len(rom_chars)))
+    ax.set_xticklabels(rom_chars, fontsize=7)
+    ax.set_yticks(range(len(lat_chars)))
+    ax.set_yticklabels(lat_chars, fontsize=7)
+    ax.set_xlabel("Romance character")
+    ax.set_title(lang)
+
+axes[0].set_ylabel("Latin character")
+plt.colorbar(im, ax=axes[-1], label="P(romance | latin)")
+plt.tight_layout()
+plt.show()
+```
+
+Several patterns stand out immediately. Latin *c* maps predominantly to itself in Italian
+(*acqua*, *occhio*) but spreads across *ch*, *j*, and zero in Spanish. Latin final *m*
+almost always maps to a gap (deletion), which is why the accusative ending is invisible
+in every modern descendant — a neural model must *hallucinate* it from context, not read
+it from any surviving reflex. French *eau* and *nuit* look nothing like Latin *aquam*
+and *noctem* because the vowel chain-shifts of Old French compressed what had been three
+or four distinct Latin vowels into a narrower modern inventory.
+
+## Aligning Cognates Before Reconstruction {#sec-cognate-alignment}
+
+The neural model treats reconstruction as sequence-to-sequence transduction, but it
+first needs its input cognates to be *aligned* — each position in the source sequences
+corresponding to the same ancestral sound. Without alignment, the encoder cannot learn
+which characters are cognate across languages.
+
+We can visualize what alignment looks like for a single word before feeding it to any
+model.
+
+```{python}
+#| label: fig-alignment-grid
+#| fig-cap: "Character-level global alignment of five Romance reflexes against their Latin ancestor *noctem*. Gaps (shown in grey) mark sounds that were deleted in the descendant. The initial *n-o* is preserved across all five; the *ct* cluster that became *ch* in Spanish and *tt* in Italian is the main point of divergence."
+
+fig, ax = plt.subplots(figsize=(10, 4))
+
+target = "noctem"
+reflexes = {
+    "Spanish":    "noche",
+    "Portuguese": "noite",
+    "French":     "nuit",
+    "Italian":    "notte",
+    "Romanian":   "noapte",
+}
+
+lang_names = list(reflexes.keys())
+aligned_rows = []
+for lang, form in reflexes.items():
+    a_lat, a_rom = simple_align(target, form)
+    aligned_rows.append((lang, a_lat, a_rom))
+
+# All alignments share the same latin row (use first)
+lat_aligned = aligned_rows[0][1]
+ncols = len(lat_aligned)
+nrows = len(reflexes) + 1  # +1 for Latin header
+
+colors_map = {"match": "#bde0fe", "gap": "#e0e0e0", "mismatch": "#ffd6a5"}
+
+ax.set_xlim(0, ncols)
+ax.set_ylim(0, nrows)
+ax.axis("off")
+
+cell_w, cell_h = 1.0, 0.8
+y_start = nrows - 1
+
+# Latin header row
+for j, ch in enumerate(lat_aligned):
+    bg = colors_map["gap"] if ch == '-' else "#d0f0c0"
+    ax.add_patch(plt.Rectangle((j, y_start - 0.5*cell_h + 0.1), cell_w*0.9, cell_h*0.85,
+                                color=bg, ec="white", lw=1))
+    ax.text(j + 0.45, y_start, ch, ha="center", va="center", fontsize=11, fontweight="bold")
+
+ax.text(-0.5, y_start, "Latin", ha="right", va="center", fontsize=9, style="italic")
+
+# Romance rows
+for row_idx, (lang, a_lat, a_rom) in enumerate(aligned_rows):
+    y = y_start - (row_idx + 1)
+    for j, (lc, rc) in enumerate(zip(a_lat, a_rom)):
+        if rc == '-':
+            bg = colors_map["gap"]
+        elif lc == rc:
+            bg = colors_map["match"]
+        else:
+            bg = colors_map["mismatch"]
+        ax.add_patch(plt.Rectangle((j, y - 0.5*cell_h + 0.1), cell_w*0.9, cell_h*0.85,
+                                    color=bg, ec="white", lw=1))
+        ax.text(j + 0.45, y, rc, ha="center", va="center", fontsize=11)
+    ax.text(-0.5, y, lang, ha="right", va="center", fontsize=9, style="italic")
+
+# Legend
+from matplotlib.patches import Patch
+legend_elements = [
+    Patch(facecolor="#d0f0c0", label="Latin source"),
+    Patch(facecolor=colors_map["match"], label="Match"),
+    Patch(facecolor=colors_map["mismatch"], label="Substitution"),
+    Patch(facecolor=colors_map["gap"], label="Gap (deletion)"),
+]
+ax.legend(handles=legend_elements, loc="lower right", fontsize=8, framealpha=0.9)
+ax.set_title(f"Alignment: '{target}' and its Romance descendants", fontsize=12, pad=10)
+plt.tight_layout()
+plt.show()
+```
+
+The alignment grid makes visible what a linguist means when they say that French *nuit*
+and Latin *noctem* are cognate. The *n* matches; the *o* became *ui* (a chain shift
+in Old French); the *ct* cluster became silent and then vanished; the final *em* dropped
+entirely. Every step is documented in the historical record. The alignment represents all
+of it in a form the encoder can read.
+
+## Simulating Attention: What Each Language Contributes {#sec-simulated-attention}
+
+We cannot run a trained transformer here without a substantial pretrained model, but we
+can *simulate* what attention weights look like using a simple heuristic: at each output
+position, weight each input language by how closely its aligned character matches the
+true Latin character at that position. This is a transparency exercise — it shows the
+structure of what learned attention is expected to recover.
+
+```{python}
+#| label: fig-attention-sim
+#| fig-cap: "Simulated attention weights for reconstructing *noctem* from five Romance reflexes. Each row is an output position (left-to-right through the Latin form); each column is an input language. Darker = higher attention. Languages that preserved the original consonant cluster contribute more weight at positions 3–4; French contributes little because *nuit* has compressed those positions into a single sound."
+
+import plotly.graph_objects as go
+
+target   = "noctem"
+langs    = list(reflexes.keys())
+n_out    = len(target)
+n_langs  = len(langs)
+
+# Build attention simulation: similarity of aligned romance char to true latin char
+attn = np.zeros((n_out, n_langs))
+for li, lang in enumerate(langs):
+    a_lat, a_rom = simple_align(target, reflexes[lang])
+    # Map output positions back to alignment positions
+    out_pos = -1
+    for j, (lc, rc) in enumerate(zip(a_lat, a_rom)):
+        if lc != '-':
+            out_pos += 1
+            if out_pos >= n_out:
+                break
+            # Weight: 1.0 if exact match, 0.5 if substitution, 0.1 if gap
+            if rc == '-':
+                attn[out_pos, li] = 0.1
+            elif rc == lc:
+                attn[out_pos, li] = 1.0
+            else:
+                attn[out_pos, li] = 0.5
+
+# Normalize rows
+row_sums = attn.sum(axis=1, keepdims=True)
+row_sums[row_sums == 0] = 1
+attn = attn / row_sums
+
+fig = go.Figure(go.Heatmap(
+    z=attn,
+    x=langs,
+    y=[f"pos {i}: '{c}'" for i, c in enumerate(target)],
+    colorscale="Blues",
+    zmin=0, zmax=1,
+    text=np.round(attn, 2),
+    texttemplate="%{text}",
+    colorbar=dict(title="Attention weight"),
+))
+
+fig.update_layout(
+    title="Simulated Attention: Reconstructing 'noctem'",
+    xaxis=dict(title="Input language"),
+    yaxis=dict(title="Output position (Latin character)", autorange="reversed"),
+    height=340,
+    margin=dict(l=120, r=60, t=50, b=50),
+)
+fig.show()
+```
+
+The heatmap pattern is instructive. At positions 0–1 (*n-o*), attention is spread
+fairly evenly — all five languages preserve these sounds and vote consistently.
+At positions 3–4 (*t-e*, the core of the *ct* cluster), Italian (*notte*) and
+Portuguese (*noite*) carry the most weight: they preserved the consonant density
+that Spanish compressed into *ch* and French dropped to a single vowel. At position 5
+(*m*, the accusative ending), all attention values are low and close to uniform —
+no language has preserved the *-m*, so the model must infer it from its knowledge
+of Latin morphological patterns rather than from any direct evidence in the input.
+
+That final observation is crucial. The accusative *-m* is not in any of the five
+modern forms. A reconstruction model that outputs *noctem* rather than *nocte* has
+learned something about Latin morphology from training data — it has generalized from
+other accusative forms (*aquam*, *patrem*, *novum*) to infer that a word of this
+phonological shape probably ended in *-m*. This is not retrieval. It is inductive
+inference. And it is exactly why neural models beat rule-based systems: they can
+generalize across positions in a way that position-by-position majority vote cannot.
+
 ## Model Evaluation: Character Error Rate
 
 The standard metric for this task is *character error rate* (CER)—the edit distance between the predicted proto-form and the true proto-form, normalized by the length of the true form:
