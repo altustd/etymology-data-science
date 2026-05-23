@@ -64,6 +64,8 @@ format:
 
 bibliography: references.bib
 
+jupyter: etymology-data-science
+
 execute:
   echo: false
   warning: false

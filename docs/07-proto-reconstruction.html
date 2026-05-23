@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>8&nbsp; Proto-Language Reconstruction – Etymology + Data Science</title>
+<title>9&nbsp; Proto-Language Reconstruction – Etymology + Data Science</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -34,7 +34,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./08-semantic-drift.html" rel="next">
-<link href="./06-phylogenetic-inference.html" rel="prev">
+<link href="./glottochronology.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -75,6 +75,12 @@ ul.task-list li input[type="checkbox"] {
 <script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
 
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script>
+window.PlotlyConfig = {MathJaxConfig: 'local'};
+if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}
+</script>
+<script type="module">import "https://cdn.plot.ly/plotly-3.4.0.min"</script>
+
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -117,7 +123,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07-proto-reconstruction.html">Part III: Advanced Techniques</a></li><li class="breadcrumb-item"><a href="./07-proto-reconstruction.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Proto-Language Reconstruction</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07-proto-reconstruction.html">Part III: Advanced Techniques</a></li><li class="breadcrumb-item"><a href="./07-proto-reconstruction.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Proto-Language Reconstruction</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -207,6 +213,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Phylogenetic Inference: Language Family Trees</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./glottochronology.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Glottochronology: Dating Language Divergence</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -221,37 +233,37 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./07-proto-reconstruction.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Proto-Language Reconstruction</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Proto-Language Reconstruction</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./08-semantic-drift.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Semantic Drift &amp; Word Meaning Change</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Semantic Drift &amp; Word Meaning Change</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./09-borrowing-detection.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Borrowing Detection &amp; Language Contact</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Borrowing Detection &amp; Language Contact</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10-llms-etymology.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">LLMs &amp; Modern Etymology</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">LLMs &amp; Modern Etymology</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./11-etymology-graphs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Etymology as Knowledge Graphs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Etymology as Knowledge Graphs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./12-borrowing-networks.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Cross-Linguistic Borrowing Networks</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Cross-Linguistic Borrowing Networks</span></span></a>
   </div>
 </li>
       </ul>
@@ -267,8 +279,8 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./12-capstone.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Capstone Project</span></span></a>
+  <a href="./13-capstone.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Capstone Project</span></span></a>
   </div>
 </li>
       </ul>
@@ -312,25 +324,28 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#the-reversed-arrow-of-time" id="toc-the-reversed-arrow-of-time" class="nav-link active" data-scroll-target="#the-reversed-arrow-of-time"><span class="header-section-number">8.1</span> The Reversed Arrow of Time</a></li>
-  <li><a href="#framing-the-problem" id="toc-framing-the-problem" class="nav-link" data-scroll-target="#framing-the-problem"><span class="header-section-number">8.2</span> Framing the Problem</a></li>
-  <li><a href="#encoder-decoder-architecture" id="toc-encoder-decoder-architecture" class="nav-link" data-scroll-target="#encoder-decoder-architecture"><span class="header-section-number">8.3</span> Encoder-Decoder Architecture</a></li>
-  <li><a href="#attention-what-the-decoder-looks-at" id="toc-attention-what-the-decoder-looks-at" class="nav-link" data-scroll-target="#attention-what-the-decoder-looks-at"><span class="header-section-number">8.4</span> Attention: What the Decoder Looks At</a></li>
-  <li><a href="#a-rule-based-baseline" id="toc-a-rule-based-baseline" class="nav-link" data-scroll-target="#a-rule-based-baseline"><span class="header-section-number">8.5</span> A Rule-Based Baseline</a></li>
-  <li><a href="#model-evaluation-character-error-rate" id="toc-model-evaluation-character-error-rate" class="nav-link" data-scroll-target="#model-evaluation-character-error-rate"><span class="header-section-number">8.6</span> Model Evaluation: Character Error Rate</a></li>
-  <li><a href="#what-the-model-actually-learns" id="toc-what-the-model-actually-learns" class="nav-link" data-scroll-target="#what-the-model-actually-learns"><span class="header-section-number">8.7</span> What the Model Actually Learns</a></li>
-  <li><a href="#where-models-fail" id="toc-where-models-fail" class="nav-link" data-scroll-target="#where-models-fail"><span class="header-section-number">8.8</span> Where Models Fail</a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">8.9</span> Summary</a></li>
-  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">8.10</span> Further Reading</a></li>
+  <li><a href="#the-reversed-arrow-of-time" id="toc-the-reversed-arrow-of-time" class="nav-link active" data-scroll-target="#the-reversed-arrow-of-time"><span class="header-section-number">9.1</span> The Reversed Arrow of Time</a></li>
+  <li><a href="#framing-the-problem" id="toc-framing-the-problem" class="nav-link" data-scroll-target="#framing-the-problem"><span class="header-section-number">9.2</span> Framing the Problem</a></li>
+  <li><a href="#encoder-decoder-architecture" id="toc-encoder-decoder-architecture" class="nav-link" data-scroll-target="#encoder-decoder-architecture"><span class="header-section-number">9.3</span> Encoder-Decoder Architecture</a></li>
+  <li><a href="#attention-what-the-decoder-looks-at" id="toc-attention-what-the-decoder-looks-at" class="nav-link" data-scroll-target="#attention-what-the-decoder-looks-at"><span class="header-section-number">9.4</span> Attention: What the Decoder Looks At</a></li>
+  <li><a href="#a-rule-based-baseline" id="toc-a-rule-based-baseline" class="nav-link" data-scroll-target="#a-rule-based-baseline"><span class="header-section-number">9.5</span> A Rule-Based Baseline</a></li>
+  <li><a href="#sec-correspondence-tables" id="toc-sec-correspondence-tables" class="nav-link" data-scroll-target="#sec-correspondence-tables"><span class="header-section-number">9.6</span> Sound Correspondence Tables</a></li>
+  <li><a href="#sec-cognate-alignment" id="toc-sec-cognate-alignment" class="nav-link" data-scroll-target="#sec-cognate-alignment"><span class="header-section-number">9.7</span> Aligning Cognates Before Reconstruction</a></li>
+  <li><a href="#sec-simulated-attention" id="toc-sec-simulated-attention" class="nav-link" data-scroll-target="#sec-simulated-attention"><span class="header-section-number">9.8</span> Simulating Attention: What Each Language Contributes</a></li>
+  <li><a href="#model-evaluation-character-error-rate" id="toc-model-evaluation-character-error-rate" class="nav-link" data-scroll-target="#model-evaluation-character-error-rate"><span class="header-section-number">9.9</span> Model Evaluation: Character Error Rate</a></li>
+  <li><a href="#what-the-model-actually-learns" id="toc-what-the-model-actually-learns" class="nav-link" data-scroll-target="#what-the-model-actually-learns"><span class="header-section-number">9.10</span> What the Model Actually Learns</a></li>
+  <li><a href="#where-models-fail" id="toc-where-models-fail" class="nav-link" data-scroll-target="#where-models-fail"><span class="header-section-number">9.11</span> Where Models Fail</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">9.12</span> Summary</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">9.13</span> Further Reading</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07-proto-reconstruction.html">Part III: Advanced Techniques</a></li><li class="breadcrumb-item"><a href="./07-proto-reconstruction.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Proto-Language Reconstruction</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07-proto-reconstruction.html">Part III: Advanced Techniques</a></li><li class="breadcrumb-item"><a href="./07-proto-reconstruction.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Proto-Language Reconstruction</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-reconstruction" class="quarto-section-identifier"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Proto-Language Reconstruction</span></span></h1>
+<h1 class="title"><span id="sec-reconstruction" class="quarto-section-identifier"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Proto-Language Reconstruction</span></span></h1>
 </div>
 
 
@@ -368,16 +383,16 @@ window.Quarto = {
 </ul>
 </div>
 </div>
-<section id="the-reversed-arrow-of-time" class="level2" data-number="8.1">
-<h2 data-number="8.1" class="anchored" data-anchor-id="the-reversed-arrow-of-time"><span class="header-section-number">8.1</span> The Reversed Arrow of Time</h2>
+<section id="the-reversed-arrow-of-time" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="the-reversed-arrow-of-time"><span class="header-section-number">9.1</span> The Reversed Arrow of Time</h2>
 <p>The standard way of thinking about language change points forward in time: Latin <em>noctem</em> becomes Spanish <em>noche</em>. The sound changes, the vowels drift, the case endings drop. Change flows in one direction.</p>
 <p>Proto-language reconstruction reverses the arrow. Given Spanish <em>noche</em>, French <em>nuit</em>, Italian <em>notte</em>, and Portuguese <em>noite</em>, can we recover Latin <em>noctem</em>—or, more generally, the proto-form that preceded all of them?</p>
 <p>Traditional linguists do this by hand: they compare the forms, identify the correspondences, and apply the sound laws in reverse. It works beautifully when the sound laws are known, when enough descendants have been recorded, and when the linguist has years of experience with the language family. It does not scale.</p>
 <p>Neural sequence-to-sequence models do scale. Trained on thousands of examples of (modern forms → proto-form), they learn the inverse sound changes implicitly, without being explicitly programmed with any rules. The results, on held-out test data, are remarkably accurate: roughly 32% of reconstructed proto-forms are letter-perfect, and over 60% are within one character substitution of the correct answer.</p>
 <p>This is not as impressive as 99% accuracy, but it is meaningful: an automatic system is doing, at scale and in milliseconds, something that took expert linguists a career.</p>
 </section>
-<section id="framing-the-problem" class="level2" data-number="8.2">
-<h2 data-number="8.2" class="anchored" data-anchor-id="framing-the-problem"><span class="header-section-number">8.2</span> Framing the Problem</h2>
+<section id="framing-the-problem" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="framing-the-problem"><span class="header-section-number">9.2</span> Framing the Problem</h2>
 <p>The formal problem is:</p>
 <p>Given <span class="math inline">\(k\)</span> <em>cognate reflexes</em> (one per descendant language), predict the <em>proto-form</em> from which they all descended.</p>
 <p>This is a <em>many-to-one sequence transduction</em> problem. The input is a set of sequences (one per language); the output is a single sequence (the proto-form). The challenge is that the mapping is irregular: no single reflex fully determines the proto-form, and different descendants preserve different features of the ancestor.</p>
@@ -386,7 +401,7 @@ window.Quarto = {
 <div id="tbl-reconstruction-data" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="2">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-reconstruction-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;8.1: Sample from the Ciobanu-Dinu Romance reconstruction dataset. The task is to predict the Latin column from the five Romance columns.
+Table&nbsp;9.1: Sample from the Ciobanu-Dinu Romance reconstruction dataset. The task is to predict the Latin column from the five Romance columns.
 </figcaption>
 <div aria-describedby="tbl-reconstruction-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output cell-output-display" data-execution_count="2">
@@ -488,8 +503,8 @@ Table&nbsp;8.1: Sample from the Ciobanu-Dinu Romance reconstruction dataset. The
 </div>
 </div>
 </section>
-<section id="encoder-decoder-architecture" class="level2" data-number="8.3">
-<h2 data-number="8.3" class="anchored" data-anchor-id="encoder-decoder-architecture"><span class="header-section-number">8.3</span> Encoder-Decoder Architecture</h2>
+<section id="encoder-decoder-architecture" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="encoder-decoder-architecture"><span class="header-section-number">9.3</span> Encoder-Decoder Architecture</h2>
 <p>The dominant architecture for sequence transduction tasks is the <em>encoder-decoder</em> model, introduced in its modern form by Sutskever, Vinyals, and Le in 2014.</p>
 <p>The encoder reads the input sequence and produces a fixed-size representation—a vector (or matrix) that summarizes the input’s content. The decoder then generates the output sequence, one token at a time, using the encoder’s representation.</p>
 <p>For proto-reconstruction with multiple input languages, the encoder processes each language’s reflex separately, and the decoder attends to all of them when generating each proto-phoneme.</p>
@@ -501,31 +516,31 @@ Table&nbsp;8.1: Sample from the Ciobanu-Dinu Romance reconstruction dataset. The
 <img src="07-proto-reconstruction_files/figure-html/fig-encdec-output-1.png" width="1046" height="470" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-encdec-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;8.1: Schematic of an encoder-decoder model for proto-form reconstruction. Each input language is encoded independently; the decoder uses attention to weight each language’s contribution when generating each proto-phoneme.
+Figure&nbsp;9.1: Schematic of an encoder-decoder model for proto-form reconstruction. Each input language is encoded independently; the decoder uses attention to weight each language’s contribution when generating each proto-phoneme.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="attention-what-the-decoder-looks-at" class="level2" data-number="8.4">
-<h2 data-number="8.4" class="anchored" data-anchor-id="attention-what-the-decoder-looks-at"><span class="header-section-number">8.4</span> Attention: What the Decoder Looks At</h2>
+<section id="attention-what-the-decoder-looks-at" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="attention-what-the-decoder-looks-at"><span class="header-section-number">9.4</span> Attention: What the Decoder Looks At</h2>
 <p>The <em>attention mechanism</em> solves a specific problem: the decoder needs to generate <em>noctem</em>, but different parts of the output depend on different input languages in different ways.</p>
 <p>When generating the initial <em>n</em>, the Spanish <em>noche</em> and Italian <em>notte</em> are the most informative—both start with <em>n</em>. When generating the ending <em>-em</em>, Latin morphology must be inferred from the pattern of accusative endings across all five languages. Attention allows the decoder to weight each input dynamically at each output timestep.</p>
 <p>Formally, the attention weight for language <span class="math inline">\(i\)</span> at output step <span class="math inline">\(t\)</span> is:</p>
 <p><span id="eq-attention"><span class="math display">\[
 \alpha_{t,i} = \frac{\exp(e_{t,i})}{\sum_j \exp(e_{t,j})}, \quad e_{t,i} = f(\mathbf{h}^{\text{dec}}_t, \mathbf{h}^{\text{enc}}_i)
-\tag{8.1}\]</span></span></p>
+\tag{9.1}\]</span></span></p>
 <p>where <span class="math inline">\(\mathbf{h}^{\text{dec}}_t\)</span> is the decoder state at step <span class="math inline">\(t\)</span>, <span class="math inline">\(\mathbf{h}^{\text{enc}}_i\)</span> is the encoder output for language <span class="math inline">\(i\)</span>, and <span class="math inline">\(f\)</span> is a compatibility function (typically a dot product or a learned linear transformation).</p>
 <p>This is the same attention mechanism that powers modern transformers, applied to a specialized multilingual input structure.</p>
 </section>
-<section id="a-rule-based-baseline" class="level2" data-number="8.5">
-<h2 data-number="8.5" class="anchored" data-anchor-id="a-rule-based-baseline"><span class="header-section-number">8.5</span> A Rule-Based Baseline</h2>
+<section id="a-rule-based-baseline" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="a-rule-based-baseline"><span class="header-section-number">9.5</span> A Rule-Based Baseline</h2>
 <p>Before implementing a neural model, it is worth building a simple rule-based baseline—both to understand the problem structure and to set a performance floor.</p>
 <div id="lst-baseline" class="cell listing quarto-float quarto-figure quarto-figure-left anchored" data-execution_count="4">
 <figure class="quarto-float quarto-float-lst figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst quarto-uncaptioned" id="lst-baseline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Listing&nbsp;8.1
+Listing&nbsp;9.1
 </figcaption>
 <div aria-describedby="lst-baseline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output cell-output-stdout">
@@ -542,15 +557,99 @@ Listing&nbsp;8.1
 <p>The majority vote baseline does surprisingly well on some words and fails badly on others. <em>Agua/aqua</em> reconstructs the <em>a-qu-a</em> pattern from majority votes but cannot recover the Latin accusative ending <em>-m</em>. <em>Padre/père</em> cannot recover <em>patrem</em> because the forms have diverged so much.</p>
 <p>These failures are informative: the neural model’s advantage comes from learning cross-position dependencies (the ending depends on the whole word pattern, not just the final position) and cross-language patterns (French regularly drops Latin endings, Spanish preserves some, Romanian preserves others).</p>
 </section>
-<section id="model-evaluation-character-error-rate" class="level2" data-number="8.6">
-<h2 data-number="8.6" class="anchored" data-anchor-id="model-evaluation-character-error-rate"><span class="header-section-number">8.6</span> Model Evaluation: Character Error Rate</h2>
+<section id="sec-correspondence-tables" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="sec-correspondence-tables"><span class="header-section-number">9.6</span> Sound Correspondence Tables</h2>
+<p>Before a neural model can learn to reconstruct proto-forms, a human (or an alignment algorithm) must first determine <em>which</em> character in the modern form corresponds to <em>which</em> character in the Latin original. This step—establishing sound correspondences— is what the comparative method has been doing by hand for two centuries. It is also what the encoder’s attention mechanism is learning to do implicitly.</p>
+<p>A <em>sound correspondence table</em> records, for a given pair of languages, which source phoneme maps to which target phoneme. For Latin-to-Spanish, the classic Grimm-like correspondences include: Latin <em>ct</em> → Spanish <em>ch</em> (<em>noctem</em> → <em>noche</em>, <em>lactem</em> → <em>leche</em>), Latin <em>pl/cl/fl-</em> → Spanish <em>ll</em> (<em>planum</em> → <em>llano</em>), and Latin final <em>-m</em> → Spanish zero (the accusative ending simply vanishes).</p>
+<p>We can compute an empirical correspondence table directly from our aligned dataset.</p>
+<div id="cell-fig-correspondence-heatmap" class="cell" data-execution_count="5">
+<div class="cell-output cell-output-display">
+<div id="fig-correspondence-heatmap" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-correspondence-heatmap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="07-proto-reconstruction_files/figure-html/fig-correspondence-heatmap-output-1.png" width="1319" height="569" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-correspondence-heatmap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.2: Sound correspondence frequencies from Latin to each Romance language, estimated from 30 Swadesh-list cognate pairs. Each cell shows how often a Latin character maps to a Romance character at aligned positions. Blank cells are zero. The diagonal dominates for vowels; consonant mappings show systematic shifts.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Several patterns stand out immediately. Latin <em>c</em> maps predominantly to itself in Italian (<em>acqua</em>, <em>occhio</em>) but spreads across <em>ch</em>, <em>j</em>, and zero in Spanish. Latin final <em>m</em> almost always maps to a gap (deletion), which is why the accusative ending is invisible in every modern descendant — a neural model must <em>hallucinate</em> it from context, not read it from any surviving reflex. French <em>eau</em> and <em>nuit</em> look nothing like Latin <em>aquam</em> and <em>noctem</em> because the vowel chain-shifts of Old French compressed what had been three or four distinct Latin vowels into a narrower modern inventory.</p>
+</section>
+<section id="sec-cognate-alignment" class="level2" data-number="9.7">
+<h2 data-number="9.7" class="anchored" data-anchor-id="sec-cognate-alignment"><span class="header-section-number">9.7</span> Aligning Cognates Before Reconstruction</h2>
+<p>The neural model treats reconstruction as sequence-to-sequence transduction, but it first needs its input cognates to be <em>aligned</em> — each position in the source sequences corresponding to the same ancestral sound. Without alignment, the encoder cannot learn which characters are cognate across languages.</p>
+<p>We can visualize what alignment looks like for a single word before feeding it to any model.</p>
+<div id="cell-fig-alignment-grid" class="cell" data-execution_count="6">
+<div class="cell-output cell-output-display">
+<div id="fig-alignment-grid" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-alignment-grid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="07-proto-reconstruction_files/figure-html/fig-alignment-grid-output-1.png" width="950" height="375" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-alignment-grid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.3: Character-level global alignment of five Romance reflexes against their Latin ancestor <em>noctem</em>. Gaps (shown in grey) mark sounds that were deleted in the descendant. The initial <em>n-o</em> is preserved across all five; the <em>ct</em> cluster that became <em>ch</em> in Spanish and <em>tt</em> in Italian is the main point of divergence.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The alignment grid makes visible what a linguist means when they say that French <em>nuit</em> and Latin <em>noctem</em> are cognate. The <em>n</em> matches; the <em>o</em> became <em>ui</em> (a chain shift in Old French); the <em>ct</em> cluster became silent and then vanished; the final <em>em</em> dropped entirely. Every step is documented in the historical record. The alignment represents all of it in a form the encoder can read.</p>
+</section>
+<section id="sec-simulated-attention" class="level2" data-number="9.8">
+<h2 data-number="9.8" class="anchored" data-anchor-id="sec-simulated-attention"><span class="header-section-number">9.8</span> Simulating Attention: What Each Language Contributes</h2>
+<p>We cannot run a trained transformer here without a substantial pretrained model, but we can <em>simulate</em> what attention weights look like using a simple heuristic: at each output position, weight each input language by how closely its aligned character matches the true Latin character at that position. This is a transparency exercise — it shows the structure of what learned attention is expected to recover.</p>
+<div id="cell-fig-attention-sim" class="cell" data-execution_count="7">
+<div id="fig-attention-sim" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-attention-sim-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_SVG"></script><script>if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}</script>                <script>window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+        <script charset="utf-8" src="https://cdn.plot.ly/plotly-3.4.0.min.js" integrity="sha256-KEmPoupLpFyGMyGAiOsiNDbKDKAvxXAn/W+oQa0ZAfk=" crossorigin="anonymous"></script>                <div id="70b0f3ca-4967-450b-a4f8-c2795de11757" class="plotly-graph-div" style="height:340px; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("70b0f3ca-4967-450b-a4f8-c2795de11757")) {                    Plotly.newPlot(                        "70b0f3ca-4967-450b-a4f8-c2795de11757",                        [{"colorbar":{"title":{"text":"Attention weight"}},"colorscale":[[0.0,"rgb(247,251,255)"],[0.125,"rgb(222,235,247)"],[0.25,"rgb(198,219,239)"],[0.375,"rgb(158,202,225)"],[0.5,"rgb(107,174,214)"],[0.625,"rgb(66,146,198)"],[0.75,"rgb(33,113,181)"],[0.875,"rgb(8,81,156)"],[1.0,"rgb(8,48,107)"]],"text":{"dtype":"f8","bdata":"mpmZmZmZyT+amZmZmZnJP5qZmZmZmck\u002fmpmZmZmZyT+amZmZmZnJPylcj8L1KMw\u002fKVyPwvUozD8pXI\u002fC9Si8Pylcj8L1KMw\u002fKVyPwvUozD8fhetRuB7VP8P1KFyPwsU\u002fw\u002fUoXI\u002fCxT\u002fD9Shcj8LFP8P1KFyPwsU\u002fKVyPwvUovD8pXI\u002fC9SjMPylcj8L1KMw\u002fKVyPwvUozD8pXI\u002fC9SjMP7gehetRuM4\u002fuB6F61G4zj97FK5H4XqUP7gehetRuM4\u002fuB6F61G4zj+amZmZmZnJP5qZmZmZmck\u002fmpmZmZmZyT+amZmZmZnJP5qZmZmZmck\u002f","shape":"6, 5"},"texttemplate":"%{text}","x":["Spanish","Portuguese","French","Italian","Romanian"],"y":["pos 0: 'n'","pos 1: 'o'","pos 2: 'c'","pos 3: 't'","pos 4: 'e'","pos 5: 'm'"],"z":{"dtype":"f8","bdata":"mpmZmZmZyT+amZmZmZnJP5qZmZmZmck\u002fmpmZmZmZyT+amZmZmZnJPxzHcRzHccw\u002fHMdxHMdxzD8cx3Ecx3G8PxzHcRzHccw\u002fHMdxHMdxzD9VVVVVVVXVP1VVVVVVVcU\u002fVVVVVVVVxT9VVVVVVVXFP1VVVVVVVcU\u002fHMdxHMdxvD8cx3Ecx3HMPxzHcRzHccw\u002fHMdxHMdxzD8cx3Ecx3HMPzkfg\u002fMxOM8\u002fOR+D8zE4zz\u002f7GJyPwfmYPzkfg\u002fMxOM8\u002fOR+D8zE4zz+amZmZmZnJP5qZmZmZmck\u002fmpmZmZmZyT+amZmZmZnJP5qZmZmZmck\u002f","shape":"6, 5"},"zmax":1,"zmin":0,"type":"heatmap"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30}}},"yaxis":{"title":{"text":"Output position (Latin character)"},"autorange":"reversed"},"margin":{"l":120,"r":60,"t":50,"b":50},"title":{"text":"Simulated Attention: Reconstructing 'noctem'"},"xaxis":{"title":{"text":"Input language"}},"height":340},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('70b0f3ca-4967-450b-a4f8-c2795de11757');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };            </script>        </div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-attention-sim-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.4: Simulated attention weights for reconstructing <em>noctem</em> from five Romance reflexes. Each row is an output position (left-to-right through the Latin form); each column is an input language. Darker = higher attention. Languages that preserved the original consonant cluster contribute more weight at positions 3–4; French contributes little because <em>nuit</em> has compressed those positions into a single sound.
+</figcaption>
+</figure>
+</div>
+</div>
+<p>The heatmap pattern is instructive. At positions 0–1 (<em>n-o</em>), attention is spread fairly evenly — all five languages preserve these sounds and vote consistently. At positions 3–4 (<em>t-e</em>, the core of the <em>ct</em> cluster), Italian (<em>notte</em>) and Portuguese (<em>noite</em>) carry the most weight: they preserved the consonant density that Spanish compressed into <em>ch</em> and French dropped to a single vowel. At position 5 (<em>m</em>, the accusative ending), all attention values are low and close to uniform — no language has preserved the <em>-m</em>, so the model must infer it from its knowledge of Latin morphological patterns rather than from any direct evidence in the input.</p>
+<p>That final observation is crucial. The accusative <em>-m</em> is not in any of the five modern forms. A reconstruction model that outputs <em>noctem</em> rather than <em>nocte</em> has learned something about Latin morphology from training data — it has generalized from other accusative forms (<em>aquam</em>, <em>patrem</em>, <em>novum</em>) to infer that a word of this phonological shape probably ended in <em>-m</em>. This is not retrieval. It is inductive inference. And it is exactly why neural models beat rule-based systems: they can generalize across positions in a way that position-by-position majority vote cannot.</p>
+</section>
+<section id="model-evaluation-character-error-rate" class="level2" data-number="9.9">
+<h2 data-number="9.9" class="anchored" data-anchor-id="model-evaluation-character-error-rate"><span class="header-section-number">9.9</span> Model Evaluation: Character Error Rate</h2>
 <p>The standard metric for this task is <em>character error rate</em> (CER)—the edit distance between the predicted proto-form and the true proto-form, normalized by the length of the true form:</p>
 <p><span id="eq-cer"><span class="math display">\[
 \text{CER} = \frac{\text{edit\_distance}(\hat{y}, y)}{|y|}
-\tag{8.2}\]</span></span></p>
+\tag{9.2}\]</span></span></p>
 <p>Published results on the Ciobanu-Dinu Romance dataset: - Majority vote baseline: CER ≈ 0.60–0.70 - SVM with n-gram features: CER ≈ 0.30–0.35 - LSTM encoder-decoder: CER ≈ 0.18–0.22 - Transformer (best published): CER ≈ 0.12–0.15</p>
 <p>A CER of 0.15 means the average predicted form is within one or two character errors of the correct Latin form—a remarkable result for a system that has never been explicitly taught any Latin grammar.</p>
-<div id="cell-fig-cer-comparison" class="cell" data-execution_count="5">
+<div id="cell-fig-cer-comparison" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div id="fig-cer-comparison" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -558,34 +657,34 @@ Listing&nbsp;8.1
 <img src="07-proto-reconstruction_files/figure-html/fig-cer-comparison-output-1.png" width="661" height="373" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cer-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;8.2: Character error rate (CER) comparison across reconstruction methods on the Romance benchmark. Lower is better.
+Figure&nbsp;9.5: Character error rate (CER) comparison across reconstruction methods on the Romance benchmark. Lower is better.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="what-the-model-actually-learns" class="level2" data-number="8.7">
-<h2 data-number="8.7" class="anchored" data-anchor-id="what-the-model-actually-learns"><span class="header-section-number">8.7</span> What the Model Actually Learns</h2>
+<section id="what-the-model-actually-learns" class="level2" data-number="9.10">
+<h2 data-number="9.10" class="anchored" data-anchor-id="what-the-model-actually-learns"><span class="header-section-number">9.10</span> What the Model Actually Learns</h2>
 <p>It is tempting to describe what the neural model does as “learning the sound laws in reverse”—and this is approximately right, but the approximation hides something interesting.</p>
 <p>A traditional linguist reconstructing <em>noctem</em> from Romance descendants works through a series of explicitly stated rules: French <em>nuit</em> reflects <em>*nok-te-m</em> → <em>*noite</em> → <em>nuit</em> through a series of documented changes. Each step is labeled, justified, and reversible. The model does not work this way. It learns a direct mapping from the set of modern forms to the proto-form, without any explicit intermediate representation of the sound change rules.</p>
 <p>What the attention mechanism learns—and this has been partially interpretable through visualization—is something that looks like a learned sound correspondence table. At each output position, the attention weights over the input languages tend to cluster around specific positions in the input sequences. When the model is generating a consonant that was preserved differently in different languages (e.g., the <em>kt</em> cluster in NIGHT), it learns to weight Latin and Lithuanian more heavily because those languages preserve the cluster more faithfully than French or Spanish. When it is generating a vowel that was preserved in some languages and lost in others, it learns to weight the languages that retained it.</p>
 <p>This is not quite the same as applying the comparative method—it lacks the step-by-step justification and the explicit rules—but it is learning a representation of the same underlying regularities. The model’s output is not a black box producing arbitrary outputs; it is a differentiable approximation of expert linguistic reasoning, with all the strengths (speed, scale) and weaknesses (no explicit justification, failure on out-of-distribution inputs) that implies.</p>
 </section>
-<section id="where-models-fail" class="level2" data-number="8.8">
-<h2 data-number="8.8" class="anchored" data-anchor-id="where-models-fail"><span class="header-section-number">8.8</span> Where Models Fail</h2>
+<section id="where-models-fail" class="level2" data-number="9.11">
+<h2 data-number="9.11" class="anchored" data-anchor-id="where-models-fail"><span class="header-section-number">9.11</span> Where Models Fail</h2>
 <p>Neural reconstruction models fail in characteristic ways:</p>
 <p><strong>Morphological endings</strong>: Modern Romance languages have largely dropped Latin case endings. The accusative <em>-m</em> and <em>-em</em> endings are invisible in modern forms. Models trained on the accusative forms learn to append <em>-m</em> frequently but often predict the wrong vowel before it.</p>
 <p><strong>Rare sound changes</strong>: Irregular correspondences—sounds that changed differently in one language due to a phonological environment that no longer exists—are hard to learn from limited training data.</p>
 <p><strong>Low-frequency vocabulary</strong>: The model generalizes from common patterns. Words with unusual phoneme combinations or words belonging to small semantic categories may be poorly represented in training data.</p>
 <p><strong>Unattested languages</strong>: A model trained on Romance languages cannot directly reconstruct Proto-Indo-European—the training distribution is too different. Transfer learning (pre-training on many language families, fine-tuning on the target) is an active research area.</p>
 </section>
-<section id="summary" class="level2" data-number="8.9">
-<h2 data-number="8.9" class="anchored" data-anchor-id="summary"><span class="header-section-number">8.9</span> Summary</h2>
+<section id="summary" class="level2" data-number="9.12">
+<h2 data-number="9.12" class="anchored" data-anchor-id="summary"><span class="header-section-number">9.12</span> Summary</h2>
 <p>Proto-language reconstruction is a sequence-to-sequence problem: map a set of aligned modern reflexes to their ancestral proto-form. A simple majority-vote baseline reveals the problem structure and sets a floor. Encoder-decoder neural models—particularly transformers with attention over multiple input languages—achieve character error rates of 12–15% on the Romance benchmark, substantially better than earlier methods. Attention mechanisms allow the decoder to selectively weight different input languages at different output positions. Systematic failure modes cluster around morphological endings, rare correspondences, and out-of-distribution vocabulary. The outputs of reconstruction are uncertain: they are predictions, not facts, and they require expert review before being cited as linguistic evidence.</p>
 </section>
-<section id="further-reading" class="level2" data-number="8.10">
-<h2 data-number="8.10" class="anchored" data-anchor-id="further-reading"><span class="header-section-number">8.10</span> Further Reading</h2>
+<section id="further-reading" class="level2" data-number="9.13">
+<h2 data-number="9.13" class="anchored" data-anchor-id="further-reading"><span class="header-section-number">9.13</span> Further Reading</h2>
 <ul>
 <li>Ciobanu, A. M., &amp; Dinu, L. P. (2018). Ab Initio: Automatic Latin Proto-word reconstruction. <em>COLING 2018</em>.</li>
 <li>Meloni, C., et al.&nbsp;(2021). Ab Antiquo: Neural proto-language reconstruction. <em>NAACL 2021</em>. Transformer approach.</li>
@@ -999,13 +1098,13 @@ Figure&nbsp;8.2: Character error rate (CER) comparison across reconstruction met
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./06-phylogenetic-inference.html" class="pagination-link" aria-label="Phylogenetic Inference: Language Family Trees">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Phylogenetic Inference: Language Family Trees</span></span>
+      <a href="./glottochronology.html" class="pagination-link" aria-label="Glottochronology: Dating Language Divergence">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Glottochronology: Dating Language Divergence</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./08-semantic-drift.html" class="pagination-link" aria-label="Semantic Drift &amp; Word Meaning Change">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Semantic Drift &amp; Word Meaning Change</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Semantic Drift &amp; Word Meaning Change</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
