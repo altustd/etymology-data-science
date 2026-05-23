@@ -20,6 +20,7 @@ book:
         - 04-sequence-alignment.qmd
         - 05-cognate-detection.qmd
         - 06-phylogenetic-inference.qmd
+        - glottochronology.qmd
     - part: "Part III: Advanced Techniques"
       chapters:
         - 07-proto-reconstruction.qmd
